@@ -5,25 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 15:23:01 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/05 16:19:49 by csteylae         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec_prompt.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
 /*   Updated: 2024/09/05 15:08:57 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
-
+/*
 void	exec_heredoc(t_shell *shell, t_redirect *heredoc)
 {
 	(void) shell;
@@ -49,7 +37,7 @@ void	perform_redirections(t_shell *shell, int index)
 		exec_heredoc(shell, heredoc);
 	open_file(shell, index);
 }
-
+*/
 bool	exec_builtin(t_shell *shell)
 {
 	char **cmd;
@@ -66,9 +54,8 @@ bool	exec_builtin(t_shell *shell)
 void	exec_simple_cmd(t_shell *shell)
 {
 	pid_t	pid;
-	char	**cmd;
 
-	cmd = shell->tab->cmd;
+//	cmd = shell->tab->cmd;
 //	perform_redirections(shell, 0);
 	if (exec_builtin(shell))
 		return;

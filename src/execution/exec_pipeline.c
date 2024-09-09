@@ -113,8 +113,7 @@ void	exec_pipeline(t_shell *shell)
 	{
 		//perform_redirections_files()
 		ft_printf("nb of iteration %i\n", i);
-		pipe(pipe_fd);
-		if (pipe_fd < 0)
+		if (pipe(pipe_fd) < 0)
 			exit_error(shell, "pipe");
 		child_pid[i] = fork();
 		if (child_pid[i] < 0)

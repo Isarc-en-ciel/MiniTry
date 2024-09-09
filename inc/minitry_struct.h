@@ -60,6 +60,18 @@ typedef struct s_redirect
 }   t_redirect;
 
 /**
+/ An array of structure redirection.
+	t_redirect array : the array of struct. Its size is computated from the parsing step.
+	int	size : the number of redirection of the same type that affect the command
+/
+*/
+typedef struct	s_redir_array
+{
+	t_redirect	*array;
+	int			size;
+}	t_redir_array;
+
+/**
  * A structure containing the commands that will be passed to the execution
  * in form of an array of t_command
  *
@@ -71,11 +83,11 @@ typedef struct s_redirect
  */
 typedef struct s_command
 {
-	char		**cmd;
-	t_redirect	*in;
-	t_redirect	*out;
-	t_redirect	*heredoc;
-	t_redirect	*append;
+	char			**cmd;
+	t_redir_array	in;
+	t_redir_array	out;
+	t_redir_array	heredoc;
+	t_redir_array	append;
 }	t_command;
 
 /**
