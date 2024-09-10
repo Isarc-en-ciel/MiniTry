@@ -72,7 +72,6 @@ void	exec_command(t_shell *shell, int n)
 	int		i;
 	char	**path;
 
-	ft_printf("ok\n");
 	i = 0;
 	search_absolute_path(shell, n);
 	path = get_path(shell->env);
