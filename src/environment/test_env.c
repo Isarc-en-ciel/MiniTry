@@ -34,8 +34,8 @@ static void	set_all_members_to_NULL(t_command *tab, int size)
 		tab[i].cmd = NULL;
 		tab[i].in = NULL;
 		tab[i].out = NULL;
-		tab[i].heredoc = NULL;
 		tab[i].append = NULL;
+		tab[i].heredoc = NULL;
 		i++;
 	}
 }

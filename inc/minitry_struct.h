@@ -84,10 +84,10 @@ typedef struct	s_redir_array
 typedef struct s_command
 {
 	char			**cmd;
-	t_redir_array	in;
-	t_redir_array	out;
-	t_redir_array	heredoc;
-	t_redir_array	append;
+	t_redir_array	*in;
+	t_redir_array	*out;
+	t_redir_array	*append;
+	t_redir_array	*heredoc;
 }	t_command;
 
 /**

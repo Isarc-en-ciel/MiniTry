@@ -30,21 +30,23 @@ void	free_tab_char(char **tab)
 	}
 }
 
-void	free_tab_redirect(t_redirect *redir_tab)
+void	free_redir_array(t_redir_array *redirection)
 {
 	int	i;
 
 	i = 0;
-	if (!redir_tab)
+	if (!redirection)
 		return ;
-	while(redir_tab[i].filename)
+	while (i != redirection->size)
 	{
-		free(redir_tab[i].filename);
-		if (redir_tab[i].hd_delimiter)
-			free(redir_tab[i].hd_delimiter);
+		if (redirection->array[i].hd_delimiter)
+			free(redirection->array[i].hd_delimiter);
+		free(redirection->array[i].filename);
 		i++;
 	}
-	free(redir_tab);
+	free(redirection->array);
+	free(redirection);
+	redirection = NULL;
 }
 
 void	free_cmd(t_command *cmd)
@@ -54,13 +56,13 @@ void	free_cmd(t_command *cmd)
 	if (cmd->cmd)
 		free_tab_char(cmd->cmd);
 	if (cmd->in)
-		free_tab_redirect(cmd->in);
+		free_redir_array(cmd->in);
 	if (cmd->out)
-		free_tab_redirect(cmd->out);
+		free_redir_array(cmd->out);
 	if (cmd->heredoc)
-		free_tab_redirect(cmd->heredoc);
+		free_redir_array(cmd->heredoc);
 	if(cmd->append)
-		free_tab_redirect(cmd->append);
+		free_redir_array(cmd->append);
 	cmd = NULL;
 }
 
