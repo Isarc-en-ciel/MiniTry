@@ -39,6 +39,13 @@ static void	set_all_members_to_NULL(t_command *tab, int size)
 		i++;
 	}
 }
+/*
+void	create_redir_array(enum e_token token, t_command *cmd, char *filename)
+{
+	if (token == REDIR_IN)
+		cmd.in
+}
+*/
 
 static void parse_cmd(t_shell *shell, t_command *tab, char *input)
 {
@@ -47,6 +54,7 @@ static void parse_cmd(t_shell *shell, t_command *tab, char *input)
 	(void)shell;
 
 	i = 0;
+//	int j = 0;
 	input_split = ft_split(input, '|');
 	while(input_split[i])
 	{
@@ -54,6 +62,13 @@ static void parse_cmd(t_shell *shell, t_command *tab, char *input)
 		i++;
 	}
 	free_tab_char(input_split);
+/*	while(tab[i])
+	{
+		while (tab[i].cmd[j])
+		{
+			if(ft_strchr(tab[i].cmd[j], '<'))
+				create_redir_array(, tab[i], cmd[j + 1]);
+				*/
 }
 
 static	t_command *pseudo_parsing(t_shell *shell, char *input)
