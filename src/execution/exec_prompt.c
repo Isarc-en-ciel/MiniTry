@@ -76,5 +76,8 @@ int	exec_prompt(t_shell *shell)
 		exec_simple_cmd(shell);
 	else
 		exec_pipeline(shell);
+	free_tab_cmd(shell->tab_size, shell->tab);
+	shell->tab_size = 0;
+	ft_printf("end of execution\n");
 	return (0);
 }

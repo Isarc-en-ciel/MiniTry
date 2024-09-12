@@ -1,7 +1,7 @@
 NAME= minitry
 CC=cc
 CFLAGS= -Wall -Wextra -Werror
-DFLAGS= -fsanitize=address -g
+DFLAGS= -g -O0 #-fsanitize=address
 
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a

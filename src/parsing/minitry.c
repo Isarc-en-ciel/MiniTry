@@ -1,46 +1,47 @@
 #include "../../inc/minitry.h"
 
-static	t_shell	*init_data(void)
+static	t_shell	*init_shell(void)
 {
-	t_shell *data;
+	t_shell *shell;
 
-	data = malloc(sizeof(*data));
-	if (!data)
+	shell = malloc(sizeof(*shell));
+	if (!shell)
 	{
 		ft_putstr_fd("error\n", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	data->tab = NULL;
-	data->env = NULL;
-	data->tab_size = 0;
-	return (data);
+	shell->tab = NULL;
+	shell->env = NULL;
+	shell->tab_size = 0;
+	return (shell);
 }
 
 int read_the_input(char **envp)
 {
     char *input;
-    t_shell  *data;
+    t_shell  *shell;
 
-	data = init_data();
-	data->env = init_env(envp);
+	shell = init_shell();
+	shell->env = init_env(envp);
     while (1)
     {
         input = readline("gib comand pliz> ");
-        if (!strlen(input))
-            continue;
+		if (!input)
+			break;
+		else if (ft_strlen(input) == 0)
+			continue;
+	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
+	//	if shell == null -> continue
 		add_history(input);
-	//	data.tab = retrieve_cmd(input); doesnt compile for the moment 
-	//	if data == null -> continue
-		test_env(data, input); // simple tests that wont disturb your workflow :)
-        free(input);
-    }
+		test_env(shell, input); // simple tests that wont disturb your workflow :)
+       	free(input);
+	}
     return (0);
 }
 
 int main(int ac, char **av, char **envp)
 {
     (void)av;
-	(void)envp;
 
     if (ac != 1)
         return (1);

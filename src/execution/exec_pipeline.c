@@ -66,13 +66,6 @@ static void wait_children(pid_t *child_pid, int child_nb)
 	child_pid = NULL;
 }
 
-static int	read_from_pipe(int pipe_fd[2], int prev_fd)
-{
-	close(pipe_fd[WRITE_TO]);
-	close(prev_fd);
-	return (pipe_fd[READ_FROM]);
-}
-
 void	exec_pipeline(t_shell *shell)
 {
 	int	i;
@@ -84,7 +77,7 @@ void	exec_pipeline(t_shell *shell)
 	child_pid = malloc(sizeof(*child_pid) * shell->tab_size);
 	if (!child_pid)
 		exit_error(shell, "malloc");
-	prev_fd = 0; //prev_fd = open_files();
+	prev_fd = 0; // check if REDIR_INprev_fd = open_files();
 	while (i != shell->tab_size) //while command arent executed
 	{
 		//perform_redirections_files()
@@ -98,7 +91,8 @@ void	exec_pipeline(t_shell *shell)
 			redirect_pipeline(shell, i, pipe_fd, prev_fd);
 			exec_command(shell, i);
 		}
-		prev_fd = read_from_pipe(pipe_fd, prev_fd);
+		close(pipe_fd[WRITE_TO]);
+		prev_fd = pipe_fd[READ_FROM];
 		i++;
 	}
 	close(prev_fd);
