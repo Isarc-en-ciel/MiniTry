@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/06 15:46:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/13 13:55:47 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	exec_command(t_shell *shell, int n)
 			exec_error(path, shell, "malloc");
 		if (access(path[i], X_OK) == 0)
 		{
-			if (execve(path[i], shell->tab[n].cmd, shell->env) < 0)
-				exec_error(path, shell, "execve");
+			execve(path[i], shell->tab[n].cmd, shell->env);
+			exec_error(path, shell, "execve");
 		}
 		i++;
 	}

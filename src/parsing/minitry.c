@@ -27,7 +27,10 @@ int read_the_input(char **envp)
     {
         input = readline("gib comand pliz> ");
 		if (!input)
+		{
+			ft_printf("Error input is NULL bouuuuh\n");
 			break;
+		}
 		else if (ft_strlen(input) == 0)
 			continue;
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 

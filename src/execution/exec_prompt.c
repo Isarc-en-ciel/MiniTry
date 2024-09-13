@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/05 15:08:57 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:00:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ bool	exec_builtin(t_shell *shell)
 	cmd = shell->tab->cmd;
 	if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
 		exec_env(shell);
-//	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
 	else
 		return (false);
 	return (true);
@@ -78,6 +77,5 @@ int	exec_prompt(t_shell *shell)
 		exec_pipeline(shell);
 	free_tab_cmd(shell->tab_size, shell->tab);
 	shell->tab_size = 0;
-	ft_printf("end of execution\n");
 	return (0);
 }
