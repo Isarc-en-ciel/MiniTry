@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 19:48:46 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/05 16:11:06 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/13 17:47:36 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,3 @@ example_function()
     t_lexer new;
     append(new); // memcopy new
 }
-
-
-t_lexer test;
-
-test = (t_lexer){0};

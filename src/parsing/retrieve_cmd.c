@@ -84,13 +84,14 @@ void	free_temp_array(t_darray* darray)
 	free(darray->content);
 }
 
-t_darray	realloc_array(t_darray darray, t_lexer new_token)
+t_darray	realloc_array(t_darray *darray)
 {
-	t_darray	*new_array;
+	t_lexer	*new_content;
 
-	new_array = init_array(darray.size + darray.block);
+	darray->max_size = darray->max_size + darray->block;
+	new_content = malloc(sizeof(t_lexer)*darray->max_size);
 	// copier darray dans new_array
-	new_array[max+1] = new token
-	free darray
-	return (new_array);
+	free_temp_array(darray);
+	darray->content = new_content;
+	return (*darray);
 }
