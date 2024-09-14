@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 19:48:46 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/13 17:47:36 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/14 15:08:43 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void* content = [][][][][]       = 5 mem blocks of size type_size (e.g. int or t
 compter mes pipes pour eliminer les erreur de sytaxe 
 et creer un tableau de commandes de la bonne taille direct 
 et sortir de ma boucle a chaque pipe*/
+
+//utils str_cmp  si "<>"/"><" erreur de syntaxe
 
 /*while()
 {

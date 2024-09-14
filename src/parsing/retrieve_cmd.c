@@ -3,7 +3,6 @@
 t_command   retrieve_cmd(char *input)
 {
     t_darray tab;
-    t_lexer	lexer;
     int		i;
 	int		j;
 
@@ -16,18 +15,12 @@ t_command   retrieve_cmd(char *input)
     {
         if (ft_isspace(input[i]) = 0)
             i++;
-        else if (input[i] == '|') //erreur si j'ai "||" ou que | est mon premier terme ? des aue j'ai un pipe -> ajouter une ligne a ma struc et le mettre en premier terme de la nouvelle ligne
-			tab[j].type = PIPE //indiquer sa position qq part ? 
-		else if (input[i] == '<<') //utils str_cmp  si "<>"/"><" erreur de syntaxe
-		else if (input[i] == '<' && input[i] == input[i + 1])
-			lexer->operator = REDIR_HEREDOC;
-		else if (input[i] == '>>')
-			lexer->operator = REDIR_APP;
+        else if (input[i] == '|')
+			tab.content[j] = create_pipe(input, i, tab.content[j]); //j++;
 		else if (input[i] == '<')
-			lexer->operator = REDIR_IN;
+			tab.content[j] = create_redirect_in(input, i, tab.content[j]);
 		else if (input[i] == '>')
-			lexer->operator = REDIR_OUT;
-			tab[j] = new_token;
+			tab.content[j] = create_redirect_out(input, i, tab.content[j]);
 		else if (input[i] == '\"')
 		{
 			while (input[i] != '\"') //ici on doit conserver les variables d'env uniquement
@@ -87,10 +80,16 @@ void	free_temp_array(t_darray* darray)
 t_darray	realloc_array(t_darray *darray)
 {
 	t_lexer	*new_content;
+	int		i;
 
+	i = 0;
 	darray->max_size = darray->max_size + darray->block;
 	new_content = malloc(sizeof(t_lexer)*darray->max_size);
-	// copier darray dans new_array
+	while (&darray->content[i])
+	{
+		new_content[i] = darray->content[i];
+		i++;
+	}
 	free_temp_array(darray);
 	darray->content = new_content;
 	return (*darray);
