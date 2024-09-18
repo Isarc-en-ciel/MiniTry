@@ -8,38 +8,52 @@ t_command   retrieve_cmd(char *input)
 
     i = 0;
 	j = 0;
-    init_array(&tab, 10);
-	if (!tab.content)
-		return ((void)NULL);
+    if (init_array(&tab, 10) == 0)
+		return(NULL);
     while (input[i]) //j'itere ou moi ptdr ???
     {
-        if (ft_isspace(input[i]) = 0)
+        if (ft_isspace(input[i]) == 0)
             i++;
         else if (input[i] == '|')
-			tab.content[j] = create_pipe(input, i, tab.content[j]); //j++;
+		{
+			tab.content[j] = create_pipe(input, &i, tab.content[j]);
+			j++;
+		}
 		else if (input[i] == '<')
-			tab.content[j] = create_redirect_in(input, i, tab.content[j]);
+		{
+			tab.content[j] = create_redirect_in(input, &i, tab.content[j]);
+			j++;
+		}
 		else if (input[i] == '>')
-			tab.content[j] = create_redirect_out(input, i, tab.content[j]);
+		{
+			tab.content[j] = create_redirect_out(input, &i, tab.content[j]);
+			j++;
+		}
 		else if (input[i] == '\"')
 		{
-			tab.content[j] = create_doubleq(input, i, tab.content[j]);
+			tab.content[j] = create_doubleq(input, &i, tab.content[j]);
 			if (!tab.content[j].word)
-				error_fct();
+				error_fct(tab);
+			j++;
 		}
 		else if (input[i] == '\'')
 		{
-			tab.content[j] = create_simpleq(input, i, tab.content[j]);
+			tab.content[j] = create_simpleq(input, &i, tab.content[j]);
 			if (!tab.content[j].word)
-				error_fct();
+				error_fct(tab);
+			j++;
 		}
 		else
-			tab.content[j] = create_word(input, i, tab.content[j]);
+		{
+			tab.content[j] = create_word(input, &i, tab.content[j]);
+			if (!tab.content[j].word)
+				error_fct(tab);
+			j++;
+		}
     }
 }
 
-// maybe give return check?
-char	init_array(t_darray* darray, size_t block_size)
+int	init_array(t_darray* darray, size_t block_size)
 {
 	darray->block = block_size;
 	darray->max_size = block_size;
@@ -84,4 +98,19 @@ t_darray	realloc_array(t_darray *darray)
 	free_temp_array(darray);
 	darray->content = new_content;
 	return (*darray);
+}
+
+int error_fct(t_darray tab)
+{
+    write (1, "SYNTAX ERROR\n", 13);
+    if (&tab)
+        free_temp_array(&tab);
+    return (1);
+}
+
+int ft_isspace(char c)
+{
+    if ((c > 8 && c < 14) || c == 32)
+        return (0);
+    return (1);
 }

@@ -12,9 +12,11 @@ int check_open_quotes(char *str, char c, int j)
     return (0);
 }
 
-int error_fct()
+int error_fct(t_darray tab)
 {
     write (1, "SYNTAX ERROR\n", 13);
+    if (tab)
+        free_temp_array(tab);
     return (1);
 }
 
