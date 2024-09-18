@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/06 13:32:21 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/17 13:45:27 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ enum e_tokens {
 typedef struct s_lexer
 {
     char    *word;
-    int     isthereaspace;
+    int     is_there_a_space;
 	enum e_tokens	type;
 }   t_lexer;
 
@@ -60,8 +60,8 @@ typedef struct s_redirect
 }   t_redirect;
 
 /**
-/ An array of structure redirection.
 	t_redirect array : the array of struct. Its size is computated from the parsing step.
+/ An array of structure redirection.
 	int	size : the number of redirection of the same type that affect the command
 /
 */
