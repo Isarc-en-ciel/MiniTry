@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/05 15:08:18 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:28:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
 /* repo utils */
 //file free_struct.c :
 void	free_tab_char(char **tab);
-void	free_redir_array(t_redir_array *redirection);
+void	free_redir_array(t_redir_array redirection);
 void	free_cmd(t_command *cmd);
 void	free_tab_cmd(int size, t_command *tab);
 void	free_shell(t_shell *shell);
