@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/17 13:45:27 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/18 16:53:35 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct	s_redir_array
  */
 typedef struct s_command
 {
-	char			**cmd;
+	char			*cmd;
 	t_redir_array	*in;
 	t_redir_array	*out;
 	t_redir_array	*append;
