@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_env.c                                         :+:      :+:    :+:   */
+/*   pseudo_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 12:09:39 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/20 12:07:20 by csteylae         ###   ########.fr       */
+/*   Created: 2024/09/20 13:57:01 by csteylae          #+#    #+#             */
+/*   Updated: 2024/09/20 15:18:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,13 @@ enum e_tokens	which_redir(char *arg)
 {
 	enum e_tokens	type;
 
-	if (ft_strchr(arg, '<'))
+	type = -1;
+
+	if (!ft_strncmp(arg, "<", 1))
 		type = REDIR_IN;
 	if (arg[1] == '<')
 		type = REDIR_HEREDOC;
-	if (ft_strchr(arg, '>'))
+	else if (!ft_strncmp(arg, ">", 1))
 		type  = REDIR_OUT;
 	if (arg[1] == '>')
 		type = REDIR_APP;
@@ -75,12 +77,12 @@ t_redirect	new_redir(char *arg)
 	int	char_len;
 
 	redir.type = which_redir(arg);
-//	ft_printf("REDIR_TYPE : %s\n", redir.type);
+	//ft_printf("REDIR_TYPE : %d\n", redir.type);
+	char_len = 2;
 	if (redir.type == REDIR_IN || redir.type == REDIR_OUT)
 		char_len = 1;
-	else
-		char_len = 2;
 	redir.filename = ft_strdup(arg + char_len);
+	redir.hd_delimiter = NULL;
 	return (redir);
 }
 
@@ -90,11 +92,11 @@ t_redir_array	fill_redir_array(t_command cmd)
 	t_redir_array redir;
 	int	n = 0;
 
-	redir.array = malloc(sizeof(t_redirect) * redir.size);
 	redir.size = count_redir(cmd.cmd);
+	redir.array = malloc(sizeof(t_redirect) * redir.size);
 	while (cmd.cmd[i])
 	{
-		if (ft_strchr(cmd.cmd[i], '<') || ft_strchr(cmd.cmd[i], '>')) 
+		if (!ft_strncmp(cmd.cmd[i], "<", 1) || !ft_strncmp(cmd.cmd[i], ">", 1))
 		{
 			redir.array[n] = new_redir(cmd.cmd[i]);
 			n++;
@@ -146,22 +148,21 @@ static void parse_cmd(t_shell *shell, t_command *tab, char *input)
 	}
 	free_tab_char(input_split);
 	shell->tab = tab;
-//	i = 0;
-//	while (i != shell->tab_size)
-//	{
-//		shell->tab[i].redirection = fill_redir_array(shell->tab[i]);
-//		i++;
-//	}
-//	i = 0;
-//	ft_printf("ok\n\n\n");
-//	while (i != shell->tab_size)
-//	{
-//		shell->tab[i].cmd = construct_cmd(shell->tab[i].cmd, shell->tab[i].redirection.size);
-//		i++;
-//	}
+	i = 0;
+	while (i != shell->tab_size)
+	{
+		shell->tab[i].redirection = fill_redir_array(shell->tab[i]);
+		i++;
+	}
+	i = 0;
+	while (i != shell->tab_size)
+	{
+		shell->tab[i].cmd = construct_cmd(shell->tab[i].cmd, shell->tab[i].redirection.size);
+		i++;
+	}
 }
 
-static	t_command *pseudo_parsing(t_shell *shell, char *input)
+t_command *pseudo_parsing(t_shell *shell, char *input)
 {
 	t_command *tab;
 
@@ -175,10 +176,18 @@ static	t_command *pseudo_parsing(t_shell *shell, char *input)
 	return (tab);
 }
 
-void	test_env(t_shell *shell, char *input)
+void	ft_print_redir_type(int token)
 {
-	shell->tab = pseudo_parsing(shell, input);
-//	exec_prompt(shell);
+	if (token == REDIR_IN)
+		ft_printf("REDIR_IN");
+	else if (token == REDIR_OUT)
+		ft_printf("REDIR_OUT");
+	else if (token == REDIR_APP)
+		ft_printf("REDIR_APP");
+	else if (token == REDIR_HEREDOC)
+		ft_printf("REDIR_HEREDOC");
+	else 
+		ft_printf("IS NOT A REDIR");
 }
 
 void	print_redirection(t_redir_array redir)
@@ -187,7 +196,9 @@ void	print_redirection(t_redir_array redir)
 	ft_printf("redir.size : %d\n", redir.size);
 	while (i != redir.size)
 	{
-		ft_printf("redir : filename : %s ; type : %d\n", redir.array[i].filename, redir.array[i].type);
+		ft_printf("redir : filename : %s, ", redir.array[i].filename);
+		ft_print_redir_type(redir.array[i].type);
+		ft_printf("\n");
 		i++;
 	}
 }

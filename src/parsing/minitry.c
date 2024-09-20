@@ -36,7 +36,8 @@ int read_the_input(char **envp)
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
 		add_history(input);
-		test_env(shell, input); // simple tests that wont disturb your workflow :)
+		shell->tab = pseudo_parsing(shell, input);// simple parsing to test execution
+		exec_prompt(shell);
        	free(input);
 	}
     return (0);

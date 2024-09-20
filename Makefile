@@ -10,7 +10,7 @@ SRCS= src/parsing/minitry.c \
 	  src/builtins/cd.c \
 	  src/builtins/env.c \
 	  src/environment/init_env.c\
-	  src/environment/test_env.c \
+	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \
 	  src/execution/exec_pipeline.c \
