@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/19 20:05:42 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/20 11:54:34 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,8 @@ t_darray	retrieve_cmd(char *input)
 		else
 		{
 			reserve_array(&tab);
-			ft_printf("ok");
-			sleep(1);
 			tab.content[j] = create_word(input, &i, tab.content[j]);
-			ft_printf("ok2");
-			sleep(1);
+			ft_printf("ok");
 			if (!tab.content[j].word)
 				error_fct(tab);
 			tab.actual_size++;
