@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:09:39 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/18 19:14:30 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/20 11:28:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	count_nb_of_cmd(char *input)
 {
-	int	i = 1; //we suppose there is at leat 1 command
+	int	i = 0;
 
 	while (*input)
 	{
@@ -22,7 +22,7 @@ static int	count_nb_of_cmd(char *input)
 			i++;
 		input++;
 	}
-	return (i);
+	return (i + 1);
 }
 
 static void	set_all_members_to_NULL(t_command *tab, int size)
@@ -146,19 +146,19 @@ static void parse_cmd(t_shell *shell, t_command *tab, char *input)
 	}
 	free_tab_char(input_split);
 	shell->tab = tab;
-	i = 0;
-	while (i != shell->tab_size)
-	{
-		shell->tab[i].redirection = fill_redir_array(shell->tab[i]);
-		i++;
-	}
-	i = 0;
-	ft_printf("ok\n\n\n");
-	while (i != shell->tab_size)
-	{
-		shell->tab[i].cmd = construct_cmd(shell->tab[i].cmd, shell->tab[i].redirection.size);
-		i++;
-	}
+//	i = 0;
+//	while (i != shell->tab_size)
+//	{
+//		shell->tab[i].redirection = fill_redir_array(shell->tab[i]);
+//		i++;
+//	}
+//	i = 0;
+//	ft_printf("ok\n\n\n");
+//	while (i != shell->tab_size)
+//	{
+//		shell->tab[i].cmd = construct_cmd(shell->tab[i].cmd, shell->tab[i].redirection.size);
+//		i++;
+//	}
 }
 
 static	t_command *pseudo_parsing(t_shell *shell, char *input)
@@ -178,7 +178,7 @@ static	t_command *pseudo_parsing(t_shell *shell, char *input)
 void	test_env(t_shell *shell, char *input)
 {
 	shell->tab = pseudo_parsing(shell, input);
-	exec_prompt(shell);
+//	exec_prompt(shell);
 }
 
 void	print_redirection(t_redir_array redir)
@@ -197,6 +197,9 @@ void	ft_print_cmd(t_shell *shell)
 	int	i = 0;
 	int	j = 0;
 
+	ft_printf("tab size : %d\n", shell->tab_size);
+	if (!shell->tab || !shell->tab->cmd)
+		return;
 	while (i != shell->tab_size)
 	{
 		ft_printf("-------------------------------\n");
