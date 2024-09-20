@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/18 17:06:18 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/19 20:05:42 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ t_darray	retrieve_cmd(char *input)
 		else
 		{
 			reserve_array(&tab);
+			ft_printf("ok");
+			sleep(1);
 			tab.content[j] = create_word(input, &i, tab.content[j]);
+			ft_printf("ok2");
+			sleep(1);
 			if (!tab.content[j].word)
 				error_fct(tab);
 			tab.actual_size++;
@@ -97,7 +101,7 @@ void	reserve_array(t_darray *darray)
 
 void	free_temp_array(t_darray *darray)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < darray->actual_size)
@@ -129,7 +133,7 @@ t_darray	realloc_array(t_darray *darray)
 int	error_fct(t_darray tab)
 {
 	write (1, "SYNTAX ERROR\n", 13);
-	if (&tab)
+	if (tab.content)
 		free_temp_array(&tab);
 	return (1);
 }
@@ -137,6 +141,6 @@ int	error_fct(t_darray tab)
 int	ft_isspace(char c)
 {
 	if ((c > 8 && c < 14) || c == 32)
-		return (0);
+		return (0); //pe intervertir 1 et 0 > pour que 1 = espace vrai
 	return (1);
 }

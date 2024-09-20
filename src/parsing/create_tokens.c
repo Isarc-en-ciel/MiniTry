@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:53:33 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/18 15:06:50 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/19 20:05:55 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ t_lexer	create_redirect_in(char *input, int *position, t_lexer token)
 	if (input[*position - 1] && input[*position - 1] == 32)
 		token.is_there_a_space = 1;
 	token.type = REDIR_IN;
-	*position++;
+	position++;
 	if (input[*position + 1] == '<')
 	{
 		token.type = REDIR_HEREDOC;
-		*position++;
+		position++;
 	}
 	return (token);
 }
@@ -45,11 +45,11 @@ t_lexer	create_redirect_out(char *input, int *position, t_lexer token)
 	if (input[*position - 1] && input[*position - 1] == 32)
 		token.is_there_a_space = 1;
 	token.type = REDIR_OUT;
-	*position++;
+	position++;
 	if (input[*position + 1] == '>')
 	{
 		token.type = REDIR_APP;
-		*position++;
+		position++;
 	}
 	return (token);
 }
@@ -101,7 +101,7 @@ int	check_open_quotes(char *str, char c, int j)
 	int	i;
 
 	i = j;
-	while (str++ != '\0')
+	while (str++)
 	{
 		if (str[i] == c)
 			return (i - j);
@@ -122,7 +122,7 @@ t_lexer	create_word(char *input, int *position, t_lexer token)
 		token.is_there_a_space = 1;
 	token.type = QUOTE;
 	token.word = NULL;
-	while (ft_isspace(input[i]))
+	while (input[i] && ft_isspace(input[i]))
 		i++;
 	l = i - l;
 	token.word = malloc(sizeof(char) * l);

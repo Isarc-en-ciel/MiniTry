@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 19:48:46 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/14 15:08:43 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/19 18:06:21 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ darray implentations:
     - delete();             // free content
 */
 
-example_function() 
+/*example_function() 
 {
     t_lexer new;
     append(new); // memcopy new
-}
+}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitry_function.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/05 15:08:18 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:28:55 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,22 @@ void	free_shell(t_shell *shell);
 //file exit_error.c
 void	exit_error(t_shell *shell, char *error);
 
+//tokenisation
+t_lexer	create_pipe(char *input, int *position, t_lexer token);
+t_lexer	create_redirect_in(char *input, int *position, t_lexer token);
+t_lexer	create_redirect_out(char *input, int *position, t_lexer token);
+t_lexer	create_doubleq(char *input, int *position, t_lexer token);
+t_lexer	create_simpleq(char *input, int *position, t_lexer token);
+t_lexer	create_word(char *input, int *position, t_lexer token);
+int	    check_open_quotes(char *str, char c, int j);
+void	*ft_memcpy_plus(void *dst, const void *src, int start, int n);
+
+t_darray	retrieve_cmd(char *input);
+int	init_array(t_darray *darray, size_t block_size);
+void	reserve_array(t_darray *darray);
+void	free_temp_array(t_darray *darray);
+t_darray	realloc_array(t_darray *darray);
+int	error_fct(t_darray tab);
+int	ft_isspace(char c);
 
 #endif
