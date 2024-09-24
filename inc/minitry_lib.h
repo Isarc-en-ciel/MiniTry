@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:02:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/04 13:43:57 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:35:58 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../lib/Libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
 # include <stdio.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
