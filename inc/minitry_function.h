@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/19 18:28:55 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/24 13:09:57 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ t_lexer	create_word(char *input, int *position, t_lexer token);
 int	    check_open_quotes(char *str, char c, int j);
 void	*ft_memcpy_plus(void *dst, const void *src, int start, int n);
 
-t_darray	retrieve_cmd(char *input);
-int	init_array(t_darray *darray, size_t block_size);
-void	reserve_array(t_darray *darray);
+//dynamic array
+t_darray	*retrieve_cmd(char *input);
+int	    init_array(t_darray *darray, size_t block_size);
+int	reserve_array(t_darray *darray);
 void	free_temp_array(t_darray *darray);
 t_darray	realloc_array(t_darray *darray);
-int	error_fct(t_darray tab);
-int	ft_isspace(char c);
+int 	error_fct(t_darray *tab);
+int	    ft_isspace(char c);
+int print_token_tab(t_darray *cmd);
 
 #endif

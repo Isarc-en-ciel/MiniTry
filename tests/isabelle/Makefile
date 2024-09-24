@@ -8,7 +8,10 @@ PRINTF_LIB = ../../lib/ft_printf/libftprintf.a
 
 SRCS= main.c \
 	  ../../src/parsing/create_tokens.c \
+	  ../../src/parsing/create_tokens2.c \
 	  ../../src/parsing/retrieve_cmd.c \
+	  ../../src/parsing/darray_utils.c \
+	  token_tester.c \
 
 HEADER = ../../inc/*.h
 
