@@ -6,7 +6,9 @@ DFLAGS= -g -O0 -fsanitize=address
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a
 
-SRCS= src/parsing/minitry.c \
+SRCS= lib/get_next_line/get_next_line.c \
+	  lib/get_next_line/get_next_line_utils.c \
+	  src/parsing/minitry.c \
 	  src/builtins/cd.c \
 	  src/builtins/env.c \
 	  src/environment/init_env.c\

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:02:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/24 15:44:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:22:03 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 # include "../lib/Libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
+# include "../lib/get_next_line/get_next_line.h"
 # include <stdio.h>
 # include <errno.h>
 # include <stdlib.h>
