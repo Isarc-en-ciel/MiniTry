@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:57:01 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/20 15:18:38 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:51:16 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ static void parse_cmd(t_shell *shell, t_command *tab, char *input)
 	while (i != shell->tab_size)
 	{
 		shell->tab[i].cmd = construct_cmd(shell->tab[i].cmd, shell->tab[i].redirection.size);
+		shell->tab[i].fd_in = STDIN_FILENO;
+		shell->tab[i].fd_out = STDOUT_FILENO;
 		i++;
 	}
 }
@@ -172,7 +174,7 @@ t_command *pseudo_parsing(t_shell *shell, char *input)
 		exit_error(shell, "malloc");
 	set_all_members_to_NULL(tab, shell->tab_size);
 	parse_cmd(shell, tab, input);
-	ft_print_cmd(shell);
+//	ft_print_cmd(shell);
 	return (tab);
 }
 
@@ -196,7 +198,7 @@ void	print_redirection(t_redir_array redir)
 	ft_printf("redir.size : %d\n", redir.size);
 	while (i != redir.size)
 	{
-		ft_printf("redir : filename : %s, ", redir.array[i].filename);
+		ft_printf("redir.filename : %s, ", redir.array[i].filename);
 		ft_print_redir_type(redir.array[i].type);
 		ft_printf("\n");
 		i++;
@@ -216,7 +218,7 @@ void	ft_print_cmd(t_shell *shell)
 		ft_printf("-------------------------------\n");
 		while (shell->tab[i].cmd[j] != NULL)
 		{
-			ft_printf("%s\n", shell->tab[i].cmd[j]);
+			ft_printf("cmd[%d] : %s\n", j, shell->tab[i].cmd[j]);
 			j++;
 		}
 		print_redirection(shell->tab[i].redirection);

@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitry.h                                          :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 12:20:28 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/26 15:50:20 by csteylae         ###   ########.fr       */
+/*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
+/*   Updated: 2024/09/26 15:25:34 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITRY_H
+#include "../../inc/minitry.h"
 
-#define MINITRY_H
+t_shell	init_shell(void)
+{
+	t_shell shell;
 
-#include "minitry_lib.h"
-#include "minitry_struct.h"
-#include "minitry_function.h"
-
-# define READ_FROM 0
-# define WRITE_TO 1
-
-enum e_builtin {
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT
-};
-
-
-#endif
+	shell.tab = NULL;
+	shell.env = NULL;
+	shell.tab_size = 0;
+	return (shell);
+}

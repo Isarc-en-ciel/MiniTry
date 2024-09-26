@@ -6,26 +6,11 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/26 12:58:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:13:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
-
-static void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
-{
-	if (new_fd_in >= 0)
-	{
-		if (dup2(new_fd_in, STDIN_FILENO) < 0)
-			exit_error(shell, "dup2");
-//		close(new_fd_in);
-	}
-	if (new_fd_out >= 0)
-	{
-		if (dup2(new_fd_out, STDOUT_FILENO) < 0)
-			exit_error(shell, "dup2");
-	}
-}
 
 static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int fd_prev)
 {
@@ -42,7 +27,7 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int fd_prev
 	else if (i == last_cmd)
 	{
 		close(pipe_fd[WRITE_TO]);
-		redirect_io(shell, fd_prev, STDOUT_FILENO);
+		redirect_io(shell, fd_prev, shell->tab[i].fd_out);
 	}
 	else
 	{

@@ -9,6 +9,7 @@ PRINTF_LIB = lib/ft_printf/libftprintf.a
 SRCS= lib/get_next_line/get_next_line.c \
 	  lib/get_next_line/get_next_line_utils.c \
 	  src/parsing/minitry.c \
+	  src/init/init_shell.c \
 	  src/builtins/cd.c \
 	  src/builtins/env.c \
 	  src/environment/init_env.c\

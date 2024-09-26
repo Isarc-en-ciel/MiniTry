@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/26 12:58:48 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:13:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,13 @@ void	exec_simple_cmd(t_shell *shell)
 		return;
 	}
 	pid = fork();
-	perform_redirection(shell, &shell->tab[0]);
-	if (exec_builtin(shell))
 	if (pid < 0)
 		exit_error(shell, "fork");
 	if (pid == 0)
+	{
+		perform_redirection(shell, &shell->tab[0]);
 		exec_command(shell, 0);
+	}
 	wait(&shell->exit_status);
 	if (WIFEXITED(shell->exit_status))
 		shell->exit_status = WEXITSTATUS(shell->exit_status);
