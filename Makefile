@@ -8,6 +8,11 @@ PRINTF_LIB = lib/ft_printf/libftprintf.a
 
 SRCS= src/parsing/minitry.c \
 	  src/builtins/cd.c \
+	  src/parsing/create_tokens.c \
+	  src/parsing/create_tokens2.c \
+	  src/parsing/darray_utils.c \
+	  src/parsing/retrieve_cmd.c \
+	  src/parsing/token_tester.c \
 	  src/builtins/env.c \
 	  src/environment/init_env.c\
 	  src/environment/test_env.c \
