@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/24 13:09:57 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/26 14:47:07 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ t_darray	realloc_array(t_darray *darray);
 int 	error_fct(t_darray *tab);
 int	    ft_isspace(char c);
 int print_token_tab(t_darray *cmd);
+void	ft_print_redir_type(enum e_tokens token);
 
 #endif
