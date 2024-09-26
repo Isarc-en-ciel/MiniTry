@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/13 14:53:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:58:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,17 @@ static void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
 
 static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int fd_prev)
 {
+	int	first_cmd;
 	int	last_cmd;
 
+	first_cmd = 0;
 	last_cmd = shell->tab_size - 1;
-	if (i == last_cmd)
+	if (i == first_cmd)
+	{
+		close(pipe_fd[READ_FROM]);
+		redirect_io(shell, shell->tab[i].fd_in, pipe_fd[WRITE_TO]);
+	}
+	else if (i == last_cmd)
 	{
 		close(pipe_fd[WRITE_TO]);
 		redirect_io(shell, fd_prev, STDOUT_FILENO);
@@ -49,10 +56,13 @@ static void wait_children(t_shell *shell, pid_t *child_pid, int child_nb)
 	int	i;
 
 	i = 0;
-	ft_printf("child_nb : %i\n", child_nb);
 	while (i != child_nb)
 	{
-		shell->exit_status = wait(NULL);
+		wait(&shell->exit_status);
+		if (WIFEXITED(shell->exit_status))
+			shell->exit_status = WEXITSTATUS(shell->exit_status);
+		else if (WIFSIGNALED(shell->exit_status))
+			shell->exit_status = WTERMSIG(shell->exit_status);
 		i++;
 	}
 	free(child_pid);
@@ -73,10 +83,10 @@ void	exec_pipeline(t_shell *shell)
 	prev_fd = 0; // check if REDIR_INprev_fd = open_files();
 	while (i != shell->tab_size) //while command arent executed
 	{
-		//perform_redirections_files()
 		if (pipe(pipe_fd) < 0)
 			exit_error(shell, "pipe");
 		child_pid[i] = fork();
+		perform_redirection(shell, &shell->tab[i]);
 		if (child_pid[i] < 0)
 			exit_error(shell, "fork");
 		else if (child_pid[i] == 0)

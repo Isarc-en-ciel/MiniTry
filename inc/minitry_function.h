@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/20 14:03:08 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:37:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	exec_env(t_shell *shell);
 void	exec_command(t_shell *shell, int nb); /*file exec_command.c */
 int		exec_prompt(t_shell *shell); /* file exec_prompt.c */
 void	exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
+void	perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
 t_command	*pseudo_parsing(t_shell *shell, char *input);
 
 /* repo utils */

@@ -16,6 +16,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \
 	  src/execution/exec_pipeline.c \
+	  src/execution/redirection.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 

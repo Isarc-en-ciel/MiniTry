@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/24 15:17:27 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:35:19 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_redirect
 	int					fd;
 	char				*filename;
 	char				*hd_delimiter;
-	enum e_tokens			type;
+	enum e_tokens		type;
 }   t_redirect;
 
 /**
@@ -81,6 +81,8 @@ typedef struct s_command
 {
 	char			**cmd;
 	t_redir_array	redirection;
+	int				fd_in;
+	int				fd_out;
 }	t_command;
 
 /**
@@ -99,8 +101,6 @@ typedef struct s_shell
 	int			tab_size;
 	int			error;
 	int			exit_status;
-	int			fd_in;
-	int			fd_out;
 }	t_shell;
 
 typedef struct s_darray

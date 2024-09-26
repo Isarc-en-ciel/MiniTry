@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/24 16:37:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:58:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ void	exec_simple_cmd(t_shell *shell)
 {
 	pid_t	pid;
 
-//	cmd = shell->tab->cmd;
-//	perform_redirections(shell, 0);
 	if (exec_builtin(shell))
+	{
+		//exec_builtins
 		return;
+	}
 	pid = fork();
+	perform_redirection(shell, &shell->tab[0]);
+	if (exec_builtin(shell))
 	if (pid < 0)
 		exit_error(shell, "fork");
 	if (pid == 0)
