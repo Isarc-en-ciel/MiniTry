@@ -6,7 +6,11 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/26 14:47:07 by iwaslet          ###   ########.fr       */
+=======
+/*   Updated: 2024/09/26 15:38:03 by csteylae         ###   ########.fr       */
+>>>>>>> redirection
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +28,10 @@ char	**init_env(char **envp);
 void	ft_print_cmd(t_shell *shell);
 void	test_env(t_shell *shell, char *input); //function added to your minitry.c to avoid the pollution of that file 
 
+
+/* repo init */
+t_shell	init_shell(void);
+
 /* repo builtins */
 void	exec_cd(char *cmd);
 void	exec_env(t_shell *shell);
@@ -32,11 +40,14 @@ void	exec_env(t_shell *shell);
 void	exec_command(t_shell *shell, int nb); /*file exec_command.c */
 int		exec_prompt(t_shell *shell); /* file exec_prompt.c */
 void	exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
+void	perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
+void	redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
+t_command	*pseudo_parsing(t_shell *shell, char *input);
 
 /* repo utils */
 //file free_struct.c :
 void	free_tab_char(char **tab);
-void	free_redir_array(t_redir_array *redirection);
+void	free_redir_array(t_redir_array redirection);
 void	free_cmd(t_command *cmd);
 void	free_tab_cmd(int size, t_command *tab);
 void	free_shell(t_shell *shell);

@@ -1,20 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minitry.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/26 15:33:42 by csteylae          #+#    #+#             */
+/*   Updated: 2024/09/27 18:22:32 by iwaslet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minitry.h"
-
-static	t_shell	*init_shell(void)
-{
-	t_shell *shell;
-
-	shell = malloc(sizeof(*shell));
-	if (!shell)
-	{
-		ft_putstr_fd("error\n", STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
-	shell->tab = NULL;
-	shell->env = NULL;
-	shell->tab_size = 0;
-	return (shell);
-}
 
 int read_the_input(char **envp)
 {
@@ -41,7 +37,8 @@ int read_the_input(char **envp)
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
 		add_history(input);
-		test_env(shell, input); // simple tests that wont disturb your workflow :)
+		shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
+		exec_prompt(&shell);
        	free(input);
 	}
     return (0);

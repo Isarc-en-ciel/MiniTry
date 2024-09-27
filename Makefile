@@ -6,7 +6,10 @@ DFLAGS= -g -O0 -fsanitize=address
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a
 
-SRCS= src/parsing/minitry.c \
+SRCS= lib/get_next_line/get_next_line.c \
+	  lib/get_next_line/get_next_line_utils.c \
+	  src/parsing/minitry.c \
+	  src/init/init_shell.c \
 	  src/builtins/cd.c \
 	  src/parsing/create_tokens.c \
 	  src/parsing/create_tokens2.c \
@@ -15,10 +18,11 @@ SRCS= src/parsing/minitry.c \
 	  src/parsing/token_tester.c \
 	  src/builtins/env.c \
 	  src/environment/init_env.c\
-	  src/environment/test_env.c \
+	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \
 	  src/execution/exec_pipeline.c \
+	  src/execution/redirection.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 

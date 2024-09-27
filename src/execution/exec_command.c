@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/13 13:55:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:20:55 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void	exec_command(t_shell *shell, int n)
 		}
 		i++;
 	}
-	exec_error(path, shell, shell->tab->cmd[0]);
+	exec_error(path, shell, shell->tab[n].cmd[0]);
 }

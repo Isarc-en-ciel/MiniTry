@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:52:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/08/20 15:56:46 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/26 15:55:58 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,22 @@ void	free_tab_char(char **tab)
 	}
 }
 
-void	free_redir_array(t_redir_array *redirection)
+void	free_redir_array(t_redir_array redirection)
 {
 	int	i;
 
 	i = 0;
-	if (!redirection)
+	if (!redirection.array)
 		return ;
-	while (i != redirection->size)
+	while (i != redirection.size)
 	{
-		if (redirection->array[i].hd_delimiter)
-			free(redirection->array[i].hd_delimiter);
-		free(redirection->array[i].filename);
+		if (redirection.array[i].hd_delimiter)
+			free(redirection.array[i].hd_delimiter);
+		free(redirection.array[i].filename);
 		i++;
 	}
-	free(redirection->array);
-	free(redirection);
-	redirection = NULL;
+	free(redirection.array);
+	redirection.array = NULL;
 }
 
 void	free_cmd(t_command *cmd)
@@ -55,14 +54,12 @@ void	free_cmd(t_command *cmd)
 		return;
 	if (cmd->cmd)
 		free_tab_char(cmd->cmd);
-	if (cmd->in)
-		free_redir_array(cmd->in);
-	if (cmd->out)
-		free_redir_array(cmd->out);
-	if (cmd->heredoc)
-		free_redir_array(cmd->heredoc);
-	if(cmd->append)
-		free_redir_array(cmd->append);
+	if (cmd->redirection.array)
+		free_redir_array(cmd->redirection);
+	if (cmd->fd_in != STDIN_FILENO)
+		close(cmd->fd_in);
+	if (cmd->fd_out != STDOUT_FILENO)
+		close(cmd->fd_out);
 	cmd = NULL;
 }
 
