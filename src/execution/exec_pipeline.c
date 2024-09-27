@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/26 19:13:01 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:09:07 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,21 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int fd_prev
 	if (i == first_cmd)
 	{
 		close(pipe_fd[READ_FROM]);
-		redirect_io(shell, shell->tab[i].fd_in, pipe_fd[WRITE_TO]);
+		if (shell->tab[i].fd_out == STDOUT_FILENO)
+			redirect_io(shell, shell->tab[i].fd_in, pipe_fd[WRITE_TO]);
 	}
 	else if (i == last_cmd)
 	{
 		close(pipe_fd[WRITE_TO]);
-		redirect_io(shell, fd_prev, shell->tab[i].fd_out);
+		if (shell->tab[i].fd_in == STDIN_FILENO)
+			redirect_io(shell, fd_prev, shell->tab[i].fd_out);
 	}
 	else
 	{
 		close(pipe_fd[READ_FROM]);
-		redirect_io(shell, fd_prev, pipe_fd[WRITE_TO]);
+		fd_prev = shell->tab[i].fd_in;
+		if (shell->tab[i].fd_out == STDOUT_FILENO)
+			redirect_io(shell, fd_prev, pipe_fd[WRITE_TO]);
 	}
 }
 
@@ -71,11 +75,11 @@ void	exec_pipeline(t_shell *shell)
 		if (pipe(pipe_fd) < 0)
 			exit_error(shell, "pipe");
 		child_pid[i] = fork();
-		perform_redirection(shell, &shell->tab[i]);
 		if (child_pid[i] < 0)
 			exit_error(shell, "fork");
 		else if (child_pid[i] == 0)
 		{
+			perform_redirection(shell, &shell->tab[i]);
 			redirect_pipeline(shell, i, pipe_fd, prev_fd);
 			exec_command(shell, i);
 		}
