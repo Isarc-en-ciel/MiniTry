@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:44:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/27 13:10:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:48:09 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	open_file(t_shell *shell, int prev_fd, t_redirect redir, int flags)
 	else
 		fd = open(redir.filename, flags);
 	if (fd < 0)
-		exit_error(shell, "open");
+		exit_error(shell, redir.filename);
 	return (fd);
 }
 
