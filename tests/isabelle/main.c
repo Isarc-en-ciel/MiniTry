@@ -3,11 +3,11 @@
 int read_the_input(char **envp)
 {
     char *input;
-    t_darray    *cmd;
+    t_darray    *tokens;
 
     (void)envp;
 
-    cmd = NULL;
+    tokens = NULL;
     while (1)
     {
         input = readline("gib comand pliz> ");
@@ -18,9 +18,10 @@ int read_the_input(char **envp)
 		}
 		else if (ft_strlen(input) == 0)
 			continue;
-	    cmd = retrieve_cmd(input);
-        if (cmd == NULL || cmd->content == NULL)
+	    tokens = retrieve_cmd(input);
+        if (tokens == NULL || tokens->content == NULL)
             return (1);
+        parsing_starter(tokens);
 		add_history(input);
        	free(input);
 	}

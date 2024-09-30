@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:53:33 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/30 12:49:12 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/30 13:34:38 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_open_quotes(char *str, char c, int j)
 	return (0);
 }
 
-t_lexer	create_word(char *input, int *position, t_lexer token) //attention si des quotes sont ouvertes 'dans un mot'
+t_lexer	create_word(char *input, int *position, t_lexer token)
 {
 	int	l;
 	int	i;

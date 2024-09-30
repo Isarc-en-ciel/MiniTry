@@ -6,12 +6,13 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/24 13:56:23 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/30 13:35:43 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
-
+/*mettre un flag au cas ou j'ai que des espaces 
+(check que j'ai bien malloc tab.content)*/
 t_darray	*retrieve_cmd(char *input)
 {
 	t_darray	*tab;
@@ -27,7 +28,7 @@ t_darray	*retrieve_cmd(char *input)
 		return (tab);
 	while (input[i])
 	{
-		if (ft_isspace(input[i]) == 1) //mettre un flag au cas ou j'ai que des espaces (check que j'ai bien malloc tab.content)
+		if (ft_isspace(input[i]) == 1)
 			i++;
 		else if (input[i] == '|')
 		{
