@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   creat_tokens2.c                                    :+:      :+:    :+:   */
+/*   create_tokens2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:51:15 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/24 13:51:56 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/30 12:46:22 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,11 @@ t_lexer	create_redirect_out(char *input, int *position, t_lexer token)
 		(*position)++;
 	}
 	return (token);
+}
+
+int	is_delimiter(char c)
+{
+	if (c == '<' || c == '>' || c == '|' || c == '\"' || c == '\'')
+		return (1);
+	return (0);
 }

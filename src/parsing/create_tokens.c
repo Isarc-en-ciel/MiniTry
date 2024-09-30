@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:53:33 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/26 16:13:11 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/09/30 12:49:12 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ t_lexer	create_word(char *input, int *position, t_lexer token) //attention si de
 		token.is_there_a_space = 1;
 	token.type = WORD;
 	token.word = NULL;
-	while (input[i] && !ft_isspace(input[i]))
+	while (input[i] && !ft_isspace(input[i]) && !is_delimiter(input[i]))
 		i++;
 	l = i - l + 1;
 	token.word = malloc(sizeof(char) * l);
 	if (token.word == NULL)
 		return (token);
 	token.word = ft_memcpy_plus(token.word, input, *position, l);
-	*position = *position + l;
+	*position = *position + l - 1;
 	return (token);
 }
 
