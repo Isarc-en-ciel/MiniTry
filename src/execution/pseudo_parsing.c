@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:57:01 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/26 18:51:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:37:47 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ t_command *pseudo_parsing(t_shell *shell, char *input)
 	return (tab);
 }
 
-void	ft_print_redir_type(int token)
+void	print_redir_type(int token)
 {
 	if (token == REDIR_IN)
 		ft_printf("REDIR_IN");
@@ -199,7 +199,7 @@ void	print_redirection(t_redir_array redir)
 	while (i != redir.size)
 	{
 		ft_printf("redir.filename : %s, ", redir.array[i].filename);
-		ft_print_redir_type(redir.array[i].type);
+		print_redir_type(redir.array[i].type);
 		ft_printf("\n");
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:33:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/30 15:25:32 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/01 13:44:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	read_the_input(char **envp)
 {
 	char		*input;
-	t_shell		*shell;
+	t_shell		shell;
 	t_darray	*tokens;
 
 	shell = init_shell();
-	shell->env = init_env(envp);
+	shell.env = init_env(envp);
 	tokens = NULL;
 	while (1)
 	{
@@ -31,10 +31,10 @@ int	read_the_input(char **envp)
 		}
 		else if (ft_strlen(input) == 0)
 			continue ;
-		tokens = retrieve_cmd(input);
-		if (tokens == NULL || tokens->content == NULL)
-			return (1);
-		parsing_starter(tokens);
+//		tokens = retrieve_cmd(input);
+//		if (tokens == NULL || tokens->content == NULL)
+//			return (1);
+//		parsing_starter(tokens);
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
 		add_history(input);
