@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:57:01 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/01 13:37:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:13:23 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	set_all_members_to_NULL(t_command *tab, int size)
 		tab[i].cmd = NULL;
 		tab[i].redirection.array = NULL;
 		tab[i].redirection.size = 0;
+		tab[i].error.str_perror = NULL; 
+		tab[i].error.code = OK;
 		i++;
 	}
 }

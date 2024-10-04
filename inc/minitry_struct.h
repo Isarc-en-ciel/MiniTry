@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/27 18:23:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/02 12:11:09 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,7 @@
 # define MINITRY_STRUCT_H
 
 #include "minitry_lib.h"
-
-/**
- * An enum to identify the different type of redirection that can affect a command
- *
- * REDIR_IN :	<
- * REDIR_OUT:	>	
- * REDIR_HEREDOC : <<
- * REDIR_APPEND :	>>
- */
-enum e_tokens {
-    PIPE,
-    QUOTE,
-    D_QUOTE,
-    WORD,
-    REDIR_IN,
-    REDIR_OUT,
-    REDIR_APP,
-    REDIR_HEREDOC
-};
+#include "minitry_enum.h"
 
 typedef struct s_lexer
 {
@@ -77,12 +59,20 @@ typedef struct	s_redir_array
  * command->cmd	: an array of strings, as char **argv. Contains in cmd[0] the command name and the others indexes contains its potential options
  * command->redirection	: an array that kept in the order in which they appear in input, from left to righ,	all redirections that can affects a cmd	
  */
+
+typedef struct	error
+{
+	char 			*str_perror;
+	enum e_error	code;
+}	t_error;
+
 typedef struct s_command
 {
 	char			**cmd;
 	t_redir_array	redirection;
 	int				fd_in;
 	int				fd_out;
+	t_error			error;
 }	t_command;
 
 /**
@@ -94,12 +84,12 @@ typedef struct s_command
  *	shell.error	an int to indicate if an error occurs, 
  *		idk if we will keep it (just use in init_shell() in src/parsing/minitry.c
  */
+
 typedef struct s_shell
 {
 	char		**env;
 	t_command	*tab;
 	int			tab_size;
-	int			error;
 	int			exit_status;
 }	t_shell;
 

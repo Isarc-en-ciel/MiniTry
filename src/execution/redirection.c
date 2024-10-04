@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:44:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/01 15:57:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:33:03 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
 	}
 }
 
-int	open_file(t_shell *shell, int prev_fd, t_redirect redir, int flags)
+int	open_file(t_command *cmd, int prev_fd, t_redirect redir, int flags)
 {
 	int	fd;
 
@@ -38,7 +38,7 @@ int	open_file(t_shell *shell, int prev_fd, t_redirect redir, int flags)
 	else
 		fd = open(redir.filename, flags);
 	if (fd < 0)
-		exit_error(shell, redir.filename);
+		cmd->error = set_error(redir.filename, OPEN_FILE);
 	return (fd);
 }
 
@@ -77,9 +77,12 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 			//do heredoc
 		}
 		else if (cmd->redirection.array[i].type == REDIR_IN)
-			cmd->fd_in = open_file(shell, cmd->fd_in, cmd->redirection.array[i], flags);
+			cmd->fd_in = open_file(cmd, cmd->fd_in, cmd->redirection.array[i], flags);
 		else
-			cmd->fd_out = open_file(shell, cmd->fd_out, cmd->redirection.array[i], flags);
+			cmd->fd_out = open_file(cmd, cmd->fd_out, cmd->redirection.array[i], flags);
+		//check if error has occured
+		if (cmd->error.code == OPEN_FILE)
+			return ;
 		i++;
 	}
 	redirect_io(shell, cmd->fd_in, cmd->fd_out);
