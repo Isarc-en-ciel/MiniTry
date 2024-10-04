@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 20:34:12 by csteylae          #+#    #+#             */
+/*   Updated: 2024/10/04 21:13:32 by csteylae         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:44:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 14:07:10 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:33:27 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +72,48 @@ static int	get_flags(int redir_type)
 	return (flags);
 }
 
+void	exec_heredoc(t_shell *shell, t_command *cmd, t_redirect redir)
+{
+	int	pipe_heredoc[2];
+	int	pid;
+	char *line;
+
+	line = NULL;
+	ft_printf("hd del : %s\n", redir.hd_delimiter);
+	if (pipe(pipe_heredoc) < 0)
+	{
+		cmd->error = set_error(redir.filename, OPEN_FILE);
+		return ;
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		close(pipe_heredoc[READ_FROM]);
+		if (dup2(pipe_heredoc[WRITE_TO], STDOUT_FILENO) < 0)
+		{
+			close(pipe_heredoc[WRITE_TO]);
+			exit_error(shell, "pipe");
+		}
+		while (1)
+		{
+			line = get_next_line(STDIN_FILENO);
+			if (ft_strncmp(redir.hd_delimiter, line, ft_strlen(redir.hd_delimiter)) == 0
+                && line[ft_strlen(redir.hd_delimiter)] == '\n')
+				break;
+			write(pipe_heredoc[WRITE_TO], line, ft_strlen(line));
+			free(line);
+			line = NULL;
+		}
+		close(pipe_heredoc[WRITE_TO]);
+		free(line);
+		line = NULL;
+		exit(EXIT_SUCCESS);
+	}
+	close(pipe_heredoc[WRITE_TO]);
+	waitpid(pid, NULL, 0);
+	cmd->fd_in = pipe_heredoc[READ_FROM];
+}
+
 void	perform_redirection(t_shell *shell, t_command *cmd)
 {
 	int	i;
@@ -74,7 +128,7 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 		flags = get_flags(cmd->redirection.array[i].type);
 		if (cmd->redirection.array[i].type == REDIR_HEREDOC)
 		{
-			//do heredoc
+			exec_heredoc(shell, cmd, cmd->redirection.array[i]);
 		}
 		else if (cmd->redirection.array[i].type == REDIR_IN)
 			cmd->fd_in = open_file(cmd, cmd->fd_in, cmd->redirection.array[i], flags);

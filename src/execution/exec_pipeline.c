@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 12:33:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:20:31 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,22 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int *prev_f
 
 	if (i == first_cmd)
 	{
-		close(pipe_fd[READ_FROM]);
+		if (pipe_fd[READ_FROM] >= 0)
+			close(pipe_fd[READ_FROM]);
 		if (shell->tab[i].fd_out == STDOUT_FILENO)
 			out = pipe_fd[WRITE_TO];
 	}
 	else if (i == last_cmd)
 	{
-		close(pipe_fd[WRITE_TO]);
-		if (shell->tab[i].fd_in == STDIN_FILENO)
+		if (pipe_fd[WRITE_TO] >= 0)
+			close(pipe_fd[WRITE_TO]);
+		if (shell->tab[i].fd_in == STDIN_FILENO && *prev_fd >= 0)
 			in = *prev_fd;
 	}
 	else
 	{
-		close(pipe_fd[READ_FROM]);
+		if (pipe_fd[READ_FROM] >= 0)
+			close(pipe_fd[READ_FROM]);
 		if (shell->tab[i].fd_in == STDIN_FILENO)
 			in = *prev_fd;
 		if (shell->tab[i].fd_out == STDOUT_FILENO)
