@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 19:53:28 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/07 19:04:13 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ void	exec_simple_cmd(t_shell *shell)
 	pid = fork();
 	if (pid < 0)
 		exit_error(shell, "fork");
+	perform_redirection(shell, &shell->tab[0]);
+	if (shell->tab[0].error.code == OPEN_FILE)
+		exit_error(shell, shell->tab[0].error.str_perror);
 	if (pid == 0)
 	{
-		perform_redirection(shell, &shell->tab[0]);
-		if (shell->tab[0].error.code == OPEN_FILE)
-			exit_error(shell, shell->tab[0].error.str_perror);
+		redirect_io(shell, shell->tab[0].fd_in, shell->tab[0].fd_out);
 		exec_command(shell, 0);
 	}
 	wait(&shell->exit_status);

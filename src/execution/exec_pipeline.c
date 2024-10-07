@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 15:20:31 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/07 19:04:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,29 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int *prev_f
 
 	if (i == first_cmd)
 	{
-		if (pipe_fd[READ_FROM] >= 0)
+		if (pipe_fd[READ_FROM] > 2)
 			close(pipe_fd[READ_FROM]);
 		if (shell->tab[i].fd_out == STDOUT_FILENO)
 			out = pipe_fd[WRITE_TO];
 	}
 	else if (i == last_cmd)
 	{
-		if (pipe_fd[WRITE_TO] >= 0)
+		if (pipe_fd[WRITE_TO] > 2)
 			close(pipe_fd[WRITE_TO]);
 		if (shell->tab[i].fd_in == STDIN_FILENO && *prev_fd >= 0)
 			in = *prev_fd;
 	}
 	else
 	{
-		if (pipe_fd[READ_FROM] >= 0)
+		if (pipe_fd[READ_FROM] > 2)
 			close(pipe_fd[READ_FROM]);
 		if (shell->tab[i].fd_in == STDIN_FILENO)
 			in = *prev_fd;
 		if (shell->tab[i].fd_out == STDOUT_FILENO)
 			out = pipe_fd[WRITE_TO];
 	}
+	shell->tab[i].fd_in = in;
+	shell->tab[i].fd_out = out;
 	redirect_io(shell, in, out);
 }
 
@@ -98,19 +100,19 @@ void	exec_pipeline(t_shell *shell)
 	{
 		if (pipe(pipe_fd) < 0)
 			exit_error(shell, "pipe");
+		perform_redirection(shell, &shell->tab[i]);
+		if (shell->tab[i].error.code == OPEN_FILE)
+			error_pipeline(shell, i, pipe_fd, prev_fd);
 		child_pid[i] = fork();
 		if (child_pid[i] < 0)
 			exit_error(shell, "fork");
 		else if (child_pid[i] == 0)
 		{
-			perform_redirection(shell, &shell->tab[i]);
-			if (shell->tab[i].error.code == OPEN_FILE)
-				error_pipeline(shell, i, pipe_fd, prev_fd);
 			redirect_pipeline(shell, i, pipe_fd, &prev_fd);
 			exec_command(shell, i);
 		}
 		close(pipe_fd[WRITE_TO]);
-		if (i != 0)
+		if (i != 0 && prev_fd > 2)
 			close(prev_fd);
 		prev_fd = pipe_fd[READ_FROM];
 		i++;

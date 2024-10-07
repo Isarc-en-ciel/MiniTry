@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 20:34:12 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 21:13:32 by csteylae         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:44:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 20:33:27 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/07 19:04:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +49,7 @@ static int	get_flags(int redir_type)
 	flags = 0;
 	if (redir_type == REDIR_HEREDOC)
 	{
-		//flags = heredoc flags ou jsp quoi omg :(((((((((((
+//		flags = O_RDONLY;
 	}
 	else if (redir_type == REDIR_IN)
 		flags = O_RDONLY;
@@ -72,30 +60,38 @@ static int	get_flags(int redir_type)
 	return (flags);
 }
 
-void	exec_heredoc(t_shell *shell, t_command *cmd, t_redirect redir)
+int	exec_heredoc(t_shell *shell, t_command *cmd, t_redirect redir)
 {
 	int	pipe_heredoc[2];
 	int	pid;
 	char *line;
 
 	line = NULL;
-	ft_printf("hd del : %s\n", redir.hd_delimiter);
+	if (cmd->fd_in > 2)
+		close(cmd->fd_in);
 	if (pipe(pipe_heredoc) < 0)
 	{
 		cmd->error = set_error(redir.filename, OPEN_FILE);
-		return ;
+		return (-1);
 	}
 	pid = fork();
-	if (pid == 0)
+	if (pid < 0)
+	{
+		close(pipe_heredoc[READ_FROM]);
+		close(pipe_heredoc[WRITE_TO]);
+		exit_error(shell, "fork");
+	}
+	else if (pid == 0)
 	{
 		close(pipe_heredoc[READ_FROM]);
 		if (dup2(pipe_heredoc[WRITE_TO], STDOUT_FILENO) < 0)
 		{
 			close(pipe_heredoc[WRITE_TO]);
-			exit_error(shell, "pipe");
+			exit_error(shell, "dup2");
 		}
 		while (1)
 		{
+			write(STDIN_FILENO, "> ", 2);
 			line = get_next_line(STDIN_FILENO);
 			if (ft_strncmp(redir.hd_delimiter, line, ft_strlen(redir.hd_delimiter)) == 0
                 && line[ft_strlen(redir.hd_delimiter)] == '\n')
@@ -109,9 +105,11 @@ void	exec_heredoc(t_shell *shell, t_command *cmd, t_redirect redir)
 		line = NULL;
 		exit(EXIT_SUCCESS);
 	}
+	//how to know if an error occured in the child 
+	//and how to report these error in the level of exec_prompt/exec_pipeline ?
 	close(pipe_heredoc[WRITE_TO]);
 	waitpid(pid, NULL, 0);
-	cmd->fd_in = pipe_heredoc[READ_FROM];
+	return (pipe_heredoc[READ_FROM]);
 }
 
 void	perform_redirection(t_shell *shell, t_command *cmd)
@@ -128,16 +126,15 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 		flags = get_flags(cmd->redirection.array[i].type);
 		if (cmd->redirection.array[i].type == REDIR_HEREDOC)
 		{
-			exec_heredoc(shell, cmd, cmd->redirection.array[i]);
+			cmd->fd_in = exec_heredoc(shell, cmd, cmd->redirection.array[i]);
 		}
 		else if (cmd->redirection.array[i].type == REDIR_IN)
 			cmd->fd_in = open_file(cmd, cmd->fd_in, cmd->redirection.array[i], flags);
 		else
 			cmd->fd_out = open_file(cmd, cmd->fd_out, cmd->redirection.array[i], flags);
-		//check if error has occured
 		if (cmd->error.code == OPEN_FILE)
 			return ;
 		i++;
 	}
-	redirect_io(shell, cmd->fd_in, cmd->fd_out);
+//	redirect_io(shell, cmd->fd_in, cmd->fd_out);
 }

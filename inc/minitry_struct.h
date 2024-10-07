@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/02 12:11:09 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:08:58 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 
 typedef struct s_lexer
 {
-    char    *word;
-    int     is_there_a_space;
+    char			*word;
+    int				is_there_a_space;
 	enum e_tokens	type;
 }   t_lexer;
 
 /**
  * A structure containing all the potential necessary informations about a redirction
  *
- * int fd (optionnal):				The file descriptor that can be associated to a redirection (such as "fd< filename")
- * char *filename :					The name of the file that redirects the input or output stream to read from or write to.
+ * int fd (optionnal):	The file descriptor that can be associated to a redirection (such as "fd< filename")
+ * char *filename :	The name of the file that redirects the input or output stream to read from or write to.
  * heredoc_delimiter (optionnal) :	Only for the case of REDIR_HEREDOC (noted "<< name_of_delimiter"). In all other case of redirection it will be set to NULL.
- * e_tokens type 					The type of the redirection (<, >, <<, >>)
+ * e_tokens typ	: The type of the redirection (<, >, <<, >>)
  *
  *  This struct and all its members are optional 
  */
