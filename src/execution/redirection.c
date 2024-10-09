@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:44:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/07 19:04:21 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:50:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ static int	get_flags(int redir_type)
 
 	flags = 0;
 	if (redir_type == REDIR_HEREDOC)
-	{
-//		flags = O_RDONLY;
-	}
+		flags = O_RDONLY;
 	else if (redir_type == REDIR_IN)
 		flags = O_RDONLY;
 	else if (redir_type == REDIR_OUT)
@@ -60,56 +58,41 @@ static int	get_flags(int redir_type)
 	return (flags);
 }
 
-int	exec_heredoc(t_shell *shell, t_command *cmd, t_redirect redir)
+static void	create_heredoc(t_command *cmd, t_redirect *redir)
 {
-	int	pipe_heredoc[2];
-	int	pid;
-	char *line;
+	char	*line;
+	int		heredoc;
+	int		pid;
 
 	line = NULL;
-	if (cmd->fd_in > 2)
-		close(cmd->fd_in);
-	if (pipe(pipe_heredoc) < 0)
-	{
-		cmd->error = set_error(redir.filename, OPEN_FILE);
-		return (-1);
-	}
+	if (access("/Users/csteylae/goinfre/minishell_heredoc", F_OK) == 0)
+		unlink("/Users/csteylae/goinfre/minishell_heredoc");
+	heredoc = open("/Users/csteylae/goinfre/minishell_heredoc", O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (heredoc == -1)
+		cmd->error = set_error("heredoc", OPEN_FILE);
 	pid = fork();
 	if (pid < 0)
-	{
-		close(pipe_heredoc[READ_FROM]);
-		close(pipe_heredoc[WRITE_TO]);
-		exit_error(shell, "fork");
-	}
+		return ;
+		//manage error and return it to the level of the exec_pipeline
 	else if (pid == 0)
 	{
-		close(pipe_heredoc[READ_FROM]);
-		if (dup2(pipe_heredoc[WRITE_TO], STDOUT_FILENO) < 0)
-		{
-			close(pipe_heredoc[WRITE_TO]);
-			exit_error(shell, "dup2");
-		}
 		while (1)
 		{
-			write(STDIN_FILENO, "> ", 2);
+			write(STDOUT_FILENO, "> ", 2);
 			line = get_next_line(STDIN_FILENO);
-			if (ft_strncmp(redir.hd_delimiter, line, ft_strlen(redir.hd_delimiter)) == 0
-                && line[ft_strlen(redir.hd_delimiter)] == '\n')
-				break;
-			write(pipe_heredoc[WRITE_TO], line, ft_strlen(line));
+			if (ft_strncmp(redir->hd_delimiter, line, ft_strlen(redir->hd_delimiter)) == 0
+   	            && line[ft_strlen(redir->hd_delimiter)] == '\n')
+					break;
+			write(heredoc, line, ft_strlen(line));
 			free(line);
 			line = NULL;
 		}
-		close(pipe_heredoc[WRITE_TO]);
-		free(line);
-		line = NULL;
-		exit(EXIT_SUCCESS);
+	free(line);
+	close(heredoc);
 	}
-	//how to know if an error occured in the child 
-	//and how to report these error in the level of exec_prompt/exec_pipeline ?
-	close(pipe_heredoc[WRITE_TO]);
 	waitpid(pid, NULL, 0);
-	return (pipe_heredoc[READ_FROM]);
+	free(redir->filename);
+	redir->filename = ft_strdup("/Users/csteylae/goinfre/minishell_heredoc");
 }
 
 void	perform_redirection(t_shell *shell, t_command *cmd)
@@ -119,6 +102,7 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 
 	i = 0;
 	flags = 0;
+	(void)shell;
 	if (!cmd->redirection.size)
 		return ;
 	while (i != cmd->redirection.size)
@@ -126,7 +110,8 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 		flags = get_flags(cmd->redirection.array[i].type);
 		if (cmd->redirection.array[i].type == REDIR_HEREDOC)
 		{
-			cmd->fd_in = exec_heredoc(shell, cmd, cmd->redirection.array[i]);
+			create_heredoc(cmd, &cmd->redirection.array[i]);
+			cmd->fd_in = open_file(cmd, cmd->fd_in, cmd->redirection.array[i], flags);
 		}
 		else if (cmd->redirection.array[i].type == REDIR_IN)
 			cmd->fd_in = open_file(cmd, cmd->fd_in, cmd->redirection.array[i], flags);

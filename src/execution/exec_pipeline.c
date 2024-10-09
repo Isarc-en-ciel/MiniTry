@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/07 19:04:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:23:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void	error_pipeline(t_shell *shell, int i,  int pipe_fd[2], int prev_fd)
 
 void	exec_pipeline(t_shell *shell)
 {
-	int	i;
-	int	pipe_fd[2];
-	pid_t *child_pid;
-	int	prev_fd;
+	int		i;
+	int		pipe_fd[2];
+	pid_t	*child_pid;
+	int		prev_fd;
 
 	i = 0;
 	child_pid = malloc(sizeof(*child_pid) * shell->tab_size);
@@ -98,16 +98,19 @@ void	exec_pipeline(t_shell *shell)
 	prev_fd = -1;
 	while (i != shell->tab_size) 
 	{
-		if (pipe(pipe_fd) < 0)
-			exit_error(shell, "pipe");
 		perform_redirection(shell, &shell->tab[i]);
 		if (shell->tab[i].error.code == OPEN_FILE)
 			error_pipeline(shell, i, pipe_fd, prev_fd);
+		if (pipe(pipe_fd) < 0)
+			exit_error(shell, "pipe");
 		child_pid[i] = fork();
 		if (child_pid[i] < 0)
 			exit_error(shell, "fork");
 		else if (child_pid[i] == 0)
 		{
+//			perform_redirection(shell, &shell->tab[i]);
+//			if (shell->tab[i].error.code == OPEN_FILE)
+//				error_pipeline(shell, i, pipe_fd, prev_fd);
 			redirect_pipeline(shell, i, pipe_fd, &prev_fd);
 			exec_command(shell, i);
 		}
@@ -120,4 +123,5 @@ void	exec_pipeline(t_shell *shell)
 	wait_children(shell, child_pid, i);
 	if (prev_fd > 2)
 		close(prev_fd);
+	delete_heredoc_file(&shell->tab[i]);
 }
