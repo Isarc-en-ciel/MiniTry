@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/30 18:43:01 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:03:49 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	parsing_starter(t_darray *tokens)
 {
 	int	i;
+	t_stock	*tab;
 
 	i = count_pipes(tokens);
 	if (i == -1)
@@ -22,7 +23,10 @@ int	parsing_starter(t_darray *tokens)
 		printf("pipe error\n");
 		return (1);
 	}
-	printf("nbr of pipes: %d\n", i);
+	tab = malloc(sizeof(t_stock) * i);
+	if (!tab)
+		return (1);
+	tab = into_cmds(i, tokens);
 	return (0);
 }
 
@@ -33,7 +37,7 @@ int	count_pipes(t_darray *tokens)
 
 	i = 0;
 	j = 0;
-	while (j < tokens->actual_size)
+	while (j < tokens->actual_size - 1)
 	{
 		if (tokens->content[0].type == PIPE)
 			return (-1);
@@ -45,7 +49,12 @@ int	count_pipes(t_darray *tokens)
 		}
 		j++;
 	}
-	//if (tokens->content[j].type == PIPE)
-//		return (-1); comment faire pour detecter dernier element est un pipe ?
+	if (tokens->content[j].type && tokens->content[j].type == PIPE)
+		return (-1);
 	return (i);
+}
+
+t_stock	*into_cmds(int i, t_darray *tokens)
+{
+	
 }

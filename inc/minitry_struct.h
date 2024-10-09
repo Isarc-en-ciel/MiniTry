@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/27 18:23:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/08 13:20:09 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
  * REDIR_APPEND :	>>
  */
 enum e_tokens {
-    PIPE,
+    PIPE = 1,
     QUOTE,
     D_QUOTE,
     WORD,
@@ -41,6 +41,12 @@ typedef struct s_lexer
     int     is_there_a_space;
 	enum e_tokens	type;
 }   t_lexer;
+
+typedef	struct	s_stock
+{
+	int	nbr_elem;
+	t_lexer	cmd;
+}	t_stock;
 
 /**
  * A structure containing all the potential necessary informations about a redirction
@@ -81,8 +87,8 @@ typedef struct s_command
 {
 	char			**cmd;
 	t_redir_array	redirection;
-	int				fd_in;
-	int				fd_out;
+	int				fd_in; //exec
+	int				fd_out; //exec
 }	t_command;
 
 /**

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:33:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/30 15:25:32 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/02 15:29:53 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	read_the_input(char **envp)
 {
 	char		*input;
-	t_shell		*shell;
+	t_shell		shell;
 	t_darray	*tokens;
 
 	shell = init_shell();
-	shell->env = init_env(envp);
+	shell.env = init_env(envp);
 	tokens = NULL;
 	while (1)
 	{
