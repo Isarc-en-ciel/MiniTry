@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/30 15:27:12 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/10 15:42:38 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	free_cmd(t_command *cmd);
 void	free_tab_cmd(int size, t_command *tab);
 void	free_shell(t_shell *shell);
 
+//file set_error.c
+t_error	set_error(char *str, enum e_error code);
+
 //file exit_error.c
 void	exit_error(t_shell *shell, char *error);
 
@@ -75,5 +78,6 @@ void	ft_print_redir_type(enum e_tokens token);
 
 int	parsing_starter(t_darray *tokens);
 int	count_pipes(t_darray *tokens);
+t_stock	*into_cmds(int i, t_darray *tokens);
 
 #endif
