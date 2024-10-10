@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:52:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/26 15:55:58 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:44:26 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	free_cmd(t_command *cmd)
 		free_tab_char(cmd->cmd);
 	if (cmd->redirection.array)
 		free_redir_array(cmd->redirection);
-	if (cmd->fd_in != STDIN_FILENO)
+	if (cmd->fd_in > 2)
 		close(cmd->fd_in);
-	if (cmd->fd_out != STDOUT_FILENO)
+	if (cmd->fd_out > 2)
 		close(cmd->fd_out);
 	cmd = NULL;
 }

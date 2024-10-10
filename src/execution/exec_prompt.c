@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 13:58:37 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:44:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,6 @@ void	exec_heredoc(t_shell *shell, t_redirect *heredoc)
 	(void) shell;
 	(void)heredoc;
 	return;
-}
-
-void	open_file(t_shell *shell, int index)
-{
-	int	i;
-	char *in;
-
-	i = 0;
-	in = shell->tab[index].in[i].filename;
-}
-		
-void	perform_redirections(t_shell *shell, int index)
-{
-	t_redirect	*heredoc;
-	
-	heredoc = shell->tab[index].heredoc;
-	if (heredoc)
-		exec_heredoc(shell, heredoc);
-	open_file(shell, index);
 }
 */
 bool	exec_builtin(t_shell *shell)
@@ -50,10 +31,31 @@ bool	exec_builtin(t_shell *shell)
 	return (true);
 }
 
+void	delete_heredoc_file(t_command *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (cmd->redirection.size == 0)
+		return ;
+	while (i != cmd->redirection.size)
+	{
+		if (cmd->redirection.array[i].type == REDIR_HEREDOC)
+		{
+			if (access(cmd->redirection.array[i].filename, F_OK) == 0)
+				unlink(cmd->redirection.array[i].filename);
+		}
+		i++;
+	}
+}
+
 void	exec_simple_cmd(t_shell *shell)
 {
 	pid_t	pid;
 
+	perform_redirection(shell, &shell->tab[0]);
+	if (shell->tab[0].error.code == OPEN_FILE)
+		exit_error(shell, shell->tab[0].error.str_perror);
 	if (exec_builtin(shell))
 	{
 		//exec_builtins
@@ -62,18 +64,20 @@ void	exec_simple_cmd(t_shell *shell)
 	pid = fork();
 	if (pid < 0)
 		exit_error(shell, "fork");
-	if (pid == 0)
+	else if (pid == 0)
 	{
-		perform_redirection(shell, &shell->tab[0]);
-		if (shell->tab[0].error.code == OPEN_FILE)
-			exit_error(shell, shell->tab[0].error.str_perror);
+//		perform_redirection(shell, &shell->tab[0]);
+//		if (shell->tab[0].error.code == OPEN_FILE)
+//			exit_error(shell, shell->tab[0].error.str_perror);
+		redirect_io(shell, shell->tab[0].fd_in, shell->tab[0].fd_out);
 		exec_command(shell, 0);
 	}
 	wait(&shell->exit_status);
-	if (WIFEXITED(shell->exit_status))
-		shell->exit_status = WEXITSTATUS(shell->exit_status);
-	else if (WIFSIGNALED(shell->exit_status))
-		shell->exit_status = WTERMSIG(shell->exit_status);
+//	if (WIFEXITED(shell->exit_status))
+//		shell->exit_status = WEXITSTATUS(shell->exit_status);
+//	else if (WIFSIGNALED(shell->exit_status))
+//		shell->exit_status = WTERMSIG(shell->exit_status);
+//	delete_heredoc_file(shell->tab);
 }
 
 int	exec_prompt(t_shell *shell)

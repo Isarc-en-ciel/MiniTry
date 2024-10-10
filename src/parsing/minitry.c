@@ -41,6 +41,7 @@ int	read_the_input(char **envp)
 		shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
 		exec_prompt(&shell);
 		free(input);
+		input = NULL;
 	}
 	return (0);
 }

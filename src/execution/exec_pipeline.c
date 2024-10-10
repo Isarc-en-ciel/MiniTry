@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 12:33:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:44:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,29 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int *prev_f
 
 	if (i == first_cmd)
 	{
-		close(pipe_fd[READ_FROM]);
+		if (pipe_fd[READ_FROM] > 2)
+			close(pipe_fd[READ_FROM]);
 		if (shell->tab[i].fd_out == STDOUT_FILENO)
 			out = pipe_fd[WRITE_TO];
 	}
 	else if (i == last_cmd)
 	{
-		close(pipe_fd[WRITE_TO]);
-		if (shell->tab[i].fd_in == STDIN_FILENO)
+		if (pipe_fd[WRITE_TO] > 2)
+			close(pipe_fd[WRITE_TO]);
+		if (shell->tab[i].fd_in == STDIN_FILENO && *prev_fd >= 0)
 			in = *prev_fd;
 	}
 	else
 	{
-		close(pipe_fd[READ_FROM]);
+		if (pipe_fd[READ_FROM] > 2)
+			close(pipe_fd[READ_FROM]);
 		if (shell->tab[i].fd_in == STDIN_FILENO)
 			in = *prev_fd;
 		if (shell->tab[i].fd_out == STDOUT_FILENO)
 			out = pipe_fd[WRITE_TO];
 	}
+	shell->tab[i].fd_in = in;
+	shell->tab[i].fd_out = out;
 	redirect_io(shell, in, out);
 }
 
@@ -81,10 +86,10 @@ void	error_pipeline(t_shell *shell, int i,  int pipe_fd[2], int prev_fd)
 
 void	exec_pipeline(t_shell *shell)
 {
-	int	i;
-	int	pipe_fd[2];
-	pid_t *child_pid;
-	int	prev_fd;
+	int		i;
+	int		pipe_fd[2];
+	pid_t	*child_pid;
+	int		prev_fd;
 
 	i = 0;
 	child_pid = malloc(sizeof(*child_pid) * shell->tab_size);
@@ -93,6 +98,9 @@ void	exec_pipeline(t_shell *shell)
 	prev_fd = -1;
 	while (i != shell->tab_size) 
 	{
+		perform_redirection(shell, &shell->tab[i]);
+		if (shell->tab[i].error.code == OPEN_FILE)
+			error_pipeline(shell, i, pipe_fd, prev_fd);
 		if (pipe(pipe_fd) < 0)
 			exit_error(shell, "pipe");
 		child_pid[i] = fork();
@@ -100,14 +108,14 @@ void	exec_pipeline(t_shell *shell)
 			exit_error(shell, "fork");
 		else if (child_pid[i] == 0)
 		{
-			perform_redirection(shell, &shell->tab[i]);
-			if (shell->tab[i].error.code == OPEN_FILE)
-				error_pipeline(shell, i, pipe_fd, prev_fd);
+//			perform_redirection(shell, &shell->tab[i]);
+//			if (shell->tab[i].error.code == OPEN_FILE)
+//				error_pipeline(shell, i, pipe_fd, prev_fd);
 			redirect_pipeline(shell, i, pipe_fd, &prev_fd);
 			exec_command(shell, i);
 		}
 		close(pipe_fd[WRITE_TO]);
-		if (i != 0)
+		if (i != 0 && prev_fd > 2)
 			close(prev_fd);
 		prev_fd = pipe_fd[READ_FROM];
 		i++;
@@ -115,4 +123,5 @@ void	exec_pipeline(t_shell *shell)
 	wait_children(shell, child_pid, i);
 	if (prev_fd > 2)
 		close(prev_fd);
+	delete_heredoc_file(&shell->tab[i]);
 }
