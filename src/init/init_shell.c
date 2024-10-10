@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/26 15:25:34 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:53:20 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ t_shell	init_shell(void)
 	shell.tab = NULL;
 	shell.env = NULL;
 	shell.tab_size = 0;
+	shell.exit_status = 0;
 	return (shell);
 }

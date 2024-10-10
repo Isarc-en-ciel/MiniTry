@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/10 15:44:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:42:20 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	exec_simple_cmd(t_shell *shell)
 
 	perform_redirection(shell, &shell->tab[0]);
 	if (shell->tab[0].error.code == OPEN_FILE)
-		exit_error(shell, shell->tab[0].error.str_perror);
+		return ;
 	if (exec_builtin(shell))
 	{
 		//exec_builtins
@@ -66,17 +66,14 @@ void	exec_simple_cmd(t_shell *shell)
 		exit_error(shell, "fork");
 	else if (pid == 0)
 	{
-//		perform_redirection(shell, &shell->tab[0]);
-//		if (shell->tab[0].error.code == OPEN_FILE)
-//			exit_error(shell, shell->tab[0].error.str_perror);
 		redirect_io(shell, shell->tab[0].fd_in, shell->tab[0].fd_out);
 		exec_command(shell, 0);
 	}
 	wait(&shell->exit_status);
-//	if (WIFEXITED(shell->exit_status))
-//		shell->exit_status = WEXITSTATUS(shell->exit_status);
-//	else if (WIFSIGNALED(shell->exit_status))
-//		shell->exit_status = WTERMSIG(shell->exit_status);
+	if (WIFEXITED(shell->exit_status))
+		shell->exit_status = WEXITSTATUS(shell->exit_status);
+	else if (WIFSIGNALED(shell->exit_status))
+		shell->exit_status = WTERMSIG(shell->exit_status);
 //	delete_heredoc_file(shell->tab);
 }
 

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:44:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/10 15:44:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:56:16 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,25 @@ int	open_file(t_command *cmd, int prev_fd, t_redirect redir, int flags)
 	int	fd;
 
 	fd = 0;
+	if (access(redir.filename, F_OK) != 0 && redir.type == REDIR_IN)
+	{
+		ft_putstr_fd(redir.filename, 1);
+		ft_putstr_fd(" : No such file or directory\n", 1);
+		cmd->error = set_error(redir.filename, OPEN_FILE);
+	}
+	else if (access(redir.filename, R_OK) != 0 && redir.type == REDIR_IN)
+	{
+		ft_putstr_fd(redir.filename, 1);
+		ft_putstr_fd(" : Permission denied\n", 1);
+		cmd->error = set_error(redir.filename, OPEN_FILE);
+	}
+	else if (access(redir.filename, W_OK) != 0 &&
+		   	(redir.type == REDIR_OUT || redir.type == REDIR_APP))
+	{
+		ft_putstr_fd(redir.filename, 1);
+		ft_putstr_fd(" : Permission denied\n", 1);
+		cmd->error = set_error(redir.filename, OPEN_FILE);
+	}
 	if (prev_fd > 2)
 		close(prev_fd);
 	if (flags & O_CREAT)
@@ -121,5 +140,4 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 			return ;
 		i++;
 	}
-//	redirect_io(shell, cmd->fd_in, cmd->fd_out);
 }

@@ -6,12 +6,16 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/10 15:44:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/10 20:56:15 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
+/*The output of each command in the pipeline is connected via a pipe to the input of the next command. 
+That is, each command reads the previous command’s output. 
+This connection is performed before any redirections specified by command1. 
+*/
 static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int *prev_fd)
 {
 	int	first_cmd;
@@ -26,8 +30,7 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int *prev_f
 
 	if (i == first_cmd)
 	{
-		if (pipe_fd[READ_FROM] > 2)
-			close(pipe_fd[READ_FROM]);
+		close(pipe_fd[READ_FROM]);
 		if (shell->tab[i].fd_out == STDOUT_FILENO)
 			out = pipe_fd[WRITE_TO];
 	}
@@ -72,7 +75,7 @@ static void wait_children(t_shell *shell, pid_t *child_pid, int child_nb)
 	child_pid = NULL;
 }
 
-void	error_pipeline(t_shell *shell, int i,  int pipe_fd[2], int prev_fd)
+void	error_pipeline(int pipe_fd[2], int prev_fd)
 {
 	//should free also child_pid 
 	if (prev_fd > 2)
@@ -81,9 +84,12 @@ void	error_pipeline(t_shell *shell, int i,  int pipe_fd[2], int prev_fd)
 		close(pipe_fd[READ_FROM]);
 	if (pipe_fd[WRITE_TO] > 2)
 		close(pipe_fd[WRITE_TO]);
-	exit_error(shell, shell->tab[i].error.str_perror);
 }
 
+/*The output of each command in the pipeline is connected via a pipe to the input of the next command. 
+That is, each command reads the previous command’s output. 
+This connection is performed before any redirections specified by command1. 
+*/
 void	exec_pipeline(t_shell *shell)
 {
 	int		i;
@@ -98,19 +104,14 @@ void	exec_pipeline(t_shell *shell)
 	prev_fd = -1;
 	while (i != shell->tab_size) 
 	{
-		perform_redirection(shell, &shell->tab[i]);
-		if (shell->tab[i].error.code == OPEN_FILE)
-			error_pipeline(shell, i, pipe_fd, prev_fd);
 		if (pipe(pipe_fd) < 0)
 			exit_error(shell, "pipe");
+		perform_redirection(shell, &shell->tab[i]);
 		child_pid[i] = fork();
 		if (child_pid[i] < 0)
 			exit_error(shell, "fork");
 		else if (child_pid[i] == 0)
 		{
-//			perform_redirection(shell, &shell->tab[i]);
-//			if (shell->tab[i].error.code == OPEN_FILE)
-//				error_pipeline(shell, i, pipe_fd, prev_fd);
 			redirect_pipeline(shell, i, pipe_fd, &prev_fd);
 			exec_command(shell, i);
 		}
@@ -121,7 +122,9 @@ void	exec_pipeline(t_shell *shell)
 		i++;
 	}
 	wait_children(shell, child_pid, i);
+	if (shell->tab[i].error.code == OPEN_FILE)
+		return (error_pipeline(pipe_fd, prev_fd));
 	if (prev_fd > 2)
 		close(prev_fd);
-	delete_heredoc_file(&shell->tab[i]);
+//	delete_heredoc_file(&shell->tab[i]);
 }
