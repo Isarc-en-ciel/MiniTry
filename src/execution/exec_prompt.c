@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/09 18:50:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:44:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	exec_simple_cmd(t_shell *shell)
 	pid_t	pid;
 
 	perform_redirection(shell, &shell->tab[0]);
-	ft_printf("fd_in : %d, fd_out : %d\n", shell->tab[0].fd_in,shell->tab[0].fd_out); 
 	if (shell->tab[0].error.code == OPEN_FILE)
 		exit_error(shell, shell->tab[0].error.str_perror);
 	if (exec_builtin(shell))
@@ -73,7 +72,6 @@ void	exec_simple_cmd(t_shell *shell)
 		redirect_io(shell, shell->tab[0].fd_in, shell->tab[0].fd_out);
 		exec_command(shell, 0);
 	}
-	ft_printf("ok\n");
 	wait(&shell->exit_status);
 //	if (WIFEXITED(shell->exit_status))
 //		shell->exit_status = WEXITSTATUS(shell->exit_status);
