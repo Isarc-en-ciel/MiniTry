@@ -14,26 +14,8 @@
 
 # define MINITRY_STRUCT_H
 
-#include "minitry_lib.h"
-
-/**
- * An enum to identify the different type of redirection that can affect a command
- *
- * REDIR_IN :	<
- * REDIR_OUT:	>	
- * REDIR_HEREDOC : <<
- * REDIR_APPEND :	>>
- */
-enum e_tokens {
-    PIPE = 1,
-    QUOTE,
-    D_QUOTE,
-    WORD,
-    REDIR_IN,
-    REDIR_OUT,
-    REDIR_APP,
-    REDIR_HEREDOC
-};
+#include "minitry.h"
+#include "minitry_enum.h"
 
 typedef struct s_lexer
 {
@@ -76,6 +58,11 @@ typedef struct	s_redir_array
 	int			size;
 }	t_redir_array;
 
+typedef struct	error
+{
+	char 			*str_perror;
+	enum e_error	code;
+}	t_error;
 /**
  * A structure containing the commands that will be passed to the execution
  * in form of an array of t_command
@@ -89,6 +76,7 @@ typedef struct s_command
 	t_redir_array	redirection;
 	int				fd_in; //exec
 	int				fd_out; //exec
+	t_error			error;
 }	t_command;
 
 /**
