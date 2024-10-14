@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:02:51 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/10 15:41:31 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:57:31 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,14 @@ enum e_builtin {
 
 enum e_error {
 	OK,
-	OPEN_FILE
+	OPEN_FILE,
+	FILE_NO_EXIST,
+	FILE_NO_PERM
 };
 
-# define READ_FROM 0
-# define WRITE_TO 1
+enum {
+	NO_REDIR = -1,
+	READ_FROM = 0,
+	WRITE_TO = 1
+};
+

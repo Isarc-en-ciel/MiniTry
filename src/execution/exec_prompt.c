@@ -6,19 +6,12 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/10 20:42:20 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:31:19 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
-/*
-void	exec_heredoc(t_shell *shell, t_redirect *heredoc)
-{
-	(void) shell;
-	(void)heredoc;
-	return;
-}
-*/
+
 bool	exec_builtin(t_shell *shell)
 {
 	char **cmd;
@@ -31,30 +24,12 @@ bool	exec_builtin(t_shell *shell)
 	return (true);
 }
 
-void	delete_heredoc_file(t_command *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (cmd->redirection.size == 0)
-		return ;
-	while (i != cmd->redirection.size)
-	{
-		if (cmd->redirection.array[i].type == REDIR_HEREDOC)
-		{
-			if (access(cmd->redirection.array[i].filename, F_OK) == 0)
-				unlink(cmd->redirection.array[i].filename);
-		}
-		i++;
-	}
-}
-
 void	exec_simple_cmd(t_shell *shell)
 {
 	pid_t	pid;
 
 	perform_redirection(shell, &shell->tab[0]);
-	if (shell->tab[0].error.code == OPEN_FILE)
+	if (shell->tab[0].error.code != OK)
 		return ;
 	if (exec_builtin(shell))
 	{

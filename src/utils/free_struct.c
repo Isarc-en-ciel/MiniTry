@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:52:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/09 15:44:26 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:27:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,4 @@ void	free_shell(t_shell *shell)
 		free_tab_cmd(shell->tab_size, shell->tab);
 	if (shell->env)
 		free_tab_char(shell->env);
-	shell = NULL;
 }
