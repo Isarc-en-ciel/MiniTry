@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:57:01 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/02 12:13:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:39:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,13 @@ t_redirect	new_redir(char *arg)
 	if (redir.type == REDIR_IN || redir.type == REDIR_OUT)
 		char_len = 1;
 	redir.filename = ft_strdup(arg + char_len);
-	redir.hd_delimiter = NULL;
+	if (redir.type == REDIR_HEREDOC)
+	{
+		redir.hd_delimiter = ft_strdup(arg + 2);
+		ft_printf("DEL : %s\n", redir.hd_delimiter);
+	}
+	else
+		redir.hd_delimiter = NULL;
 	return (redir);
 }
 

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:33:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/15 14:07:09 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:21:53 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	read_the_input(char **envp)
 		shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
 		exec_prompt(&shell);
 		free(input);
+		input = NULL;
 	}
 	return (0);
 }

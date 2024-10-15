@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/15 14:10:20 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:22:58 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,13 @@
 
 # define MINITRY_STRUCT_H
 
-#include "minitry_lib.h"
-
-/**
- * An enum to identify the different type of redirection that can affect a command
- *
- * REDIR_IN :	<
- * REDIR_OUT:	>	
- * REDIR_HEREDOC : <<
- * REDIR_APPEND :	>>
- */
+#include "minitry.h"
+#include "minitry_enum.h"
 
 typedef struct s_lexer
 {
-    char    *word;
-    int     is_there_a_space;
+    char			*word;
+    int				is_there_a_space;
 	enum e_tokens	type;
 }   t_lexer;
 
@@ -41,10 +33,10 @@ typedef	struct	s_stock
 /**
  * A structure containing all the potential necessary informations about a redirction
  *
- * int fd (optionnal):				The file descriptor that can be associated to a redirection (such as "fd< filename")
- * char *filename :					The name of the file that redirects the input or output stream to read from or write to.
+ * int fd (optionnal):	The file descriptor that can be associated to a redirection (such as "fd< filename")
+ * char *filename :	The name of the file that redirects the input or output stream to read from or write to.
  * heredoc_delimiter (optionnal) :	Only for the case of REDIR_HEREDOC (noted "<< name_of_delimiter"). In all other case of redirection it will be set to NULL.
- * e_tokens type 					The type of the redirection (<, >, <<, >>)
+ * e_tokens typ	: The type of the redirection (<, >, <<, >>)
  *
  *  This struct and all its members are optional 
  */
@@ -66,6 +58,11 @@ typedef struct	s_redir_array
 	int			size;
 }	t_redir_array;
 
+typedef struct	error
+{
+	char 			*str_perror;
+	enum e_error	code;
+}	t_error;
 /**
  * A structure containing the commands that will be passed to the execution
  * in form of an array of t_command
@@ -79,6 +76,7 @@ typedef struct s_command
 	t_redir_array	redirection;
 	int				fd_in; //exec
 	int				fd_out; //exec
+	t_error			error;
 }	t_command;
 
 /**

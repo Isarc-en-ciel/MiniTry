@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/15 14:19:03 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:22:17 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	exec_env(t_shell *shell);
 /* repo execution */
 void	exec_command(t_shell *shell, int nb); /*file exec_command.c */
 int		exec_prompt(t_shell *shell); /* file exec_prompt.c */
+void	delete_heredoc_file(t_command *cmd);/* file exec_prompt.c */
 void	exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
 void	perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
 void	redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
@@ -83,6 +84,5 @@ int	count_pipes(t_darray *tokens);
 int	into_cmds(int i, t_darray *tokens, t_stock *tab);
 int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
 int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
-
 
 #endif

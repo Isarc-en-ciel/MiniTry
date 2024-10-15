@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/04 12:33:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:58:10 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	exec_error(char **path, t_shell *shell, char *str, int flag)
 		exit_error(shell, str);
 	if (flag == X_OK)
 	{
-		spec_msg_error = ft_strjoin(str, ": permission denied", NO_MALLOC);
+		spec_msg_error = ft_strjoin(str, ": permission denied\n", NO_MALLOC);
 		if (!spec_msg_error)
 			exit_error(shell, "malloc");
 	}
 	else if (flag == F_OK)
 	{
-		spec_msg_error = ft_strjoin(str, ": command not found", NO_MALLOC);
+		spec_msg_error = ft_strjoin(str, ": command not found\n", NO_MALLOC);
 		if (!spec_msg_error)
 			exit_error(shell, "malloc");
 	}
