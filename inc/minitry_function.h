@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/15 14:22:17 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 16:04:57 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_tab_cmd(int size, t_command *tab);
 void	free_shell(t_shell *shell);
 
 //file set_error.c
-//t_error	set_error(char *str, enum e_error code);
+t_error	set_error(char *str, enum e_error code);
 
 //file exit_error.c
 void	exit_error(t_shell *shell, char *error);
