@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/14 18:38:50 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:20:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@
 //	free(spec_msg_error);
 //	exit_error(shell, NULL);
 //}
-//
 //* */
  static void	exec_error(char **path, t_shell *shell, char *str)
 {
