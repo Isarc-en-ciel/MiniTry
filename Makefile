@@ -16,6 +16,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/parsing/darray_utils.c \
 	  src/parsing/retrieve_cmd.c \
 	  src/parsing/token_tester.c \
+	  src/parsing/actual_parsing.c \
 	  src/builtins/env.c \
 	  src/environment/init_env.c\
 	  src/execution/pseudo_parsing.c \
@@ -26,6 +27,8 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 	  src/utils/set_error.c \
+
+HEADER = ../../inc/*.h
 
 OBJS=$(SRCS:.c=.o)
 

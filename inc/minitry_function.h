@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/10 15:42:38 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:19:03 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include "minitry_struct.h"
 #include "minitry_lib.h"
+#include "minitry_enum.h"
 
 /*file src/environment/init_env.c */
 char	**init_env(char **envp);
@@ -49,7 +50,7 @@ void	free_tab_cmd(int size, t_command *tab);
 void	free_shell(t_shell *shell);
 
 //file set_error.c
-t_error	set_error(char *str, enum e_error code);
+//t_error	set_error(char *str, enum e_error code);
 
 //file exit_error.c
 void	exit_error(t_shell *shell, char *error);
@@ -76,8 +77,12 @@ int     is_delimiter(char c);
 int     print_token_tab(t_darray *cmd);
 void	ft_print_redir_type(enum e_tokens token);
 
+//parsing
 int	parsing_starter(t_darray *tokens);
 int	count_pipes(t_darray *tokens);
-t_stock	*into_cmds(int i, t_darray *tokens);
+int	into_cmds(int i, t_darray *tokens, t_stock *tab);
+int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
+int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/08 13:20:09 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:10:20 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@
  * REDIR_HEREDOC : <<
  * REDIR_APPEND :	>>
  */
-enum e_tokens {
-    PIPE = 1,
-    QUOTE,
-    D_QUOTE,
-    WORD,
-    REDIR_IN,
-    REDIR_OUT,
-    REDIR_APP,
-    REDIR_HEREDOC
-};
 
 typedef struct s_lexer
 {
@@ -45,7 +35,7 @@ typedef struct s_lexer
 typedef	struct	s_stock
 {
 	int	nbr_elem;
-	t_lexer	cmd;
+	t_lexer	*cmd;
 }	t_stock;
 
 /**

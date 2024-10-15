@@ -6,9 +6,13 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:02:51 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/10 15:41:31 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:15:42 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+# ifndef MINITRY_ENUM_H
+
+# define MINITRY_ENUM_H
 
 /**
  * An enum to identify the different type of redirection that can affect a command
@@ -46,3 +50,5 @@ enum e_error {
 
 # define READ_FROM 0
 # define WRITE_TO 1
+
+#endif
