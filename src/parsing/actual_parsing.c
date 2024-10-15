@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/10/15 14:18:44 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:25:00 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parsing_starter(t_darray *tokens)
 	tab = malloc(sizeof(t_stock) * i);
 	if (!tab)
 		return (1);
-	if (into_cmds(i, tokens, &tab) == -1)
+	if (into_cmds(i, tokens, tab) == -1)
 	{
 		printf("malloc error\n");
 		return (1);
@@ -65,7 +65,7 @@ int	into_cmds(int i, t_darray *tokens, t_stock *tab)
 
 	j = 0;
 	l = 0;
-	if (nbr_elem_cmd(i, tokens, &tab) == 1)
+	if (nbr_elem_cmd(i, tokens, tab) == 1)
 		return (1);
 	while (j < i)
 	{
@@ -96,6 +96,7 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 		n++;
 		l++;
 	}
+	return (0);
 }
 
 int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
