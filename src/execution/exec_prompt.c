@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/17 16:31:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:32:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	exec_simple_cmd(t_shell *shell)
 		shell->exit_status = WEXITSTATUS(shell->exit_status);
 	else if (WIFSIGNALED(shell->exit_status))
 		shell->exit_status = WTERMSIG(shell->exit_status);
-//	delete_heredoc_file(shell->tab);
 }
 
 static	t_shell	*clean_prompt(t_shell *shell)
