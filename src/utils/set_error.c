@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:14:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/14 18:32:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:23:57 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ t_error	set_error(char *str, enum e_error code)
 		ft_putstr_fd(str, 1);
 		ft_putstr_fd(" : Permission denied\n", 1);
 	}
+	else
+		perror(str);
 	return (new_error);
 }

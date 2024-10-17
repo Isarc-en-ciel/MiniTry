@@ -5,11 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 12:19:32 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/14 18:38:51 by csteylae         ###   ########.fr       */
+/*   Created: 2024/10/17 14:49:43 by csteylae          #+#    #+#             */
+/*   Updated: 2024/10/17 16:21:06 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* the function perform_redirection will iterate troughout the array 
+ * of redirection. It will open the file that redirect the stdin and stdout
+ * of the cmd and keep it in cmd->fd_in and cmd->fd_out. 
+ * For that, we begin to check which type of redirection it
+ * and give the appropriate flags that we will pass to open() syscall
+ * before opening the file, the function check for the appropriate type if the
+ * permission are required with access() and eventually close the previous 
+ * fd open if its > 2
+ */
 #include "../../inc/minitry.h"
 
 void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
@@ -38,9 +47,9 @@ static bool	check_file_accessibility(t_command *cmd, t_redirect redir)
 		cmd->error = set_error(redir.filename, FILE_NO_PERM);
 		return (false);
 	}
-	else if (access(redir.filename, F_OK) == 0 
-			&& access(redir.filename, W_OK) != 0 
-			&&	(redir.type == REDIR_OUT || redir.type == REDIR_APP))
+	else if (access(redir.filename, F_OK) == 0
+		&& access(redir.filename, W_OK) != 0
+		&& (redir.type == REDIR_OUT || redir.type == REDIR_APP))
 	{
 		cmd->error = set_error(redir.filename, FILE_NO_PERM);
 		return (false);
@@ -66,44 +75,47 @@ int	open_file(t_command *cmd, int prev_fd, t_redirect redir, int flags)
 	return (fd);
 }
 
-static int	get_flags(int redir_type)
+static int	get_flags(t_shell *sh, t_command *cmd, t_redirect *redir, int type)
 {
 	int	flags;
 
 	flags = 0;
-	if (redir_type == REDIR_HEREDOC)
+	if (type == REDIR_HEREDOC)
+	{
+		create_heredoc(sh, cmd, redir);
 		flags = O_RDONLY;
-	else if (redir_type == REDIR_IN)
+	}
+	else if (type == REDIR_IN)
 		flags = O_RDONLY;
-	else if (redir_type == REDIR_OUT)
+	else if (type == REDIR_OUT)
 		flags = O_WRONLY | O_TRUNC | O_CREAT;
-	else if (redir_type == REDIR_APP)
+	else if (type == REDIR_APP)
 		flags = O_WRONLY | O_APPEND | O_CREAT;
 	return (flags);
 }
 
 void	perform_redirection(t_shell *shell, t_command *cmd)
 {
-	int	i;
-	int	flags;
+	int				i;
+	int				flags;
+	t_redir_array	*redir;
 
 	i = 0;
 	flags = 0;
-	(void)shell;
-	if (!cmd->redirection.size)
+	redir = &cmd->redirection;
+	if (!redir->size)
 		return ;
-	while (i != cmd->redirection.size)
+	while (i != redir->size)
 	{
-		flags = get_flags(cmd->redirection.array[i].type);
-		if (cmd->redirection.array[i].type == REDIR_HEREDOC)
-		{
-			create_heredoc(shell, cmd, &cmd->redirection.array[i]);
-			cmd->fd_in = open_file(cmd, cmd->fd_in, cmd->redirection.array[i], flags);
-		}
-		else if (cmd->redirection.array[i].type == REDIR_IN)
-			cmd->fd_in = open_file(cmd, cmd->fd_in, cmd->redirection.array[i], flags);
+		flags = get_flags(shell, cmd, &redir->array[i], redir->array[i].type);
+		if (cmd->error.code != OK)
+			return ;
+		if (redir->array[i].type == REDIR_HEREDOC)
+			cmd->fd_in = open_file(cmd, cmd->fd_in, redir->array[i], flags);
+		else if (redir->array[i].type == REDIR_IN)
+			cmd->fd_in = open_file(cmd, cmd->fd_in, redir->array[i], flags);
 		else
-			cmd->fd_out = open_file(cmd, cmd->fd_out, cmd->redirection.array[i], flags);
+			cmd->fd_out = open_file(cmd, cmd->fd_out, redir->array[i], flags);
 		if (cmd->error.code != OK)
 			return ;
 		i++;

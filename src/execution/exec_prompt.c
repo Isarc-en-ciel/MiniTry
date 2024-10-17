@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/14 17:31:19 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:31:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	exec_simple_cmd(t_shell *shell)
 	if (exec_builtin(shell))
 	{
 		//exec_builtins
-		return;
+		return ;
 	}
 	pid = fork();
 	if (pid < 0)
-		exit_error(shell, "fork");
+		return (perror("fork"));
 	else if (pid == 0)
 	{
 		redirect_io(shell, shell->tab[0].fd_in, shell->tab[0].fd_out);
@@ -52,18 +52,21 @@ void	exec_simple_cmd(t_shell *shell)
 //	delete_heredoc_file(shell->tab);
 }
 
-int	exec_prompt(t_shell *shell)
+static	t_shell	*clean_prompt(t_shell *shell)
 {
-	int	nb;
-
-	nb = shell->tab_size;
-	if (nb == 1)
-		exec_simple_cmd(shell);
-	else
-		exec_pipeline(shell);
 	free_tab_cmd(shell->tab_size, shell->tab);
 	shell->tab_size = 0;
 	shell->tab = NULL;
+	return (shell);
+}
+
+int	exec_prompt(t_shell *shell)
+{
+	if (shell->tab_size == 1)
+		exec_simple_cmd(shell);
+	else
+		exec_pipeline(shell);
+	shell = clean_prompt(shell);
 	ft_printf("exit status : %d\n", shell->exit_status);
 	return (0);
 }

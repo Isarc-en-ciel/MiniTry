@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:52:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/14 12:27:35 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:05:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	free_redir_array(t_redir_array redirection)
 	{
 		if (redirection.array[i].hd_delimiter)
 			free(redirection.array[i].hd_delimiter);
-		free(redirection.array[i].filename);
+		if (redirection.array[i].filename)
+			free(redirection.array[i].filename);
 		i++;
 	}
 	free(redirection.array);
@@ -51,7 +52,7 @@ void	free_redir_array(t_redir_array redirection)
 void	free_cmd(t_command *cmd)
 {
 	if (!cmd)
-		return;
+		return ;
 	if (cmd->cmd)
 		free_tab_char(cmd->cmd);
 	if (cmd->redirection.array)
@@ -80,7 +81,7 @@ void	free_tab_cmd(int size, t_command *tab)
 void	free_shell(t_shell *shell)
 {
 	if (!shell)
-		return;
+		return ;
 	if (shell->tab)
 		free_tab_cmd(shell->tab_size, shell->tab);
 	if (shell->env)

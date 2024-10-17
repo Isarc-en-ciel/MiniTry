@@ -3,10 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minitry_struct.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/17 14:39:29 by csteylae          #+#    #+#             */
+/*   Updated: 2024/10/17 14:39:33 by csteylae         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minitry_struct.h                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/07 15:08:58 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:38:26 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +43,34 @@ typedef	struct	s_stock
 }	t_stock;
 
 /**
- * A structure containing all the potential necessary informations about a redirction
+ * A struct containing all the potential necessary informations about redirction
  *
- * int fd (optionnal):	The file descriptor that can be associated to a redirection (such as "fd< filename")
- * char *filename :	The name of the file that redirects the input or output stream to read from or write to.
- * heredoc_delimiter (optionnal) :	Only for the case of REDIR_HEREDOC (noted "<< name_of_delimiter"). In all other case of redirection it will be set to NULL.
+ * int fd (optionnal): file descriptor associated to a redirection
+ * 					(such as "fd< filename")
+ * char *filename :	name of the file that redirects the input or output stream
+ * heredoc_delimiter (optionnal) :	Only for REDIR_HEREDOC,
+ * 									if its  not a heredoc, set to NULL.
  * e_tokens typ	: The type of the redirection (<, >, <<, >>)
- *
- *  This struct and all its members are optional 
  */
-typedef struct s_redirect 
+typedef struct s_redirect
 {
-	int					fd;
-	char				*filename;
-	char				*hd_delimiter;
+	int					fd; //idk if we keep it 
+	char				*filename; //malloc
+	char				*hd_delimiter; //malloc
 	enum e_tokens		type;
 }   t_redirect;
 
 /**
-	An array of structure redirection.
-	int	size : the number of redirection that affect the command
+ * 	A struct that contains the array of redirection and the size of that array
+ *
+ * int	size : the number of redirection that affect the command. 0 if no redir
+ * t_redirect *array : the malloced array that contains all redirections,
+ * 						it keeps the redir in their order, form left to right,
+ * 						is NULL if no redir
 */
 typedef struct	s_redir_array
 {
-	t_redirect	*array;
+	t_redirect	*array; //malloc, array = malloc(sizeof(*array) * size)
 	int			size;
 }	t_redir_array;
 
@@ -63,12 +79,14 @@ typedef struct	error
 	char 			*str_perror;
 	enum e_error	code;
 }	t_error;
+
 /**
- * A structure containing the commands that will be passed to the execution
- * in form of an array of t_command
+ * Struct containing the command that will be passed to the execution
  *
- * command->cmd	: an array of strings, as char **argv. Contains in cmd[0] the command name and the others indexes contains its potential options
- * command->redirection	: an array that kept in the order in which they appear in input, from left to righ,	all redirections that can affects a cmd	
+ * command->cmd	: an array of strings. Contains the command name at index 0,
+ * 				 and its potential options
+ * command->redirection	: the t_redir array that kept in their order all redir
+ * 						 that can affects a cmd	
  */
 typedef struct s_command
 {
@@ -80,20 +98,18 @@ typedef struct s_command
 }	t_command;
 
 /**
- *	A big structure that will contains all important information
+ *	Our master struc that will contains all we need to run minishell
  *
  *	shell.envp	contains the envp variable
- *	shell.tab	contains the array of commands parsed from readline()
+ *	shell.tab	contains the array of commands
  *	shell.tab_size 	the size of the array. Is the nb of commands passed
- *	shell.error	an int to indicate if an error occurs, 
- *		idk if we will keep it (just use in init_shell() in src/parsing/minitry.c
+ *	shell.exit_status: give the exit stqtus of the last command executed
  */
 typedef struct s_shell
 {
 	char		**env;
 	t_command	*tab;
 	int			tab_size;
-	int			error;
 	int			exit_status;
 }	t_shell;
 

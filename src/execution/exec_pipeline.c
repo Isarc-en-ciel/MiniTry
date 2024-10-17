@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/15 18:23:14 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:31:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	exec_pipeline(t_shell *shell)
 	child_pid = malloc(sizeof(*child_pid) * shell->tab_size);
 	if (!child_pid)
 		exit_error(shell, "malloc");
-	prev_fd = -1;
+	prev_fd = NO_REDIR;
 	while (i != shell->tab_size) 
 	{
 		pipe_fd[READ_FROM] = -1;
