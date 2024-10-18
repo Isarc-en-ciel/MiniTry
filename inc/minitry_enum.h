@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:02:51 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/17 16:31:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:43:46 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ enum e_error {
 	OPEN_FILE,
 	FILE_NO_EXIST,
 	FILE_NO_PERM,
+	CMD_NOT_FOUND,
 	FORK,
 	MALLOC
 };

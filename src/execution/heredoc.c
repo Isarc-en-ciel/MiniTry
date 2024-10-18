@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/17 16:35:22 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:19:27 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 		unlink(HEREDOC_FILE);
 	heredoc = open(HEREDOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (heredoc == -1)
+	{
 		cmd->error = set_error("heredoc", OPEN_FILE);
+		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 	{
