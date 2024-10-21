@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/18 17:17:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:02:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,11 @@ static char	*get_cmd_path(char *path, char *cmd, enum e_error *code)
 		return (NULL);
 	}
 	path = ft_strjoin(path, cmd_path, BOTH_MALLOC);
-	if (!path)
+	if (!*path)
+	{
 		*code = MALLOC;
+		return (NULL);
+	}
 	if (access(path, F_OK) == 0)
 	{
 		if (access(path, X_OK) == 0)
@@ -98,24 +101,26 @@ void	exec_command(t_shell *shell, int n)
 {
 	int				i;
 	char			**path_array;
+	t_command		*cmd;
 
 	i = 0;
+	cmd = &shell->tab[n];
 	search_absolute_path(shell, n);
 	path_array = split_path_var(shell, n);
-	if (shell->tab[n].error.code != OK)
+	if (cmd->error.code != OK)
 		return (exec_error(NULL, shell, "malloc"));
 	while (path_array[i])
 	{
-		path_array[i] = get_cmd_path(path_array[i], shell->tab[n].cmd[0], &shell->tab[n].error.code);
-		if (shell->tab[n].error.code == MALLOC)
+		path_array[i] = get_cmd_path(path_array[i], cmd->cmd[0], &cmd->error.code);
+		if (cmd->error.code == MALLOC)
 			return (exec_error(path_array, shell, "malloc"));
 		if (path_array[i])
 		{
-			execve(path_array[i], shell->tab[n].cmd, shell->env);
+			execve(path_array[i], cmd->cmd, shell->env);
 			return (exec_error(path_array, shell, "execve"));
 		}
 		i++;
 	}
-	shell->tab[n].error = set_error(shell->tab[n].cmd[0], shell->tab[n].error.code);
+	cmd->error = set_error(cmd->cmd[0], cmd->error.code);
 	return (exec_error(path_array, shell, NULL));
 }

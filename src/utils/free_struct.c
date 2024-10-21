@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:52:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/17 12:05:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:02:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_tab_char(char **tab)
 	i = 0;
 	if (tab && *tab)
 	{
+		ft_printf("test : %s\n", *tab);
 		while (tab[i])
 		{
 			free(tab[i]);
