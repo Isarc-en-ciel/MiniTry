@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:02:51 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/18 12:43:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:28:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ enum e_error {
 	FILE_NO_PERM,
 	CMD_NOT_FOUND,
 	FORK,
-	MALLOC
+	MALLOC,
+	PIPE_ERROR,
 };
 
 enum {
+	LAST_PIPE_CLOSED = -2,
 	NO_REDIR = -1,
 	READ_FROM = 0,
 	WRITE_TO = 1

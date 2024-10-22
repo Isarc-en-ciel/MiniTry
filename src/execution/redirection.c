@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:49:43 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/18 12:38:42 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:25:59 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 
 void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
 {
-	if (new_fd_in >= 0)
+	if (new_fd_in > NO_REDIR)
 	{
 		if (dup2(new_fd_in, STDIN_FILENO) < 0)
 			exit_error(shell, "dup2");
 	}
-	if (new_fd_out >= 0)
+	if (new_fd_out > NO_REDIR)
 	{
 		if (dup2(new_fd_out, STDOUT_FILENO) < 0)
 			exit_error(shell, "dup2");

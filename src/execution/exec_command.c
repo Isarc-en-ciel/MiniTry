@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/21 15:02:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:01:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /* 
  * first construct the path from the var_env PATH, add the "/cmd" to the path 
  * then try to access the executable via access() with the X_OK flag 
- * if an access is found the command will be executed with execve() that will exit the programm
+ * if an access is found the command will be executed with execve()
+ * that will exit the programm
  * if no path was found we need to manage the error appropriately
- *
  */
 
- static void	exec_error(char **path, t_shell *shell, char *str)
+static void	exec_error(char **path, t_shell *shell, char *str)
 {
 	if (path)
 		free_tab_char(path);
@@ -29,11 +29,11 @@
 
 static void	search_absolute_path(t_shell *shell, int n)
 {
-	char *path;
+	char	*path;
 
-	if (!ft_strchr(shell->tab[n].cmd[0], '/'))
-		return ;
 	path = shell->tab[n].cmd[0];
+	if (!ft_strchr(path, '/'))
+		return ;
 	if (access(path, X_OK) == 0)
 	{
 		if (execve(path, shell->tab[n].cmd, shell->env) < 0)
@@ -46,7 +46,7 @@ static void	search_absolute_path(t_shell *shell, int n)
 	exec_error(NULL, shell, NULL);
 }
 
-static char **split_path_var(t_shell *shell, int n)
+static char	**split_path_var(t_shell *shell, int n)
 {
 	int		i;
 	char	*env_path;
@@ -68,18 +68,18 @@ static char **split_path_var(t_shell *shell, int n)
 	return (paths);
 }
 
-static char	*get_cmd_path(char *path, char *cmd, enum e_error *code)
+static char	*test_path(char *path, char *cmd_name, enum e_error *code)
 {
-	char *cmd_path; 
+	char	*slash_cmd;
 
-	cmd_path = ft_strjoin("/", cmd, NO_MALLOC);
-	if (!cmd_path)
+	slash_cmd = ft_strjoin("/", cmd_name, NO_MALLOC);
+	if (!slash_cmd)
 	{
 		*code = MALLOC;
 		return (NULL);
 	}
-	path = ft_strjoin(path, cmd_path, BOTH_MALLOC);
-	if (!*path)
+	path = ft_strjoin(path, slash_cmd, BOTH_MALLOC);
+	if (!path)
 	{
 		*code = MALLOC;
 		return (NULL);
@@ -93,10 +93,10 @@ static char	*get_cmd_path(char *path, char *cmd, enum e_error *code)
 	}
 	if (*code != FILE_NO_PERM)
 		*code = CMD_NOT_FOUND;
+	free(path);
 	return (NULL);
 }
 
-////still does not manage the case when there is just no path
 void	exec_command(t_shell *shell, int n)
 {
 	int				i;
@@ -111,7 +111,7 @@ void	exec_command(t_shell *shell, int n)
 		return (exec_error(NULL, shell, "malloc"));
 	while (path_array[i])
 	{
-		path_array[i] = get_cmd_path(path_array[i], cmd->cmd[0], &cmd->error.code);
+		path_array[i] = test_path(path_array[i], cmd->cmd[0], &cmd->error.code);
 		if (cmd->error.code == MALLOC)
 			return (exec_error(path_array, shell, "malloc"));
 		if (path_array[i])
