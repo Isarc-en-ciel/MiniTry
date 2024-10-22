@@ -1,4 +1,24 @@
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
-/*   Created: 2024/07/31 12:20:28 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/02 15:54:46 by csteylae         ###   ########.fr       */
-#include "minitry_lib.h"
+CFLAGS= -Wall -Wextra -Werror
+DFLAGS= -g -O0 #-fsanitize=address
+LIBFT = lib/Libft/libft.a
+PRINTF_LIB = lib/ft_printf/libftprintf.a
+	  src/parsing/minitry.c \
+	  src/parsing/create_tokens.c \
+	  src/parsing/create_tokens2.c \
+	  src/parsing/darray_utils.c \
+	  src/parsing/retrieve_cmd.c \
+	  src/parsing/token_tester.c \
+	  src/execution/pseudo_parsing.c \
+	  src/execution/exec_command.c \
+	make bonus -C lib/Libft
+	make -C lib/ft_printf
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF_LIB) -lreadline -o $(NAME)
+all : $(NAME)
+clean :
+	make clean -C lib/Libft
+	make clean -C lib/ft_printf
+fclean : clean
+	make fclean -C lib/Libft
+	make fclean -C lib/ft_printf
+re: fclean all
+.PHONY: all clean fclean re

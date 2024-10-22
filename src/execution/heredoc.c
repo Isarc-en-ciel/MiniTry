@@ -57,11 +57,9 @@ void	get_hd_filename(t_command *cmd, t_redirect *redir)
 
 void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 {
-	char	*line;
 	int		heredoc;
 	int		pid;
 
-	line = NULL;
 	if (access(HEREDOC_FILE, F_OK) == 0)
 		unlink(HEREDOC_FILE);
 	heredoc = open(HEREDOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644);
