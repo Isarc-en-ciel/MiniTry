@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/07/31 11:40:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:26:20 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,9 @@ int	ft_strnlen(char *str, char c)
 		i++;
 	return i;
 }
-void	exec_cd(char *input)
+int	ft_cd(char **args)
 {
-	char **cmd = ft_split(input, ' ');
-	
-	if (!ft_strncmp("cd", cmd[0], ft_strlen("cd")))
-	{
-		printf("LOL\n");
-		if (cmd[1])
-			chdir(cmd[1]);
-	}
+	(void)args;
+	ft_printf("this is cd builtin !\n");
+	return (0);
 }

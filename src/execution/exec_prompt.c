@@ -6,23 +6,30 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/18 12:38:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:26:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
-bool	exec_builtin(t_shell *shell)
+bool	get_builtin(t_shell *sh, t_command *cmd)
 {
-	char **cmd;
+	int			i;
+	t_builtin	builtin;
 
-	cmd = shell->tab->cmd;
-	if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
-		exec_env(shell);
-	else
-		return (false);
-	return (true);
+	i = 0;
+	builtin = sh->builtin_cmds[i];
+	while (i != 7)
+	{
+		if (!ft_strncmp(builtin.name, cmd->cmd[0], ft_strlen(builtin.name)))
+			return (builtin.func(cmd->cmd));
+		i++;
+		builtin = sh->builtin_cmds[i];
+	}
+	return (NULL);
 }
+
+
 
 void	exec_simple_cmd(t_shell *shell)
 {
@@ -31,11 +38,13 @@ void	exec_simple_cmd(t_shell *shell)
 	perform_redirection(shell, &shell->tab[0]);
 	if (shell->tab[0].error.code != OK)
 		return ;
-	if (exec_builtin(shell))
+	if (get_builtin(shell, &shell->tab[0]))
 	{
-		//exec_builtins
 		return ;
 	}
+
+
+
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));

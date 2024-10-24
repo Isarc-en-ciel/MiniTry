@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:39:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/18 12:33:14 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:24:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,21 @@
 
 # define MINITRY_STRUCT_H
 
-#include "minitry.h"
 #include "minitry_enum.h"
+#include "minitry_lib.h"
+
+
+/* 
+ * Pointer to the function 
+ */
+typedef int (*builtin_func) (char **args);
+
+typedef struct s_builtin
+{
+	const char		*name;
+	builtin_func	func;
+}	t_builtin;
+
 
 typedef struct s_lexer
 {
@@ -99,6 +112,7 @@ typedef struct s_shell
 	t_command	*tab;
 	int			tab_size;
 	int			exit_status;
+	t_builtin	builtin_cmds[7];
 }	t_shell;
 
 typedef struct s_darray

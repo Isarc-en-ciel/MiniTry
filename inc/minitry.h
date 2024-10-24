@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:20:28 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/02 15:54:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:38:54 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 #include "minitry_lib.h"
 #include "minitry_struct.h"
 #include "minitry_function.h"
+#include "minitry_enum.h"
 
 #endif

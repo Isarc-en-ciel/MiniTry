@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitry_function.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/14 16:55:20 by csteylae         ###   ########.fr       */
+/*   Created: 2024/10/24 13:24:03 by csteylae          #+#    #+#             */
+/*   Updated: 2024/10/24 15:25:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	test_env(t_shell *shell, char *input); //function added to your minitry.c t
 t_shell	init_shell(void);
 
 /* repo builtins */
-void	exec_cd(char *cmd);
+int	ft_cd(char **args);
 void	exec_env(t_shell *shell);
 
 /* repo execution */

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:02:51 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/22 15:28:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:29:18 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
  * REDIR_HEREDOC : <<
  * REDIR_APPEND :	>>
  */
+
+#ifndef MINITRY_ENUM_H
+
+# define MINITRY_ENUM_H
+
 enum e_tokens {
     PIPE = 1,
     QUOTE,
@@ -27,16 +32,6 @@ enum e_tokens {
     REDIR_OUT,
     REDIR_APP,
     REDIR_HEREDOC
-};
-
-enum e_builtin {
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT
 };
 
 enum e_error {
@@ -58,3 +53,5 @@ enum {
 };
 
 # define HEREDOC_FILE "/Users/csteylae/goinfre/minishell_heredoc"
+
+#endif
