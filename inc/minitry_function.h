@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitry_function.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 12:00:49 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/15 16:09:07 by csteylae         ###   ########.fr       */
+/*   Created: 2024/10/24 13:24:03 by csteylae          #+#    #+#             */
+/*   Updated: 2024/10/24 15:25:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	test_env(t_shell *shell, char *input); //function added to your minitry.c t
 t_shell	init_shell(void);
 
 /* repo builtins */
-void	exec_cd(char *cmd);
+int	ft_cd(char **args);
 void	exec_env(t_shell *shell);
 
 /* repo execution */
@@ -41,6 +41,7 @@ void	exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
 void	perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
 void	redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
 t_command	*pseudo_parsing(t_shell *shell, char *input);
+void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
 
 /* repo utils */
 //file free_struct.c :

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/07 18:58:10 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:01:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,105 +15,112 @@
 /* 
  * first construct the path from the var_env PATH, add the "/cmd" to the path 
  * then try to access the executable via access() with the X_OK flag 
- * if an access is found the command will be executed with execve() that will exit the programm
+ * if an access is found the command will be executed with execve()
+ * that will exit the programm
  * if no path was found we need to manage the error appropriately
- *
- * */
-static void	exec_error(char **path, t_shell *shell, char *str, int flag)
-{
-	char	*spec_msg_error;
+ */
 
-	spec_msg_error = NULL;
+static void	exec_error(char **path, t_shell *shell, char *str)
+{
 	if (path)
 		free_tab_char(path);
-	if (flag < 0)
-		exit_error(shell, str);
-	if (flag == X_OK)
-	{
-		spec_msg_error = ft_strjoin(str, ": permission denied\n", NO_MALLOC);
-		if (!spec_msg_error)
-			exit_error(shell, "malloc");
-	}
-	else if (flag == F_OK)
-	{
-		spec_msg_error = ft_strjoin(str, ": command not found\n", NO_MALLOC);
-		if (!spec_msg_error)
-			exit_error(shell, "malloc");
-	}
-	ft_putstr_fd(spec_msg_error, STDERR_FILENO);
-	free(spec_msg_error);
-	exit_error(shell, NULL);
+	exit_error(shell, str);
 }
 
 static void	search_absolute_path(t_shell *shell, int n)
 {
-	char *path;
+	char	*path;
 
-	if (!ft_strchr(shell->tab[n].cmd[0], '/'))
-		return;
 	path = shell->tab[n].cmd[0];
+	if (!ft_strchr(path, '/'))
+		return ;
 	if (access(path, X_OK) == 0)
 	{
 		if (execve(path, shell->tab[n].cmd, shell->env) < 0)
-			exec_error(NULL, shell, "execve", -1);
+			exec_error(NULL, shell, "execve");
 	}
-	else if (access(path, F_OK) == 0)
-			exec_error(NULL, shell, "execve", X_OK);
+	else if (access(path, F_OK) == 0 && access(path, X_OK) != 0)
+		shell->tab[n].error = set_error(path, FILE_NO_PERM);
 	else
-		exec_error(NULL, shell, shell->tab[n].cmd[0], F_OK);
+		shell->tab[n].error = set_error(path, CMD_NOT_FOUND);
+	exec_error(NULL, shell, NULL);
 }
 
-static char **get_path(char **env)
+static char	**split_path_var(t_shell *shell, int n)
 {
-	int	i;
-	char *env_path;
+	int		i;
+	char	*env_path;
+	char	**paths;
 
 	i = 0;
 	env_path = NULL;
-	while (env[i] && ft_strncmp("PATH=", env[i], 5))
+	paths = NULL;
+	if (!shell->env || !*shell->env)
+		return (NULL);
+	while (shell->env[i] && ft_strncmp("PATH=", shell->env[i], 5)) //not enough
 		i++;
-	env_path = env[i] + ft_strlen("PATH=");
-	return (ft_split(env_path, ':'));
+	if (!shell->env[i])
+		return (NULL);
+	env_path = shell->env[i] + ft_strlen("PATH=");
+	paths = ft_split(env_path, ':');
+	if (!paths)
+		shell->tab[n].error = set_error("malloc", MALLOC);
+	return (paths);
 }
 
-static char	*add_cmd_path(char *path, char *cmd)
+static char	*test_path(char *path, char *cmd_name, enum e_error *code)
 {
-	char *cmd_path; 
+	char	*slash_cmd;
 
-	cmd_path = ft_strjoin("/", cmd, NO_MALLOC);
-	if (!cmd_path)
+	slash_cmd = ft_strjoin("/", cmd_name, NO_MALLOC);
+	if (!slash_cmd)
+	{
+		*code = MALLOC;
 		return (NULL);
-	path = ft_strjoin(path, cmd_path, BOTH_MALLOC);
+	}
+	path = ft_strjoin(path, slash_cmd, BOTH_MALLOC);
 	if (!path)
+	{
+		*code = MALLOC;
 		return (NULL);
-	return (path);
+	}
+	if (access(path, F_OK) == 0)
+	{
+		if (access(path, X_OK) == 0)
+			return (path);
+		else
+			*code = FILE_NO_PERM;
+	}
+	if (*code != FILE_NO_PERM)
+		*code = CMD_NOT_FOUND;
+	free(path);
+	return (NULL);
 }
 
 void	exec_command(t_shell *shell, int n)
 {
-	int		i;
-	char	**path;
+	int				i;
+	char			**path_array;
+	t_command		*cmd;
 
 	i = 0;
+	cmd = &shell->tab[n];
 	search_absolute_path(shell, n);
-	path = get_path(shell->env);
-	if (!path)
-		exec_error(path, shell, "malloc", -1);
-	while (path[i])
+	path_array = split_path_var(shell, n);
+	if (cmd->error.code != OK)
+		return (exec_error(NULL, shell, "malloc"));
+	while (path_array[i])
 	{
-		path[i] = add_cmd_path(path[i], shell->tab[n].cmd[0]);
-		if (!path[i])
-			exec_error(path, shell, "malloc", -1);
-		if (access(path[i], F_OK) == 0)
+		path_array[i] = test_path(path_array[i], cmd->cmd[0], &cmd->error.code);
+		if (cmd->error.code == MALLOC)
+			return (exec_error(path_array, shell, "malloc"));
+		if (path_array[i])
 		{
-			if (access(path[i], X_OK) == 0)
-			{
-				execve(path[i], shell->tab[n].cmd, shell->env);
-				exec_error(path, shell, "execve", -1);
-			}
-			exec_error(path, shell, "permission denied", X_OK);
+			execve(path_array[i], cmd->cmd, shell->env);
+			return (exec_error(path_array, shell, "execve"));
 		}
 		i++;
 	}
-	exec_error(path, shell, shell->tab[n].cmd[0], F_OK);
+	cmd->error = set_error(cmd->cmd[0], cmd->error.code);
+	return (exec_error(path_array, shell, NULL));
 }

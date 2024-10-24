@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:43:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/08/01 18:43:32 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:05:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	**init_env(char **envp)
 	int	i;
 
 	i = 0;
+	if (!envp && !*envp)
+		return (NULL);
 	while (envp[i])
 		i++;
 	new_env = malloc(sizeof(*envp) * (i + 1));
