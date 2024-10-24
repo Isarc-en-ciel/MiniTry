@@ -6,13 +6,9 @@
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:02:51 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/24 13:29:18 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:43:42 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-# ifndef MINITRY_ENUM_H
-
-# define MINITRY_ENUM_H
 
 /**
  * An enum to identify the different type of redirection that can affect a command
@@ -57,7 +53,5 @@ enum {
 };
 
 # define HEREDOC_FILE "/Users/csteylae/goinfre/minishell_heredoc"
-
-#endif
 
 #endif
