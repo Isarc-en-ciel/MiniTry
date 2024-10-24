@@ -19,6 +19,5 @@
 #include "minitry_enum.h"
 #include "minitry_struct.h"
 #include "minitry_function.h"
-#include "minitry_enum.h"
 
 #endif
