@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:39:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/24 15:24:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:02:58 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,20 @@
 #include "minitry_lib.h"
 
 
-/* 
- * Pointer to the function 
- */
-typedef int (*builtin_func) (char **args);
-
-typedef struct s_builtin
-{
-	const char		*name;
-	builtin_func	func;
-}	t_builtin;
-
-
 typedef struct s_lexer
 {
     char			*word;
     int				is_there_a_space;
 	enum e_tokens	type;
 }   t_lexer;
+
+typedef struct s_darray
+{
+	t_lexer	*content;
+	size_t	max_size;
+	size_t	actual_size;
+	size_t	block;
+}	t_darray;
 
 typedef	struct	s_stock
 {
@@ -98,8 +94,29 @@ typedef struct s_command
 	t_error			error;
 }	t_command;
 
+/*
+ *	A temp struct used inside builtins functions to manage the environment 
+ *	easely. Before the return of the builtin function, once all modifications
+ *	are done,  this struct will be copied into an array of str (char **env)
+ *	and then destroyed; 
+ */
+typedef struct	s_env_list
+{
+	char		*key;
+	char		*value;
+	struct s_env_list	*next;
+}	t_env_list;
+
+typedef int (*builtin_func) (char ***env, char **args);
+
+typedef struct s_builtin
+{
+	const char		*name;
+	builtin_func	func;
+}	t_builtin;
+
 /**
- *	Our master struc that will contains all we need to run minishell
+ *	Our master struc that will contain all we need to run minishell
  *
  *	shell.envp	contains the envp variable
  *	shell.tab	contains the array of commands
@@ -115,12 +132,5 @@ typedef struct s_shell
 	t_builtin	builtin_cmds[7];
 }	t_shell;
 
-typedef struct s_darray
-{
-	t_lexer	*content;
-	size_t	max_size;
-	size_t	actual_size;
-	size_t	block;
-}	t_darray;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:24:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/24 15:25:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/25 19:00:08 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,27 @@
 #include "minitry_lib.h"
 #include "minitry_enum.h"
 
-/*file src/environment/init_env.c */
-char	**init_env(char **envp);
+/*repo environment */
+char		**init_env(char **envp); //env_list.c
+t_env_list	*new_env_list(char *key, char *value); //env_list_func.c
+void		lst_addback(t_env_list **head, t_env_list *new); //env_list_func.c
+t_env_list	*find_node(char *key, t_env_list *head);
+int			get_list_size(t_env_list *head); //env_list_func.c
+void		destroy_lst(t_env_list **head); //env_list_func.c
+t_env_list	*array_to_list(char **env);
+char		**list_to_array(t_env_list **head);
+
+void		ft_print_list(t_env_list *head);
 
 /*file src/environment/test_env.c */
 void	ft_print_cmd(t_shell *shell);
 void	test_env(t_shell *shell, char *input); //function added to your minitry.c to avoid the pollution of that file 
 
-
 /* repo init */
 t_shell	init_shell(void);
 
 /* repo builtins */
-int	ft_cd(char **args);
+int		ft_cd(char ***env, char **args);
 void	exec_env(t_shell *shell);
 
 /* repo execution */

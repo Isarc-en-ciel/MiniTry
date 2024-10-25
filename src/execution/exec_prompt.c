@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/24 15:26:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/25 15:16:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,23 @@ bool	get_builtin(t_shell *sh, t_command *cmd)
 {
 	int			i;
 	t_builtin	builtin;
+	char		*cmd_name;
 
 	i = 0;
 	builtin = sh->builtin_cmds[i];
+	cmd_name = cmd->cmd[0];
 	while (i != 7)
 	{
-		if (!ft_strncmp(builtin.name, cmd->cmd[0], ft_strlen(builtin.name)))
-			return (builtin.func(cmd->cmd));
+		if (!ft_strncmp(builtin.name, cmd_name, ft_strlen(builtin.name)))
+		{
+			builtin.func(&sh->env, cmd->cmd);
+			return (true);
+		}
 		i++;
 		builtin = sh->builtin_cmds[i];
 	}
-	return (NULL);
+	return (false);
 }
-
-
 
 void	exec_simple_cmd(t_shell *shell)
 {
@@ -40,11 +43,9 @@ void	exec_simple_cmd(t_shell *shell)
 		return ;
 	if (get_builtin(shell, &shell->tab[0]))
 	{
+	//	ft_print_env();
 		return ;
 	}
-
-
-
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));
@@ -75,6 +76,6 @@ int	exec_prompt(t_shell *shell)
 	else
 		exec_pipeline(shell);
 	shell = clean_prompt(shell);
-	ft_printf("exit status : %d\n", shell->exit_status);
+//	ft_printf("exit status : %d\n", shell->exit_status);
 	return (0);
 }
