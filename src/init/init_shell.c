@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 16:02:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:28:40 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	ft_env(char ***env, char **args)
 	int	i;
 
 	i = 0;
+	if (!env || !*env || !**env) // if there is no env
+		return (0); //not sure about it
 	while (*env[i])
 	{
 		ft_printf("%s\n", env[i]);

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 13:36:39 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 19:14:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:24:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char **list_to_array(t_env_list **head)
 	tmp = *head;
 	env = NULL;
 	i = 0;
-	env = malloc(sizeof(*env) * get_list_size(*head));
+	env = malloc(sizeof(*env) * (get_list_size(*head) + 1));
 	if (!env)
 		return ((char**)free_struct(head, env));
 	while (tmp)

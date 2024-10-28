@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 19:14:15 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:16:10 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_cd(char ***env, char **args)
 		}
 		free(pwd_node->value);
 		pwd_node->value = current_dir;
-		ft_print_list(head);
+//		ft_print_list(head);
 	}
 	*env = list_to_array(&head);
 	if (!*env)
