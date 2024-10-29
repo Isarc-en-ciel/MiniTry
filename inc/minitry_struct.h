@@ -37,6 +37,14 @@ typedef struct s_lexer
 	enum e_tokens	type;
 }   t_lexer;
 
+typedef struct s_darray
+{
+	t_lexer	*content;
+	size_t	max_size;
+	size_t	actual_size;
+	size_t	block;
+}	t_darray;
+
 typedef	struct	s_stock
 {
 	int	nbr_elem;
@@ -114,13 +122,5 @@ typedef struct s_shell
 	int			exit_status;
 	t_builtin	builtin_cmds[7];
 }	t_shell;
-
-typedef struct s_darray
-{
-	t_lexer	*content;
-	size_t	max_size;
-	size_t	actual_size;
-	size_t	block;
-}	t_darray;
 
 #endif

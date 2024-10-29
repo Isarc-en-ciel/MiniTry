@@ -85,7 +85,7 @@ t_darray	*retrieve_cmd(char *input)
 			j++;
 		}
 	}
-	print_token_tab(tab);
+	//print_token_tab(tab);
 	return (tab);
 }
 

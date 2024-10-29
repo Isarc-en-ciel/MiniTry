@@ -82,19 +82,19 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 	int	n;
 
 	n = 0;
-	while (n < tab[*j].nbr_elem)
+	while (n < tab[*j].nbr_elem && (size_t)(*l) < tokens->actual_size)
 	{
 		tab[*j].cmd[n].is_there_a_space
-			= tokens[*l].content->is_there_a_space;
-		tab[*j].cmd[n].type = tokens[*l].content->type;
+			= tokens->content[*l].is_there_a_space;
+		tab[*j].cmd[n].type = tokens->content[*l].type;
 		tab[*j].cmd[n].word = malloc(sizeof(char)
-				* ft_strlen(tokens[*l].content->word));
+				* ft_strlen(tokens->content[*l].word));
 		if (!tab[*j].cmd[n].word)
 			return (-1);
 		tab[*j].cmd[n].word = ft_memcpy(tab[*j].cmd[n].word,
-				tokens[*l].content->word, ft_strlen(tokens[*l].content->word));
+				tokens->content[*l].word, ft_strlen(tokens->content[*l].word));
 		n++;
-		l++;
+		*l += 1;
 	}
 	return (0);
 }
@@ -102,16 +102,21 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
 {
 	int	j;
-	int	n;
+	int	cmd_size;
+	size_t	n;
 
 	j = 0;
+	n = 0;
 	while (j < i)
 	{
-		n = 0;
-		while (tokens->content[n].type != PIPE)
+		cmd_size = 0;
+		while (tokens->content[n].type != PIPE && n < tokens->actual_size)
+		{
 			n++;
-		tab[j].nbr_elem = n;
-		tab[j].cmd = malloc(sizeof(t_lexer) * n);
+			cmd_size++;
+		}
+		tab[j].nbr_elem = cmd_size;
+		tab[j].cmd = malloc(sizeof(t_lexer) * (tab[j].nbr_elem));
 		if (!tab[j].cmd)
 			return (1);
 		n++;
