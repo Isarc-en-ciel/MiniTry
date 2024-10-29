@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/28 12:28:40 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:28:47 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@ int	ft_echo(char ***env, char **args)
 	(void)args;
 	(void)env;
 	ft_printf("this is echo\n");
-	return (0);
-}
-
-int	ft_pwd(char ***env, char **args)
-{
-	(void)args;
-	(void)env;
-	ft_printf("this is pwd\n");
 	return (0);
 }
 
@@ -41,23 +33,6 @@ int	ft_unset(char ***env,char **args)
 	(void)args;
 	(void)env;
 	ft_printf("this is unset!\n");
-	return (0);
-}
-
-int	ft_env(char ***env, char **args)
-{
-	(void)args;
-	(void)env;
-	int	i;
-
-	i = 0;
-	if (!env || !*env || !**env) // if there is no env
-		return (0); //not sure about it
-	while (*env[i])
-	{
-		ft_printf("%s\n", env[i]);
-		i++;
-	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 15:16:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:18:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	get_builtin(t_shell *sh, t_command *cmd)
 	{
 		if (!ft_strncmp(builtin.name, cmd_name, ft_strlen(builtin.name)))
 		{
-			builtin.func(&sh->env, cmd->cmd);
+			sh->exit_status = builtin.func(&sh->env, cmd->cmd);
 			return (true);
 		}
 		i++;

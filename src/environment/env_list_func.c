@@ -6,40 +6,25 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:36:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 19:00:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:54:09 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
-t_env_list	*new_env_list(char *key, char *value)
+int		get_list_size(t_env_list *head)
 {
-	t_env_list	*new;
-
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->value = value;
-	new->key = key;
-	new->next = NULL;
-	return (new);
-}
-
-void	lst_addback(t_env_list **head, t_env_list *new)
-{
+	int			i;
 	t_env_list	*tmp;
 
-	if (!head || !new)
-		return ;
-	if (*head == NULL)
+	i = 0;
+	tmp = head;
+	while (tmp != NULL)
 	{
-		*head = new;
-		return ;
-	}
-	tmp = *head;
-	while (tmp->next != NULL)
 		tmp = tmp->next;
-	tmp->next = new;
+		i++;
+	}
+	return (i);
 }
 
 t_env_list	*find_node(char *key, t_env_list *head)
@@ -58,19 +43,19 @@ t_env_list	*find_node(char *key, t_env_list *head)
 	return (tmp);
 }
 
-int		get_list_size(t_env_list *head)
+t_env_list	*env_modify_value(char *key, char *new_value, t_env_list **head)
 {
-	int			i;
 	t_env_list	*tmp;
 
-	i = 0;
-	tmp = head;
-	while (tmp != NULL)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
+	if (!head || !*head)
+		return (NULL);
+	tmp = find_node(key, *head);
+	if (!tmp)
+		return (NULL);
+	if (tmp->value)
+		free(tmp->value);
+	tmp->value = new_value;
+	return (tmp);
 }
 
 void	destroy_lst(t_env_list **head)

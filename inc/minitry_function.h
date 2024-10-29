@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:24:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 19:00:08 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:27:19 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char		**init_env(char **envp); //env_list.c
 t_env_list	*new_env_list(char *key, char *value); //env_list_func.c
 void		lst_addback(t_env_list **head, t_env_list *new); //env_list_func.c
 t_env_list	*find_node(char *key, t_env_list *head);
+t_env_list	*env_modify_value(char *key, char *new_value, t_env_list **head);
 int			get_list_size(t_env_list *head); //env_list_func.c
 void		destroy_lst(t_env_list **head); //env_list_func.c
 t_env_list	*array_to_list(char **env);
@@ -39,7 +40,8 @@ t_shell	init_shell(void);
 
 /* repo builtins */
 int		ft_cd(char ***env, char **args);
-void	exec_env(t_shell *shell);
+int		ft_env(char ***env, char **args);
+int		ft_pwd(char ***env, char **args);
 
 /* repo execution */
 void	exec_command(t_shell *shell, int nb); /*file exec_command.c */
