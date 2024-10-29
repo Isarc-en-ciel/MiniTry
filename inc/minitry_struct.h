@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:39:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 16:02:58 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:33:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 #include "minitry_enum.h"
 #include "minitry_lib.h"
-
 
 typedef struct s_lexer
 {
@@ -42,11 +41,14 @@ typedef	struct	s_stock
 /**
  * A struct containing all the potential necessary informations about redirction
  *
- * int fd (optionnal): file descriptor associated to a redirection
- * 					(such as "fd< filename")
+ * int fd (optionnal): file descriptor associated to a redirection, 
+ * such as "fd< filename")
+ *
  * char *filename :	name of the file that redirects the input or output stream
- * heredoc_delimiter (optionnal) :	Only for REDIR_HEREDOC,
- * 									if its  not a heredoc, set to NULL.
+ *
+ * heredoc_delimiter (optionnal) :	Only for REDIR_HEREDOC. 
+ * if its  not a heredoc, set to NULL.
+ *
  * e_tokens typ	: The type of the redirection (<, >, <<, >>)
  */
 typedef struct s_redirect
@@ -61,9 +63,9 @@ typedef struct s_redirect
  * 	A struct that contains the array of redirection and the size of that array
  *
  * int	size : the number of redirection that affect the command. 0 if no redir
+ *
  * t_redirect *array : the malloced array that contains all redirections,
- * 						it keeps the redir in their order, form left to right,
- * 						is NULL if no redir
+ * it keeps the redir in their order, form left to right,is NULL if no redir
 */
 typedef struct	s_redir_array
 {
@@ -81,9 +83,10 @@ typedef struct	error
  * Struct containing the command that will be passed to the execution
  *
  * command->cmd	: an array of strings. Contains the command name at index 0,
- * 				 and its potential options
+ * and its potential options
+ *
  * command->redirection	: the t_redir array that kept in their order all redir
- * 						 that can affects a cmd	
+ *  that can affects a cmd	
  */
 typedef struct s_command
 {
@@ -131,6 +134,5 @@ typedef struct s_shell
 	int			exit_status;
 	t_builtin	builtin_cmds[7];
 }	t_shell;
-
 
 #endif
