@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:24:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/29 17:27:19 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:03:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int			get_list_size(t_env_list *head); //env_list_func.c
 void		destroy_lst(t_env_list **head); //env_list_func.c
 t_env_list	*array_to_list(char **env);
 char		**list_to_array(t_env_list **head);
-
 void		ft_print_list(t_env_list *head);
 
 /*file src/environment/test_env.c */
@@ -38,10 +37,12 @@ void	test_env(t_shell *shell, char *input); //function added to your minitry.c t
 /* repo init */
 t_shell	init_shell(void);
 
+
 /* repo builtins */
-int		ft_cd(char ***env, char **args);
-int		ft_env(char ***env, char **args);
-int		ft_pwd(char ***env, char **args);
+int		ft_cd(char ***env, t_command *cmd);
+int		ft_env(char ***env, t_command *cmd);
+int		ft_pwd(char ***env, t_command *cmd);
+
 
 /* repo execution */
 void	exec_command(t_shell *shell, int nb); /*file exec_command.c */
@@ -53,19 +54,18 @@ void	redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
 t_command	*pseudo_parsing(t_shell *shell, char *input);
 void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
 
+
 /* repo utils */
-//file free_struct.c :
 void	free_tab_char(char **tab);
 void	free_redir_array(t_redir_array redirection);
 void	free_cmd(t_command *cmd);
 void	free_tab_cmd(int size, t_command *tab);
 void	free_shell(t_shell *shell);
-
 //file set_error.c
 t_error	set_error(char *str, enum e_error code);
-
 //file exit_error.c
 void	exit_error(t_shell *shell, char *error);
+
 
 //tokenisation
 t_lexer	create_pipe(char *input, int *position, t_lexer token);

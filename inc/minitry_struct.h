@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:39:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/29 17:33:35 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:04:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct	s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
-typedef int (*builtin_func) (char ***env, char **args);
+typedef int (*builtin_func) (char ***env, t_command *cmd);
 
 typedef struct s_builtin
 {

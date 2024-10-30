@@ -6,20 +6,20 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:03:21 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/29 17:29:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:10:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
-int	ft_env(char ***env, char **args)
+int	ft_env(char ***env, t_command *cmd)
 {
 	int			i;
 	char		**env_b;
 	char		*_env;
 	t_env_list	*head;
 
-	(void)args;
+	(void)cmd;
 	if (!env || !*env || !**env)
 		return (0);
 	i = 0;

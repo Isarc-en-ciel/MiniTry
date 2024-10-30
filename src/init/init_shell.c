@@ -6,39 +6,39 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/29 17:28:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:04:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
-int	ft_echo(char ***env, char **args)
+int	ft_echo(char ***env, t_command *cmd)
 {
-	(void)args;
+	(void)cmd;
 	(void)env;
 	ft_printf("this is echo\n");
 	return (0);
 }
 
-int	ft_export(char ***env, char **args)
+int	ft_export(char ***env, t_command *cmd)
 {
-	(void)args;
+	(void)cmd;
 	(void)env;
 	ft_printf("this is export !\n");
 	return (0);
 }
 
-int	ft_unset(char ***env,char **args)
+int	ft_unset(char ***env,t_command *cmd)
 {
-	(void)args;
+	(void)cmd;
 	(void)env;
 	ft_printf("this is unset!\n");
 	return (0);
 }
 
-int	ft_exit(char ***env, char **args)
+int	ft_exit(char ***env, t_command *cmd)
 {
-	(void)args;
+	(void)cmd;
 	(void)env;
 	ft_printf("this is exit !\n");
 	return (0);

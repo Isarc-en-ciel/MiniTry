@@ -6,18 +6,18 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:19:23 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/29 17:28:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:10:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
-int	ft_pwd(char ***env, char **args)
+int	ft_pwd(char ***env, t_command *cmd)
 {
 	t_env_list	*head;
 	t_env_list	*pwd;
 
-	if (args[1])
+	if (cmd->cmd[1])
 	{
 		// not good 
 		// idk what to do
