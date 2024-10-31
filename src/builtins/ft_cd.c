@@ -6,22 +6,28 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/24 15:26:20 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:06:40 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h" 
 
-int	ft_strnlen(char *str, char c)
+int	ft_cd(char ***env, t_command *cmd)
 {
-	int	i = 0;
-	while (str[i] != c)
-		i++;
-	return i;
-}
-int	ft_cd(char **args)
-{
-	(void)args;
-	ft_printf("this is cd builtin !\n");
-	return (0);
+	int			status;
+	t_env_list	*head;
+
+	head = array_to_list(*env);
+	env_modify_value("OLDPWD", getcwd(NULL, 0), &head);
+	status = chdir(cmd->cmd[1]);
+	if (status == 0)
+	{
+		env_modify_value("PWD", getcwd(NULL, 0), &head);
+	}
+	*env = list_to_array(&head);
+	if (!*env)
+	{
+		return (ft_printf("error malloc occurs the error should be reported\n"));
+	}
+	return (status);
 }
