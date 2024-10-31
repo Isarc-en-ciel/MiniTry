@@ -6,11 +6,52 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:36:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/29 16:54:09 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:17:30 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
+
+t_env_list	*new_env_list(char *key, char *value)
+{
+	t_env_list	*new;
+
+	new = malloc(sizeof(*new));
+	if (!new)
+		return (NULL);
+	new->value = ft_strdup(value);
+	if (!new->value)
+	{
+		free(new);
+		return (NULL);
+	}
+	new->key = ft_strdup(key);
+	if (!new->key)
+	{
+		free(new->value);
+		free(new);
+		return (NULL);
+	}
+	new->next = NULL;
+	return (new);
+}
+
+void	lst_addback(t_env_list **head, t_env_list *new)
+{
+	t_env_list	*tmp;
+
+	if (!head || !new)
+		return ;
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	tmp = *head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+}
 
 int		get_list_size(t_env_list *head)
 {
@@ -54,22 +95,8 @@ t_env_list	*env_modify_value(char *key, char *new_value, t_env_list **head)
 		return (NULL);
 	if (tmp->value)
 		free(tmp->value);
-	tmp->value = new_value;
+	tmp->value = ft_strdup(new_value);
+	if (!tmp->value)
+		return (NULL);
 	return (tmp);
-}
-
-void	destroy_lst(t_env_list **head)
-{
-	t_env_list *tmp;
-
-	if (!head || !*head)
-		return ;
-	while (*head != NULL)
-	{
-		tmp = (*head)->next;
-		free((*head)->key);
-		free((*head)->value);
-		free(*head);
-		*head = tmp;
-	}
 }

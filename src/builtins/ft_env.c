@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:03:21 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/30 12:10:25 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:17:28 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	ft_env(char ***env, t_command *cmd)
 	if (!env || !*env || !**env)
 		return (0);
 	i = 0;
-	env_b = *env;
 	_env = ft_strdup("usr/bin/env");
 	if (!_env)
 	{
@@ -31,7 +30,7 @@ int	ft_env(char ***env, t_command *cmd)
 		//return and should set error
 		//perror maybe
 	}
-	head = array_to_list(env_b);
+	head = array_to_list(*env);
 	if (!head)
 	{
 		//do somthg
@@ -40,7 +39,8 @@ int	ft_env(char ***env, t_command *cmd)
 	{
 		ft_printf("key not found :((((((((((\n");
 	}
-	env_b = list_to_array(&head);
+	*env = list_to_array(&head);
+	env_b = *env;
 	while (env_b[i])
 	{
 		ft_printf("%s\n", env_b[i]);

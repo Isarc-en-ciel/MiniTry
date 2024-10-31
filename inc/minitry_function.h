@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:24:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/30 12:03:38 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:07:54 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_shell	init_shell(void);
 int		ft_cd(char ***env, t_command *cmd);
 int		ft_env(char ***env, t_command *cmd);
 int		ft_pwd(char ***env, t_command *cmd);
+int		ft_echo(char ***env, t_command *cmd);
 
 
 /* repo execution */

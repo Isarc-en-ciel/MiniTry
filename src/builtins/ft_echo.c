@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:50:11 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/30 16:55:37 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:06:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ bool	check_n_option(char *arg)
 	return (true);
 }
 
-int	ft_echo(char ***env,t_command *cmd)
+int	ft_echo(char ***env, t_command *cmd)
 {
 	int	i;
 	int	fd;
 
 	i = 0;
+	(void)env;
 	if (cmd->fd_out != NO_REDIR)
 		fd = cmd->fd_out;
 	else

@@ -1,7 +1,7 @@
 NAME= minitry
 CC=cc
 CFLAGS= -Wall -Wextra -Werror
-DFLAGS= -g -O0 -fsanitize=address
+DFLAGS= -g -O0 #-fsanitize=address
 
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a
@@ -13,6 +13,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/builtins/ft_cd.c \
 	  src/builtins/ft_env.c \
 	  src/builtins/ft_pwd.c \
+	  src/builtins/ft_echo.c \
 	  src/parsing/create_tokens.c \
 	  src/parsing/create_tokens2.c \
 	  src/parsing/darray_utils.c \

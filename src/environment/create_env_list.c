@@ -6,40 +6,26 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 13:36:39 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/29 17:28:02 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:17:29 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
-t_env_list	*new_env_list(char *key, char *value)
+void	destroy_lst(t_env_list **head)
 {
-	t_env_list	*new;
+	t_env_list *tmp;
 
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->value = value;
-	new->key = key;
-	new->next = NULL;
-	return (new);
-}
-
-void	lst_addback(t_env_list **head, t_env_list *new)
-{
-	t_env_list	*tmp;
-
-	if (!head || !new)
+	if (!head || !*head)
 		return ;
-	if (*head == NULL)
+	while (*head != NULL)
 	{
-		*head = new;
-		return ;
+		tmp = (*head)->next;
+		free((*head)->key);
+		free((*head)->value);
+		free(*head);
+		*head = tmp;
 	}
-	tmp = *head;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = new;
 }
 
 static void	*free_struct(t_env_list **head, char **str_tab)
@@ -66,11 +52,10 @@ t_env_list	*array_to_list(char **env)
 		if (!dico)
 			return ((t_env_list*)free_struct(&head, dico));
 		new = new_env_list(dico[0], dico[1]);
+		free_tab_char(dico);
 		if (!new)
 			return ((t_env_list*)free_struct(&head, dico));
-		new = new_env_list(dico[0], dico[1]);
 		lst_addback(&head, new);
-		//free_tab_char(dico);
 		i++;
 	}
 	return (head);
@@ -93,7 +78,7 @@ char **list_to_array(t_env_list **head)
 		env[i] = ft_strjoin(tmp->key, "=", NO_MALLOC);
 		if (!env[i])
 			return ((char**)free_struct(head, env));
-		env[i] = ft_strjoin(env[i], tmp->value,NO_MALLOC);
+		env[i] = ft_strjoin(env[i], tmp->value, S1_MALLOC);
 		if (!env[i])
 			return ((char**)free_struct(head, env));
 		tmp = tmp->next;
