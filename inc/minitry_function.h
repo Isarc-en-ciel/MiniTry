@@ -86,4 +86,9 @@ int	into_cmds(int i, t_darray *tokens, t_stock *tab);
 int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
 int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
 
+//testing parsing
+int	print_token_tab(t_darray *cmd);
+void	ft_print_redir_type(enum e_tokens token);
+int	print_stock_tab(t_stock *tab, int cmds);
+
 #endif

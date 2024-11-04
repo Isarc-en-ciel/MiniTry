@@ -31,6 +31,8 @@ int	parsing_starter(t_darray *tokens)
 		printf("malloc error\n");
 		return (1);
 	}
+	ft_printf("we have %d commands\n", i);
+	print_stock_tab(tab, i);
 	return (0);
 }
 

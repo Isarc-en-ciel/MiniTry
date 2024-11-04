@@ -47,3 +47,25 @@ void	ft_print_redir_type(enum e_tokens token)
 	else if (token == QUOTE)
 		ft_printf("QUOTE");
 }
+
+int	print_stock_tab(t_stock *tab, int cmds)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < cmds)
+	{
+		j = 0;
+		while (j < tab[i].nbr_elem)
+		{
+			ft_printf("token : %s\nwith type : ", tab[i].cmd[j].word); //ptet je stocke pas le word = NULL en cas de token symbole
+			ft_print_redir_type(tab[i].cmd[j].type);
+			ft_printf("\n");
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
+	return (0);
+}

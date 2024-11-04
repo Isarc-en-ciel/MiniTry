@@ -1,14 +1,14 @@
 NAME= minitry
 CC=cc
 CFLAGS= -Wall -Wextra -Werror
-DFLAGS= -g -O0 #-fsanitize=address
+DFLAGS= -g -O0 -fsanitize=address
 
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a
 
 SRCS= lib/get_next_line/get_next_line.c \
 	  lib/get_next_line/get_next_line_utils.c \
-	  src/parsing/minitry.c \
+	  src/parsing/main.c \
 	  src/init/init_shell.c \
 	  src/builtins/cd.c \
 	  src/parsing/create_tokens.c \
