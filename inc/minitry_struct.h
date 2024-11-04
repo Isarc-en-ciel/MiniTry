@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:39:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/24 15:24:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:02:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,6 @@
 
 #include "minitry_enum.h"
 #include "minitry_lib.h"
-
-
-/* 
- * Pointer to the function 
- */
-typedef int (*builtin_func) (char **args);
-
-typedef struct s_builtin
-{
-	const char		*name;
-	builtin_func	func;
-}	t_builtin;
-
 
 typedef struct s_lexer
 {
@@ -54,11 +41,14 @@ typedef	struct	s_stock
 /**
  * A struct containing all the potential necessary informations about redirction
  *
- * int fd (optionnal): file descriptor associated to a redirection
- * 					(such as "fd< filename")
+ * int fd (optionnal): file descriptor associated to a redirection, 
+ * such as "fd< filename")
+ *
  * char *filename :	name of the file that redirects the input or output stream
- * heredoc_delimiter (optionnal) :	Only for REDIR_HEREDOC,
- * 									if its  not a heredoc, set to NULL.
+ *
+ * heredoc_delimiter (optionnal) :	Only for REDIR_HEREDOC. 
+ * if its  not a heredoc, set to NULL.
+ *
  * e_tokens typ	: The type of the redirection (<, >, <<, >>)
  */
 typedef struct s_redirect
@@ -73,9 +63,9 @@ typedef struct s_redirect
  * 	A struct that contains the array of redirection and the size of that array
  *
  * int	size : the number of redirection that affect the command. 0 if no redir
+ *
  * t_redirect *array : the malloced array that contains all redirections,
- * 						it keeps the redir in their order, form left to right,
- * 						is NULL if no redir
+ * it keeps the redir in their order, form left to right,is NULL if no redir
 */
 typedef struct	s_redir_array
 {
@@ -93,9 +83,10 @@ typedef struct	error
  * Struct containing the command that will be passed to the execution
  *
  * command->cmd	: an array of strings. Contains the command name at index 0,
- * 				 and its potential options
+ * and its potential options
+ *
  * command->redirection	: the t_redir array that kept in their order all redir
- * 						 that can affects a cmd	
+ *  that can affects a cmd	
  */
 typedef struct s_command
 {
@@ -106,8 +97,29 @@ typedef struct s_command
 	t_error			error;
 }	t_command;
 
+/*
+ *	A temp struct used inside builtins functions to manage the environment 
+ *	easely. Before the return of the builtin function, once all modifications
+ *	are done,  this struct will be copied into an array of str (char **env)
+ *	and then destroyed; 
+ */
+typedef struct	s_env_list
+{
+	char		*key;
+	char		*value;
+	struct s_env_list	*next;
+}	t_env_list;
+
+typedef int (*builtin_func) (char ***env, t_command *cmd);
+
+typedef struct s_builtin
+{
+	const char		*name;
+	builtin_func	func;
+}	t_builtin;
+
 /**
- *	Our master struc that will contains all we need to run minishell
+ *	Our master struc that will contain all we need to run minishell
  *
  *	shell.envp	contains the envp variable
  *	shell.tab	contains the array of commands

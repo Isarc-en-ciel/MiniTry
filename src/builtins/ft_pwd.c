@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 17:03:21 by csteylae          #+#    #+#             */
-/*   Updated: 2024/09/04 15:10:35 by csteylae         ###   ########.fr       */
+/*   Created: 2024/10/29 17:19:23 by csteylae          #+#    #+#             */
+/*   Updated: 2024/10/31 11:11:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minitry.h"
 
-void	exec_env(t_shell *shell)
+int	ft_pwd(char ***env, t_command *cmd)
 {
-	int	i;
+	t_env_list	*head;
+	t_env_list	*pwd;
 
-	i = 0;
-	if (!shell->env && !shell->env[0])
-		return ;
-	while (shell->env[i])
+	if (cmd->cmd[1])
 	{
-		ft_printf("%s\n", shell->env[i]);
-		i++;
+		// not good 
+		// idk what to do
+		// go ask to people how to manage it
 	}
+	head = array_to_list(*env);
+	if (!env)
+	{
+		// perror("malloc")
+		// return
+	}
+	pwd = find_node("PWD", head);
+	ft_printf("%s\n", pwd->value);
+	if (!pwd)
+	{
+		//return exit status pwd not found
+	}
+	destroy_lst(&head);
+	return (0);
 }
