@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   actual_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/10/15 16:09:30 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:36:37 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 
 int	parsing_starter(t_darray *tokens)
 {
@@ -89,12 +89,18 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 		tab[*j].cmd[n].is_there_a_space
 			= tokens->content[*l].is_there_a_space;
 		tab[*j].cmd[n].type = tokens->content[*l].type;
-		tab[*j].cmd[n].word = malloc(sizeof(char)
-				* ft_strlen(tokens->content[*l].word));
-		if (!tab[*j].cmd[n].word)
-			return (-1);
-		tab[*j].cmd[n].word = ft_memcpy(tab[*j].cmd[n].word,
-				tokens->content[*l].word, ft_strlen(tokens->content[*l].word));
+		if (ft_strlen(tokens->content[*l].word) == SIZE_T_MAX)
+			tab[*j].cmd[n].word = NULL;
+		else
+		{
+			tab[*j].cmd[n].word = malloc(sizeof(char)
+					* ft_strlen(tokens->content[*l].word));
+			if (!tab[*j].cmd[n].word)
+				return (-1);
+			tab[*j].cmd[n].word = ft_memcpy(tab[*j].cmd[n].word,
+					tokens->content[*l].word,
+					ft_strlen(tokens->content[*l].word));
+		}
 		n++;
 		*l += 1;
 	}
@@ -103,8 +109,8 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 
 int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
 {
-	int	j;
-	int	cmd_size;
+	int		j;
+	int		cmd_size;
 	size_t	n;
 
 	j = 0;

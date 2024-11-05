@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitry_lib.h                                      :+:      :+:    :+:   */
+/*   minishell_lib.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITRY_LIBRARIES_H
+#ifndef MINISHELL_LIBRARIES_H
 
-# define MINITRY_LIBRARIES_H
+# define MINISHELL_LIBRARIES_H
 
 # include "../lib/Libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"

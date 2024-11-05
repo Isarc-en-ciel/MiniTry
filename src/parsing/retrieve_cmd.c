@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   retrieve_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/30 13:35:43 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:31:22 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 /*mettre un flag au cas ou j'ai que des espaces 
 (check que j'ai bien malloc tab.content)*/
 t_darray	*retrieve_cmd(char *input)

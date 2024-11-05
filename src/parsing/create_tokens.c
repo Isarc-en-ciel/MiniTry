@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:53:33 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/30 13:34:38 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:36:15 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minitry.h"
-//ici on doit conserver les variables d'env uniquement
+#include "../../inc/minishell.h"
+
 t_lexer	create_doubleq(char *input, int *position, t_lexer token)
 {
 	int	l;

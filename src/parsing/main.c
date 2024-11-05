@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 
 int	read_the_input(char **envp)
 {
@@ -35,7 +35,7 @@ int	read_the_input(char **envp)
 		tokens = retrieve_cmd(input);
 		if (tokens == NULL || tokens->content == NULL)
 			return (1);
-		parsing_starter(tokens);
+		parsing_starter(tokens); // si que des espaces segfault pcq pas de tokens ?  compter si nbr tokens = 0 ?
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
 	//	shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution

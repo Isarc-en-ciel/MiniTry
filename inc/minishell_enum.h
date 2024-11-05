@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitry_enum.h                                     :+:      :+:    :+:   */
+/*   minishell_enum.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,9 +19,9 @@
  * REDIR_APPEND :	>>
  */
 
-#ifndef MINITRY_ENUM_H
+#ifndef MINISHELL_ENUM_H
 
-# define MINITRY_ENUM_H
+# define MINISHELL_ENUM_H
 
 enum e_tokens {
     PIPE = 1,

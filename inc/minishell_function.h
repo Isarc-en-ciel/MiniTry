@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitry_function.h                                 :+:      :+:    :+:   */
+/*   minishell_function.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITRY_FUNCTION_H
+#ifndef MINISHELL_FUNCTION_H
 
-# define MINITRY_FUNCTION_H
+# define MINISHELL_FUNCTION_H
 
-#include "minitry_struct.h"
-#include "minitry_lib.h"
-#include "minitry_enum.h"
+#include "minishell_struct.h"
+#include "minishell_lib.h"
+#include "minishell_enum.h"
 
 /*repo environment */
 char		**init_env(char **envp); //env_list.c

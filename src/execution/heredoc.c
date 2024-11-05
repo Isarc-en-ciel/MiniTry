@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/17 19:19:27 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:35:47 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * so we will be able to use it as any other file in the function open_file()
  *
  */
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 
 void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 {

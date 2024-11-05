@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitry_struct.h                                   :+:      :+:    :+:   */
+/*   minishell_struct.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINITRY_STRUCT_H
+# ifndef MINISHELL_STRUCT_H
 
-# define MINITRY_STRUCT_H
+# define MINISHELL_STRUCT_H
 
-#include "minitry_enum.h"
-#include "minitry_lib.h"
+#include "minishell_enum.h"
+#include "minishell_lib.h"
 
 typedef struct s_lexer
 {

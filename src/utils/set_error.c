@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:14:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/22 16:24:19 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:37:18 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 
 t_error	set_error(char *str, enum e_error code)
 {

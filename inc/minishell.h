@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitry.h                                          :+:      :+:    :+:   */
+/*   minishell.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,13 +11,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITRY_H
+#ifndef MINISHELL_H
 
-#define MINITRY_H
+#define MINISHELL_H
 
-#include "minitry_lib.h"
-#include "minitry_enum.h"
-#include "minitry_struct.h"
-#include "minitry_function.h"
+#include "minishell_lib.h"
+#include "minishell_enum.h"
+#include "minishell_struct.h"
+#include "minishell_function.h"
 
 #endif

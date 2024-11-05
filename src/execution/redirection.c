@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:49:43 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/22 14:25:59 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:35:54 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * permission are required with access() and eventually close the previous 
  * fd open if its > 2
  */
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 
 void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
 {

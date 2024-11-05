@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:51:15 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/30 13:34:20 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:36:43 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 
 t_lexer	create_pipe(char *input, int *position, t_lexer token)
 {

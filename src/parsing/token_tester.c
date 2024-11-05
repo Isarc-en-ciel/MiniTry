@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_tester.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:09:08 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/09/26 15:10:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:37:00 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minitry.h"
+#include "../../inc/minishell.h"
 
 int	print_token_tab(t_darray *cmd)
 {
@@ -59,7 +59,8 @@ int	print_stock_tab(t_stock *tab, int cmds)
 		j = 0;
 		while (j < tab[i].nbr_elem)
 		{
-			ft_printf("token : %s\nwith type : ", tab[i].cmd[j].word); //ptet je stocke pas le word = NULL en cas de token symbole
+			ft_printf("token : %s\nwith space: %d\nwith type : ",
+				tab[i].cmd[j].word, tab[i].cmd[j].is_there_a_space);
 			ft_print_redir_type(tab[i].cmd[j].type);
 			ft_printf("\n");
 			j++;
