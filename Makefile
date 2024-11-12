@@ -18,6 +18,8 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/parsing/create_tokens2.c \
 	  src/parsing/darray_utils.c \
 	  src/parsing/retrieve_cmd.c \
+	  src/parsing/retrieve_utils.c \
+	  src/parsing/retrieve_utils2.c \
 	  src/parsing/token_tester.c \
 	  src/parsing/actual_parsing.c \
 	  src/environment/init_env.c \

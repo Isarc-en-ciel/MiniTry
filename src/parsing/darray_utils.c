@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:48:50 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/05 17:36:48 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/12 14:52:53 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ t_darray	realloc_array(t_darray *darray)
 	return (*darray);
 }
 
-int	error_fct(t_darray *tab)
+void	free_final_array(t_darray *darray)
 {
-	write (1, "SYNTAX ERROR\n", 13);
-	if (tab->content)
-		free_temp_array(tab);
-	return (0);
+	free_temp_array(darray);
+	free (darray);
 }

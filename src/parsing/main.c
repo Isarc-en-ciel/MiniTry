@@ -34,13 +34,17 @@ int	read_the_input(char **envp)
 		add_history(input);
 		tokens = retrieve_cmd(input);
 		if (tokens == NULL || tokens->content == NULL)
+		{
+			free_final_array(tokens);
 			return (1);
-		parsing_starter(tokens); // si que des espaces segfault pcq pas de tokens ?  compter si nbr tokens = 0 ?
+		}
+		parsing_starter(tokens);
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
 	//	shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
 	//	exec_prompt(&shell);
 		free(input);
+		free_final_array(tokens);
 		input = NULL;
 	}
 	return (0);
@@ -51,6 +55,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (1);
-	read_the_input(envp);
+	if (read_the_input(envp) == 1)
+		write (1, "ho no it's fucked\n", 18);
 	return (0);
 }

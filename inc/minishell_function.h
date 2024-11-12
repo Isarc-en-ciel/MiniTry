@@ -81,8 +81,9 @@ void	*ft_memcpy_plus(void *dst, const void *src, int start, int n);
 //dynamic array
 t_darray	*retrieve_cmd(char *input);
 int	    init_array(t_darray *darray, size_t block_size);
-int	reserve_array(t_darray *darray);
+int 	reserve_array(t_darray *darray);
 void	free_temp_array(t_darray *darray);
+void	free_final_array(t_darray *darray);
 t_darray	realloc_array(t_darray *darray);
 int 	error_fct(t_darray *tab);
 int	    ft_isspace(char c);

@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/05 17:36:37 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/12 12:52:25 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	parsing_starter(t_darray *tokens)
+int	parsing_starter(t_darray *tokens) //faire tous les free
 {
 	int		i;
 	t_stock	*tab;
