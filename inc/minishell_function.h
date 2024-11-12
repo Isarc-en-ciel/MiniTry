@@ -90,6 +90,12 @@ int	    ft_isspace(char c);
 int     is_delimiter(char c);
 int     print_token_tab(t_darray *cmd);
 void	ft_print_redir_type(enum e_tokens token);
+int retrieve_pipe(char *input, int *i, int *j, t_darray *tab);
+int	retrieve_in(char *input, int *i, int *j, t_darray *tab);
+int	retrieve_out(char *input, int *i, int *j, t_darray *tab);
+int	retrieve_dquotes(char *input, int *i, int *j, t_darray *tab);
+int	retrieve_squotes(char *input, int *i, int *j, t_darray *tab);
+int	retrieve_word(char *input, int *i, int *j, t_darray *tab);
 
 //parsing
 int	parsing_starter(t_darray *tokens);
