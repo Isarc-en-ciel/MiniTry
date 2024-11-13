@@ -34,10 +34,7 @@ int	read_the_input(char **envp)
 		add_history(input);
 		tokens = retrieve_cmd(input);
 		if (tokens == NULL || tokens->content == NULL)
-		{
-			free_final_array(tokens);
 			return (1);
-		}
 		parsing_starter(tokens);
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
