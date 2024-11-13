@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_struct.h                                   :+:      :+:    :+:   */
+/*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 14:39:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/31 11:02:45 by csteylae         ###   ########.fr       */
+/*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
+/*   Updated: 2024/11/13 16:32:42 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINISHELL_STRUCT_H
+#ifndef MINISHELL_STRUCT_H
 
 # define MINISHELL_STRUCT_H
 
-#include "minishell_enum.h"
-#include "minishell_lib.h"
+# include "minishell_enum.h"
+# include "minishell_lib.h"
 
 typedef struct s_lexer
 {
-    char			*word;
-    int				is_there_a_space;
+	char			*word;
+	int				is_there_a_space;
 	enum e_tokens	type;
-}   t_lexer;
+}	t_lexer;
 
 typedef struct s_darray
 {
@@ -32,9 +32,9 @@ typedef struct s_darray
 	size_t	block;
 }	t_darray;
 
-typedef	struct	s_stock
+typedef struct s_stock
 {
-	int	nbr_elem;
+	int		nbr_elem;
 	t_lexer	*cmd;
 }	t_stock;
 
@@ -57,7 +57,7 @@ typedef struct s_redirect
 	char				*filename; //malloc
 	char				*hd_delimiter; //malloc
 	enum e_tokens		type;
-}   t_redirect;
+}	t_redirect;
 
 /**
  * 	A struct that contains the array of redirection and the size of that array
@@ -67,15 +67,15 @@ typedef struct s_redirect
  * t_redirect *array : the malloced array that contains all redirections,
  * it keeps the redir in their order, form left to right,is NULL if no redir
 */
-typedef struct	s_redir_array
+typedef struct s_redir_array
 {
 	t_redirect	*array; //malloc, array = malloc(sizeof(*array) * size)
 	int			size;
 }	t_redir_array;
 
-typedef struct	error
+typedef struct error
 {
-	char 			*str_perror;
+	char			*str_perror;
 	enum e_error	code;
 }	t_error;
 
@@ -103,10 +103,10 @@ typedef struct s_command
  *	are done,  this struct will be copied into an array of str (char **env)
  *	and then destroyed; 
  */
-typedef struct	s_env_list
+typedef struct s_env_list
 {
-	char		*key;
-	char		*value;
+	char				*key;
+	char				*value;
 	struct s_env_list	*next;
 }	t_env_list;
 

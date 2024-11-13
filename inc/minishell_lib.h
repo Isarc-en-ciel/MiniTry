@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_lib.h                                      :+:      :+:    :+:   */
+/*   minishell_lib.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 12:02:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/25 11:57:14 by csteylae         ###   ########.fr       */
+/*   Created: 2024/11/13 16:26:55 by iwaslet           #+#    #+#             */
+/*   Updated: 2024/11/13 16:28:14 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBRARIES_H
+#ifndef MINISHELL_LIB_H
 
-# define MINISHELL_LIBRARIES_H
+# define MINISHELL_LIB_H
 
 # include "../lib/Libft/libft.h"
 # include "../lib/ft_printf/ft_printf.h"
