@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actual_parsing.c                                   :+:      :+:    :+:   */
+/*   init_struct_shell.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/14 16:03:40 by iwaslet          ###   ########.fr       */
+/*   Created: 2024/11/14 16:02:52 by iwaslet           #+#    #+#             */
+/*   Updated: 2024/11/14 16:04:10 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//parser sur la grammaire decidee dans le tab t_stock
+//initialiser la structure t_shell et la remplir avant l'expander
