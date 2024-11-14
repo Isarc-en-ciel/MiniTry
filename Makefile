@@ -1,4 +1,4 @@
-NAME= minitry
+NAME= minishell
 CC=cc
 CFLAGS= -Wall -Wextra -Werror
 DFLAGS= -g -O0 -fsanitize=address

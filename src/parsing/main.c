@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.s19.be>           +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 15:33:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/10/24 13:29:59 by csteylae         ###   ########.fr       */
+/*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
+/*   Updated: 2024/11/14 15:56:12 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	read_the_input(char **envp)
 		add_history(input);
 		tokens = retrieve_cmd(input);
 		if (tokens == NULL || tokens->content == NULL)
-			return (1);
+			continue;
 		parsing_starter(tokens);
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
