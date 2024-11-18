@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:36:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 15:31:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:04:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	lst_addback(t_env_list **head, t_env_list *new)
 	tmp->next = new;
 }
 
-void	env_lst_delete(t_env_list *elem)
+void	delete_env(t_env_list *elem)
 {
 	if (elem->value)
 		free(elem->value);

@@ -6,6 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
+/*   Updated: 2024/11/18 16:18:56 by csteylae         ###   ########.fr       */
 /*   Updated: 2024/11/18 15:54:13 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -22,6 +23,7 @@
 char		**init_env(char **envp); //env_list.c
 t_env_list	*new_env_list(char *key, char *value); //env_list_func.c
 void		lst_addback(t_env_list **head, t_env_list *new); //env_list_func.c
+void		delete_env(t_env_list *elem);
 t_env_list	*get_env(char *key, t_env_list *head);
 t_env_list	*env_modify_value(char *key, char *new_value, t_env_list **head);
 int			get_list_size(t_env_list *head); //env_list_func.c
