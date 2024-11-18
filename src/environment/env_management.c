@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:06:28 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 15:42:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:14:50 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 //}
 //
 
+void	env_error(t_command *cmd, char *str, enum e_error code)
+{
+	cmd->error = set_error(str, code);
+	return ;
+}
+
 t_env_list	*find_prev_env(t_env_list **head, char *key)
 {
 	t_env_list	*tmp;
@@ -44,20 +50,20 @@ t_env_list	*find_prev_env(t_env_list **head, char *key)
 	return (tmp);
 }
 
-t_env_list	*replace_env(char *key, char *new_value, t_env_list **head)
+void	replace_env(char *key, char *value, t_env_list **head, t_command *cmd)
 {
 	t_env_list	*tmp;
 	t_env_list	*new;
 
-	new = new_env_list(key, new_value);
+	new = new_env_list(key, value);
 	if (!new)
-		return (NULL);
+		return (env_error(cmd, "malloc", MALLOC));
 	tmp = find_prev_env(head, key);
 	if (!tmp)
-		//prev_tmp_not_found;
-	
-
-
+		return ;
+	new->next = tmp->next->next;
+	delete_env(tmp->next);
+	tmp->next = new;
 }
 
 t_env_list	*get_env(char *key, t_env_list *head)

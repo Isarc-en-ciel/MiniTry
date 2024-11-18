@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:19:23 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:17 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 16:01:54 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_pwd(char ***env, t_command *cmd)
 		// perror("malloc")
 		// return
 	}
-	pwd = find_node("PWD", head);
+	pwd = get_env("PWD", head);
 	ft_printf("%s\n", pwd->value);
 	if (!pwd)
 	{
