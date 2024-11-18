@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 14:36:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:26 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:31:36 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ void	lst_addback(t_env_list **head, t_env_list *new)
 	tmp->next = new;
 }
 
+void	env_lst_delete(t_env_list *elem)
+{
+	if (elem->value)
+		free(elem->value);
+	if (elem->key)
+		free(elem->key);
+	free(elem);
+}
+
 int		get_list_size(t_env_list *head)
 {
 	int			i;
@@ -68,35 +77,18 @@ int		get_list_size(t_env_list *head)
 	return (i);
 }
 
-t_env_list	*find_node(char *key, t_env_list *head)
+void	destroy_lst(t_env_list **head)
 {
-	t_env_list	*tmp;
-
-	if (!head)
-		return (NULL);
-	tmp = head;
-	while(tmp)
-	{
-		if (!ft_strncmp(key, tmp->key, ft_strlen(tmp->key)))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
-
-t_env_list	*env_modify_value(char *key, char *new_value, t_env_list **head)
-{
-	t_env_list	*tmp;
+	t_env_list *tmp;
 
 	if (!head || !*head)
-		return (NULL);
-	tmp = find_node(key, *head);
-	if (!tmp)
-		return (NULL);
-	if (tmp->value)
-		free(tmp->value);
-	tmp->value = ft_strdup(new_value);
-	if (!tmp->value)
-		return (NULL);
-	return (tmp);
+		return ;
+	while (*head != NULL)
+	{
+		tmp = (*head)->next;
+		free((*head)->key);
+		free((*head)->value);
+		free(*head);
+		*head = tmp;
+	}
 }

@@ -6,27 +6,11 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 13:36:39 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:23 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:09:29 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	destroy_lst(t_env_list **head)
-{
-	t_env_list *tmp;
-
-	if (!head || !*head)
-		return ;
-	while (*head != NULL)
-	{
-		tmp = (*head)->next;
-		free((*head)->key);
-		free((*head)->value);
-		free(*head);
-		*head = tmp;
-	}
-}
 
 static void	*free_struct(t_env_list **head, char **str_tab)
 {

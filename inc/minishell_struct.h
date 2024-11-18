@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/13 16:32:42 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:47:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_command
 	t_redir_array	redirection;
 	int				fd_in; //exec
 	int				fd_out; //exec
-	t_error			error;
+	t_error			error; //set to OK
 }	t_command;
 
 /*
@@ -129,8 +129,8 @@ typedef struct s_builtin
 typedef struct s_shell
 {
 	char		**env;
-	t_command	*tab;
-	int			tab_size;
+	t_command	*tab; //parsing
+	int			tab_size; //nb of cmd
 	int			exit_status;
 	t_builtin	builtin_cmds[7];
 }	t_shell;
