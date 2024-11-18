@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/18 15:55:15 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 16:02:12 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ int	read_the_input(char **envp)
 		tokens = retrieve_cmd(input);
 		if (tokens == NULL || tokens->content == NULL)
 			continue ;
-		parsing_starter(tokens);
+		if (parsing_starter(tokens) == 1)
+		{
+			free_final_array(tokens);
+			//free tab
+			continue ;
+		}
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
 	//	shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution

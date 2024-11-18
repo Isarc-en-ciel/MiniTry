@@ -17,6 +17,8 @@
         "memory": "c",
         "ratio": "c",
         "tuple": "c",
-        "utility": "c"
+        "utility": "c",
+        "minitry.h": "c",
+        "minishell.h": "c"
     }
 }
