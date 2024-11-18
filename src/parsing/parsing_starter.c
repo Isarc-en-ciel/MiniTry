@@ -6,13 +6,14 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/14 16:01:52 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:17:09 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+//faire tous les free
 
-int	parsing_starter(t_darray *tokens) //faire tous les free
+int	parsing_starter(t_darray *tokens)
 {
 	int		i;
 	t_stock	*tab;
@@ -33,7 +34,7 @@ int	parsing_starter(t_darray *tokens) //faire tous les free
 	}
 	ft_printf("we have %d commands\n", i);
 	print_stock_tab(tab, i);
-	return (0);
+	return (check_grammar(tab, i));
 }
 
 int	count_pipes(t_darray *tokens)

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/13 16:41:36 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:17:34 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int			count_pipes(t_darray *tokens);
 int			into_cmds(int i, t_darray *tokens, t_stock *tab);
 int			fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
 int			nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
+int	        check_grammar(t_stock *tab, int cmds);
 
 //testing parsing
 int			print_token_tab(t_darray *cmd);
