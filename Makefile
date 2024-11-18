@@ -27,6 +27,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/environment/init_env.c \
 	  src/environment/function_env.c \
 	  src/environment/create_env_list.c \
+	  src/environment/env_management.c \
 	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \

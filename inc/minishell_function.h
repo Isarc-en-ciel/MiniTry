@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/13 16:41:36 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:26:10 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@
 char		**init_env(char **envp); //env_list.c
 t_env_list	*new_env_list(char *key, char *value); //env_list_func.c
 void		lst_addback(t_env_list **head, t_env_list *new); //env_list_func.c
-t_env_list	*find_node(char *key, t_env_list *head);
+t_env_list	*get_env(char *key, t_env_list *head);
 t_env_list	*env_modify_value(char *key, char *new_value, t_env_list **head);
 int			get_list_size(t_env_list *head); //env_list_func.c
 void		destroy_lst(t_env_list **head); //env_list_func.c
 t_env_list	*array_to_list(char **env);
 char		**list_to_array(t_env_list **head);
 void		ft_print_list(t_env_list *head);
+
+/*repo builtins*/
+t_env_list	*init_list(char **env, t_command *cmd);
 
 /*file src/environment/test_env.c */
 void		ft_print_cmd(t_shell *shell);

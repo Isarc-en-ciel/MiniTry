@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:43 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:04:15 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,13 @@ static	t_shell	*clean_prompt(t_shell *shell)
 int	exec_prompt(t_shell *shell)
 {
 	if (shell->tab_size == 1)
+	{
 		exec_simple_cmd(shell);
+		if (shell->tab[0].error.code != OK)
+		{
+			perror(shell->tab[0].error.str_perror);
+		}
+	}
 	else
 		exec_pipeline(shell);
 	shell = clean_prompt(shell);
