@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 17:52:28 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:15:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_env(char ***envp, t_command *cmd)
 		return (0);
 	if (cmd->cmd[1])
 		return (builtin_error(cmd, cmd->cmd[0], BUILTIN_ARG, &head));
-	head = array_to_list(*envp);
 	i = 0;
+	head = array_to_list(*envp);
 	if (!head)
 		return (builtin_error(cmd, "malloc", MALLOC, &head));
 	replace_env("_", "usr/bin/env", &head, cmd);
