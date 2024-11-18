@@ -10,6 +10,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  lib/get_next_line/get_next_line_utils.c \
 	  src/parsing/main.c \
 	  src/init/init_shell.c \
+	  src/builtins/builtin_utils.c \
 	  src/builtins/ft_cd.c \
 	  src/builtins/ft_env.c \
 	  src/builtins/ft_pwd.c \
@@ -26,7 +27,8 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/parsing/init_struct_shell.c \
 	  src/environment/init_env.c \
 	  src/environment/function_env.c \
-	  src/environment/create_env_list.c \
+	  src/environment/array_to_list.c \
+	  src/environment/list_to_array.c \
 	  src/environment/env_management.c \
 	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \

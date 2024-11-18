@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 15:04:15 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:52:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	exec_simple_cmd(t_shell *shell)
 		return ;
 	if (get_builtin(shell, &shell->tab[0]))
 	{
-	//	ft_print_env();
 		return ;
 	}
 	pid = fork();
@@ -74,10 +73,10 @@ int	exec_prompt(t_shell *shell)
 	if (shell->tab_size == 1)
 	{
 		exec_simple_cmd(shell);
-		if (shell->tab[0].error.code != OK)
-		{
-			perror(shell->tab[0].error.str_perror);
-		}
+//		if (shell->tab[0].error.code != OK)
+//		{
+//			perror(shell->tab[0].error.str_perror);
+//		}
 	}
 	else
 		exec_pipeline(shell);

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/14 21:36:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:41:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ enum e_error
 	MALLOC,
 	PIPE_ERROR,
 	NO_ENV,
-	OPTION_BUILTIN,
+	BUILTIN_ARG,
 };
 
 enum

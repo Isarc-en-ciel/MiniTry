@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 17:03:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 17:04:07 by csteylae         ###   ########.fr       */
+/*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
+/*   Updated: 2024/11/18 17:51:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **head)
 {
-	cmd->error = set_error(str, code);
+	if (cmd->error.code == OK)
+		cmd->error = set_error(str, code);
 	if (head && *head)
 		destroy_lst(head);
 	return (-1);
@@ -32,6 +33,18 @@ void	build_envp(t_env_list **head, t_command *cmd, char **envp)
 	}
 	free_tab_char(envp);
 	envp = new_envp;
-	destroy_lst(head);
 	return ;
 }
+
+//void	ft_print_list(t_env_list *head)
+//{
+//	t_env_list	*tmp;
+//
+//	tmp = head;
+//	while (tmp)
+//	{
+//		if (tmp->value)
+//			ft_printf("%s=%s\n", tmp->key, tmp->value);
+//		tmp = tmp->next;
+//	}
+//}
