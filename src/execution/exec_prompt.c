@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 17:52:43 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:57:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ void	exec_simple_cmd(t_shell *shell)
 		redirect_io(shell, shell->tab[0].fd_in, shell->tab[0].fd_out);
 		exec_command(shell, 0);
 	}
-	wait(&shell->exit_status);
-	if (WIFEXITED(shell->exit_status))
-		shell->exit_status = WEXITSTATUS(shell->exit_status);
-	else if (WIFSIGNALED(shell->exit_status))
-		shell->exit_status = WTERMSIG(shell->exit_status);
+	shell->exit_status = get_exit_status(&shell->tab[0], pid);
 }
 
 static	t_shell	*clean_prompt(t_shell *shell)
@@ -81,6 +77,6 @@ int	exec_prompt(t_shell *shell)
 	else
 		exec_pipeline(shell);
 	shell = clean_prompt(shell);
-//	ft_printf("exit status : %d\n", shell->exit_status);
+	ft_printf("exit status : %d\n", shell->exit_status);
 	return (0);
 }

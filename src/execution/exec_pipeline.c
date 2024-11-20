@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:40 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/20 14:52:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,26 +82,6 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int prev_fd
 	redirect_io(shell, in, out);
 }
 
-static void wait_children(t_shell *shell, pid_t *child_pid, int child_nb)
-{
-	int	i;
-
-	i = 0;
-	(void) shell;
-	while (i != child_nb)
-	{
-		wait(NULL);
-		wait(&shell->exit_status);
-		if (WIFEXITED(shell->exit_status))
-			shell->exit_status = WEXITSTATUS(shell->exit_status);
-		else if (WIFSIGNALED(shell->exit_status))
-			shell->exit_status = WTERMSIG(shell->exit_status);
-		i++;
-	}
-	free(child_pid);
-	child_pid = NULL;
-}
-
 void	error_pipeline(t_shell *shell, pid_t **children, int pipe_fd[2], int prev_fd)
 {
 	//should free also child_pid 
@@ -175,7 +155,7 @@ void	exec_pipeline(t_shell *shell)
 		}
 		i++;
 	}
-	wait_children(shell, child_pid, i);
+	shell->exit_status = wait_children(shell, child_pid, i);
 	if (prev_fd > 2)
 		close(prev_fd);
 }

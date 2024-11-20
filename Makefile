@@ -36,6 +36,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/execution/exec_pipeline.c \
 	  src/execution/redirection.c \
 	  src/execution/heredoc.c \
+	  src/execution/get_exit_status.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 	  src/utils/set_error.c \

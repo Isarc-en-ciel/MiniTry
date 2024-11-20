@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/18 17:08:26 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:44:07 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void		perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
 void		redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
 t_command	*pseudo_parsing(t_shell *shell, char *input);
 void		create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
+int			get_exit_status(t_command *cmd, pid_t pid);
+int			wait_children(t_shell *shell, pid_t *child_pid, int child_nb);
 
 /* repo utils */
 void		free_tab_char(char **tab);
