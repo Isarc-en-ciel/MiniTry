@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/18 15:20:07 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:00:55 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ int	check_grammar(t_stock *tab, int cmds)
 		i++;
 	}
 	return (0);
+}
+
+int	free_first_degree_tab()
+{
+	
+}
+
+int	free_second_degree_tab()
+{
+	
 }
 
 /* ou est ce que j'initie/remplis le t_shell ?

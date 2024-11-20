@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/18 15:17:09 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:02:50 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,16 @@ int	into_cmds(int i, t_darray *tokens, t_stock *tab)
 
 	j = 0;
 	l = 0;
-	if (nbr_elem_cmd(i, tokens, tab) == 1)
-		return (1);
+	if (nbr_elem_cmd(i, tokens, tab) == -1)
+	{
+		return (-1); //free tab jusqua tabj
+	}
 	while (j < i)
 	{
 		if (fill_cmb_tab(&j, &l, tokens, tab) == -1)
-			return (-1);
+		{
+			return (-1); //free tout jusque la
+		}
 		l++;
 		j++;
 	}
@@ -96,7 +100,7 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 		{
 			tab[*j].cmd[n].word = malloc(sizeof(char)
 					* ft_strlen(tokens->content[*l].word));
-			if (!tab[*j].cmd[n].word)
+			if (!tab[*j].cmd[n].word) //free tout jusque la
 				return (-1);
 			tab[*j].cmd[n].word = ft_memcpy(tab[*j].cmd[n].word,
 					tokens->content[*l].word,
@@ -126,8 +130,8 @@ int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
 		}
 		tab[j].nbr_elem = cmd_size;
 		tab[j].cmd = malloc(sizeof(t_lexer) * (tab[j].nbr_elem));
-		if (!tab[j].cmd)
-			return (1);
+		if (!tab[j].cmd) //free tab jusqua tabj
+			return (-1);
 		n++;
 		j++;
 	}
