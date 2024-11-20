@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 15:04:15 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:57:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	exec_simple_cmd(t_shell *shell)
 		return ;
 	if (get_builtin(shell, &shell->tab[0]))
 	{
-	//	ft_print_env();
 		return ;
 	}
 	pid = fork();
@@ -54,11 +53,7 @@ void	exec_simple_cmd(t_shell *shell)
 		redirect_io(shell, shell->tab[0].fd_in, shell->tab[0].fd_out);
 		exec_command(shell, 0);
 	}
-	wait(&shell->exit_status);
-	if (WIFEXITED(shell->exit_status))
-		shell->exit_status = WEXITSTATUS(shell->exit_status);
-	else if (WIFSIGNALED(shell->exit_status))
-		shell->exit_status = WTERMSIG(shell->exit_status);
+	shell->exit_status = get_exit_status(&shell->tab[0], pid);
 }
 
 static	t_shell	*clean_prompt(t_shell *shell)
@@ -74,14 +69,14 @@ int	exec_prompt(t_shell *shell)
 	if (shell->tab_size == 1)
 	{
 		exec_simple_cmd(shell);
-		if (shell->tab[0].error.code != OK)
-		{
-			perror(shell->tab[0].error.str_perror);
-		}
+//		if (shell->tab[0].error.code != OK)
+//		{
+//			perror(shell->tab[0].error.str_perror);
+//		}
 	}
 	else
 		exec_pipeline(shell);
 	shell = clean_prompt(shell);
-//	ft_printf("exit status : %d\n", shell->exit_status);
+	ft_printf("exit status : %d\n", shell->exit_status);
 	return (0);
 }
