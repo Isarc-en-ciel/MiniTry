@@ -3,42 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 17:03:21 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 16:19:40 by csteylae         ###   ########.fr       */
+/*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
+/*   Updated: 2024/11/18 18:15:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_env(char ***env, t_command *cmd)
+int	ft_env(char ***envp, t_command *cmd)
 {
-//	int			i;
-//	char		**env_b;
-//	t_env_list	*head;
+	t_env_list	*head;
+	int			i;
 
-	if (!env || !*env || !**env)
+	head = NULL;
+	if (!envp || !*envp)
 		return (0);
-	(void)cmd;
-//	i = 0;
-//	//head = init_list(*env, cmd);
-//	if (cmd->error.code != OK)
-//		return (-1);
-//
-//
-//	//replace value
-//	//list_to_array
-//	//return
-//
-//
-//	
-//	*env = list_to_array(&head);
-//	env_b = *env;
-//	while (env_b[i])
-//	{
-//		ft_printf("%s\n", env_b[i]);
-//		i++;
-//	}
+	if (cmd->cmd[1])
+		return (builtin_error(cmd, cmd->cmd[0], BUILTIN_ARG, &head));
+	i = 0;
+	head = array_to_list(*envp);
+	if (!head)
+		return (builtin_error(cmd, "malloc", MALLOC, &head));
+	replace_env("_", "usr/bin/env", &head, cmd);
+	if (cmd->error.code != OK)
+		return (builtin_error(cmd, NULL, cmd->error.code, &head));
+	build_envp(&head, cmd, *envp);
+	if (cmd->error.code != OK)
+		return (-1);
+	ft_print_list(head);
+	destroy_lst(&head);
 	return (0);
 }

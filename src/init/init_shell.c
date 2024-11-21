@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 15:46:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:54:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_exit(char ***env, t_command *cmd)
 
 t_shell	init_shell(void)
 {
-	t_shell shell =
+	t_shell shell =	
 	{
 		.tab = NULL,
 		.env = NULL,

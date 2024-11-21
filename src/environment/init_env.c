@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:43:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:30 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/18 17:16:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static char	*add_env_var(char *str)
 	ft_memcpy(new_env_var, str, ft_strlen(str));
 	return (new_env_var);
 }
-
 
 char	**init_env(char **envp)
 {

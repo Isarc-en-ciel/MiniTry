@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/20 14:35:46 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/21 12:37:40 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	read_the_input(char **envp)
 		}
 	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
 	//	if shell == null -> continue
-	//	shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
-	//	exec_prompt(&shell);
+		shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
+		exec_prompt(&shell);
 		free(input);
 		free_final_array(tokens);
 		input = NULL;

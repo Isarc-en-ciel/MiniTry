@@ -6,29 +6,11 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:06:28 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 16:14:50 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:39:16 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-//
-//t_env_list	*replace_env(char *key, char *new_value, t_env_list **head)
-//{
-//	t_env_list	*tmp;
-//
-//	if (!head || !*head)
-//		return (NULL);
-//	tmp = get_env(key, *head);
-//	if (!tmp)
-//		return (NULL);
-//	if (tmp->value)
-//		free(tmp->value);
-//	tmp->value = ft_strdup(new_value);
-//	if (!tmp->value)
-//		return (NULL);
-//	return (tmp);
-//}
-//
 
 void	env_error(t_command *cmd, char *str, enum e_error code)
 {
@@ -43,7 +25,7 @@ t_env_list	*find_prev_env(t_env_list **head, char *key)
 	tmp = *head;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->next->key, key, ft_strlen(key)))
+		if (!ft_strncmp(tmp->next->key, key, ft_strlen(tmp->next->key)))
 			break;
 		tmp = tmp->next;
 	}
@@ -73,7 +55,7 @@ t_env_list	*get_env(char *key, t_env_list *head)
 	if (!head)
 		return (NULL);
 	tmp = head;
-	while(tmp)
+	while (tmp)
 	{
 		if (!ft_strncmp(key, tmp->key, ft_strlen(tmp->key)))
 			return (tmp);
