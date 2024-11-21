@@ -6,12 +6,11 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/21 13:23:01 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/21 13:25:36 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-//faire tous les free
 
 int	parsing_starter(t_darray *tokens)
 {
@@ -22,14 +21,19 @@ int	parsing_starter(t_darray *tokens)
 	if (i == 0)
 	{
 		printf("pipe error\n");
+		free_final_array(tokens);
 		return (1);
 	}
 	tab = malloc(sizeof(t_stock) * i);
 	if (!tab)
+	{
+		free_final_array(tokens);
 		return (1);
+	}
 	if (into_cmds(i, tokens, tab) == -1)
 	{
 		printf("malloc error\n");
+		free_final_array(tokens);
 		return (1);
 	}
 	ft_printf("we have %d commands\n", i);
