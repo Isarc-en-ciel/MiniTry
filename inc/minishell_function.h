@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/20 14:44:07 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:20:32 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int			into_cmds(int i, t_darray *tokens, t_stock *tab);
 int			fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
 int			nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
 int	        check_grammar(t_stock *tab, int cmds);
+void	    free_first_degree_tab(t_stock *tab, int i);
+void	    free_second_degree_tab(t_stock *tab, int i);
 
 //testing parsing
 int			print_token_tab(t_darray *cmd);

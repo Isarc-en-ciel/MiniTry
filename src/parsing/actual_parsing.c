@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/20 15:00:55 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/21 13:20:22 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,36 @@ int	check_grammar(t_stock *tab, int cmds)
 	return (0);
 }
 
-int	free_first_degree_tab()
+void	free_first_degree_tab(t_stock *tab, int i)
 {
-	
+	int	j;
+
+	j = 0;
+	while (j < i && tab[j].cmd)
+	{
+		free (tab[j].cmd);
+		j++;
+	}
+	free (tab);
 }
 
-int	free_second_degree_tab()
+void	free_second_degree_tab(t_stock *tab, int i)
 {
-	
+	int	n;
+	int	j;
+
+	n = 0;
+	j = 0;
+	while (j < i && tab[j].cmd)
+	{
+		while (n < tab[j].nbr_elem && tab[j].cmd[n].word)
+		{
+			free (tab[j].cmd[n].word);
+			n++;
+		}
+		j++;
+	}
+	free_first_degree_tab(tab, i);
 }
 
 /* ou est ce que j'initie/remplis le t_shell ?

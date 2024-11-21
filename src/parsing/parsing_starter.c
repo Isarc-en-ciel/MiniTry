@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/20 15:02:50 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/21 13:20:38 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ int	into_cmds(int i, t_darray *tokens, t_stock *tab)
 	l = 0;
 	if (nbr_elem_cmd(i, tokens, tab) == -1)
 	{
-		return (-1); //free tab jusqua tabj
+		free_first_degree_tab(tab, i);
+		return (-1);
 	}
 	while (j < i)
 	{
 		if (fill_cmb_tab(&j, &l, tokens, tab) == -1)
 		{
-			return (-1); //free tout jusque la
+			free_second_degree_tab(tab, i);
+			return (-1);
 		}
 		l++;
 		j++;
@@ -100,7 +102,6 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 		{
 			tab[*j].cmd[n].word = malloc(sizeof(char)
 					* ft_strlen(tokens->content[*l].word));
-			if (!tab[*j].cmd[n].word) //free tout jusque la
 				return (-1);
 			tab[*j].cmd[n].word = ft_memcpy(tab[*j].cmd[n].word,
 					tokens->content[*l].word,
