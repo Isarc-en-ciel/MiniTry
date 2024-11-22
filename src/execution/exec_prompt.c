@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/20 16:57:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:57:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ void	exec_simple_cmd(t_shell *shell)
 	if (shell->tab[0].error.code != OK)
 		return ;
 	if (get_builtin(shell, &shell->tab[0]))
-	{
 		return ;
-	}
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));

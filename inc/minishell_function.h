@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/20 14:44:07 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:08:20 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_shell		init_shell(void);
 
 /* repo builtins */
 int			builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **head);
-void		build_envp(t_env_list **head, t_command *cmd, char **envp);
+void		build_envp(t_env_list **head, t_command *cmd, char ***envp);
 int			ft_cd(char ***env, t_command *cmd);
 int			ft_env(char ***env, t_command *cmd);
 int			ft_pwd(char ***env, t_command *cmd);

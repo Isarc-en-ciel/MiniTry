@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 18:15:33 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:08:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_env(char ***envp, t_command *cmd)
 	replace_env("_", "usr/bin/env", &head, cmd);
 	if (cmd->error.code != OK)
 		return (builtin_error(cmd, NULL, cmd->error.code, &head));
-	build_envp(&head, cmd, *envp);
+	build_envp(&head, cmd, envp);
 	if (cmd->error.code != OK)
 		return (-1);
 	ft_print_list(head);

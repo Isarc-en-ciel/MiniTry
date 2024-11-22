@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 18:15:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:08:19 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **hea
 	return (-1);
 }
 
-void	build_envp(t_env_list **head, t_command *cmd, char **envp)
+void	build_envp(t_env_list **head, t_command *cmd, char ***envp)
 {
 	char **new_envp;
 
@@ -31,9 +31,8 @@ void	build_envp(t_env_list **head, t_command *cmd, char **envp)
 		builtin_error(cmd, "malloc", MALLOC, head);
 		return ;
 	}
-	free_tab_char(envp);
-	envp = new_envp;
-	return ;
+	free_tab_char(*envp);
+	*envp = new_envp;
 }
 
 //void	ft_print_list(t_env_list *head)
