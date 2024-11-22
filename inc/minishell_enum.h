@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/20 16:00:42 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:36:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ enum e_tokens
 enum e_error
 {
 	OK = 0,
+	BUILTIN_OPT = 2,
 	OPEN_FILE,
 	FILE_NO_EXIST,
 	FILE_NO_PERM,
@@ -46,8 +47,6 @@ enum e_error
 	MALLOC,
 	SYSCALL_ERROR = 1,
 	PIPE_ERROR,
-	NO_ENV,
-	BUILTIN_ARG,
 };
 
 enum

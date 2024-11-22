@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:06:28 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 17:39:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/22 18:12:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ t_env_list	*find_prev_env(t_env_list **head, char *key)
 	tmp = *head;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->next->key, key, ft_strlen(tmp->next->key)))
-			break;
+		if (tmp->next)
+		{
+			if (!ft_strncmp(tmp->next->key, key, ft_strlen(tmp->next->key)))
+				break;
+		}
 		tmp = tmp->next;
 	}
 	return (tmp);
