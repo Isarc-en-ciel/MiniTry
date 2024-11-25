@@ -32,17 +32,20 @@ int	read_the_input(char **envp)
 		else if (ft_strlen(input) == 0)
 			continue ;
 		add_history(input);
-//		tokens = retrieve_cmd(input);
-//		if (tokens == NULL || tokens->content == NULL)
-//			continue ;
-//		parsing_starter(tokens);
-//	//	shell.tab = retrieve_cmd(input); doesnt compile for the moment 
-	//	if shell == null -> continue
-		shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
-		exec_prompt(&shell);
+		tokens = retrieve_cmd(input);
+		if (tokens == NULL || tokens->content == NULL)
+			continue ;
+		parsing_starter(tokens);
+		shell.tab = parsin_le_vrai()
+		if (erreur)
+		{
+			free pleins de trucs
+			continue;
+		}
+		//shell.tab = pseudo_parsing(&shell, input);// simple parsing to test execution
+		//exec_prompt(&shell);
 		free(input);
-//		free_final_array(tokens);
-		input = NULL;
+		free_final_array(tokens);
 	}
 	return (0);
 }
@@ -55,4 +58,23 @@ int	main(int ac, char **av, char **envp)
 	if (read_the_input(envp) == 1)
 		write (1, "ho no it's fucked\n", 18);
 	return (0);
+}
+
+
+t_command	*parsin_le_vrai(input)
+{
+	t_darray	*tokens;
+	t_stock		*tab;
+
+	tab = NULL;
+	tokens = retrieve_cmd(input);
+	if (tokens == NULL || tokens->content == NULL)
+			continue ; // a gerer autrement
+	if (parsing_starter(tokens, &tab) == 1)
+	{
+		return (erreur);
+	}
+	free_final_array(tokens);
+	expand_on_tab(tab);
+	return (put_in_shell_tab(tab));
 }

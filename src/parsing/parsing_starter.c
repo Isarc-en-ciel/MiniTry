@@ -12,10 +12,9 @@
 
 #include "../../inc/minishell.h"
 
-int	parsing_starter(t_darray *tokens) //faire tous les free
+int	parsing_starter(t_darray *tokens, t_stock *tab) //faire tous les free
 {
 	int		i;
-	t_stock	*tab;
 
 	i = count_pipes(tokens) + 1;
 	if (i == 0)

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/22 18:17:09 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:43:23 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_env_list	*array_to_list(char **env);
 char		**list_to_array(t_env_list **head);
 void		ft_print_list(t_env_list *head);
 void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
+void		create_new_env(t_env_list **head, char *key, char *value, t_command *cmd);
 
 
 /*file src/environment/test_env.c */
