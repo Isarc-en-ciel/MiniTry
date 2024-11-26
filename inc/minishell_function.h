@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/25 11:43:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:30:34 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ char		**list_to_array(t_env_list **head);
 void		ft_print_list(t_env_list *head);
 void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
 void		create_new_env(t_env_list **head, char *key, char *value, t_command *cmd);
+
+/* expansion */
+char	*expand_var(t_shell *shell, char *word);
 
 
 /*file src/environment/test_env.c */
@@ -103,7 +106,7 @@ int			retrieve_squotes(char *input, int *i, int *j, t_darray *tab);
 int			retrieve_word(char *input, int *i, int *j, t_darray *tab);
 
 //parsing
-int			parsing_starter(t_darray *tokens);
+int			parsing_starter(t_darray *tokens, t_stock *tab);
 int			count_pipes(t_darray *tokens);
 int			into_cmds(int i, t_darray *tokens, t_stock *tab);
 int			fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);

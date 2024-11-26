@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:58:52 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/25 12:13:01 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:27:10 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ t_env_list	*get_env(char *key, t_env_list *head)
 	tmp = head;
 	while (tmp)
 	{
-		if (!ft_strncmp(key, tmp->key, ft_strlen(tmp->key)))
+		if (!ft_strncmp(key, tmp->key, ft_strlen(key)) 
+				&& !ft_strncmp(key, tmp->key, ft_strlen(tmp->key)))
 			return (tmp);
 		tmp = tmp->next;
 	}
