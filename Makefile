@@ -11,6 +11,9 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/parsing/main.c \
 	  src/init/init_shell.c \
 	  src/expander/var_expansion.c \
+	  src/expander/expand_exit_status.c \
+	  src/expander/expand_env_var.c \
+	  src/expander/update_expanded_value.c \
 	  src/builtins/builtin_utils.c \
 	  src/builtins/ft_cd.c \
 	  src/builtins/ft_env.c \
