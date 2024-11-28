@@ -1,7 +1,7 @@
 NAME= minishell
 CC=cc
 CFLAGS= -Wall -Wextra -Werror
-DFLAGS= -g -O0 #-fsanitize=address
+DFLAGS= -g -O0 -fsanitize=address
 
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a
@@ -25,6 +25,8 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/parsing/parsing_starter.c \
 	  src/parsing/actual_parsing.c \
 	  src/parsing/init_struct_shell.c \
+	  src/parsing/expander.c \
+	  src/parsing/tab_cleaner.c \
 	  src/environment/init_env.c \
 	  src/environment/function_env.c \
 	  src/environment/array_to_list.c \

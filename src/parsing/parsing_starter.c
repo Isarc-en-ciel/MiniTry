@@ -6,39 +6,38 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/21 13:25:36 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/28 15:08:59 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	parsing_starter(t_darray *tokens)
+t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab)
 {
 	int		i;
-	t_stock	*tab;
 
 	i = count_pipes(tokens) + 1;
 	if (i == 0)
 	{
 		printf("pipe error\n");
 		free_final_array(tokens);
-		return (1);
+		return (NULL);
 	}
 	tab = malloc(sizeof(t_stock) * i);
 	if (!tab)
 	{
 		free_final_array(tokens);
-		return (1);
+		return (NULL);
 	}
 	if (into_cmds(i, tokens, tab) == -1)
 	{
-		printf("malloc error\n");
 		free_final_array(tokens);
-		return (1);
+		return (NULL);
 	}
-	ft_printf("we have %d commands\n", i);
 	print_stock_tab(tab, i);
-	return (check_grammar(tab, i));
+    if (check_grammar(tab, i) == 1)
+    return (NULL);
+	return (tab);
 }
 
 int	count_pipes(t_darray *tokens)
@@ -135,6 +134,7 @@ int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
 			cmd_size++;
 		}
 		tab[j].nbr_elem = cmd_size;
+		tab[j].nbr_cmd = i;
 		tab[j].cmd = malloc(sizeof(t_lexer) * (tab[j].nbr_elem));
 		if (!tab[j].cmd)
 			return (-1);

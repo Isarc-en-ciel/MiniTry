@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/21 13:20:32 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/28 15:09:53 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,26 @@ int			retrieve_squotes(char *input, int *i, int *j, t_darray *tab);
 int			retrieve_word(char *input, int *i, int *j, t_darray *tab);
 
 //parsing
-int			parsing_starter(t_darray *tokens);
+t_command	*parsing(char *input, t_shell *shell);
+t_stock		*parsing_starter(t_darray *tokens, t_stock	*tab);
 int			count_pipes(t_darray *tokens);
 int			into_cmds(int i, t_darray *tokens, t_stock *tab);
 int			fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
 int			nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
-int	        check_grammar(t_stock *tab, int cmds);
-void	    free_first_degree_tab(t_stock *tab, int i);
-void	    free_second_degree_tab(t_stock *tab, int i);
+int			check_grammar(t_stock *tab, int cmds);
+void		free_first_degree_tab(t_stock *tab, int i);
+void		free_second_degree_tab(t_stock *tab, int i);
+
+//expander
+int			expander(t_stock *tab, t_shell *shell);
+int			expand_cmd(t_lexer *cmd, t_shell *shell);
+int			join_cmd(t_lexer *cmd);
+int			ft_strcmp(const char *s, char n);
+char		*ft_strcpy(const char *s1, char *s2);
+t_stock		*tab_cleaner(t_stock *tab);
+int			clean_cmd(t_lexer *cmd, t_lexer **new_cmd);
+int 		count_new_elem(t_lexer *cmd);
+int 		copy_token(t_lexer *cmd, t_lexer **new_cmd);
 
 //testing parsing
 int			print_token_tab(t_darray *cmd);

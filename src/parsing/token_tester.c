@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:09:08 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/05 17:37:00 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/28 14:57:29 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	print_stock_tab(t_stock *tab, int cmds)
 			ft_printf("token : %s\nwith space: %d\nwith type : ",
 				tab[i].cmd[j].word, tab[i].cmd[j].is_there_a_space);
 			ft_print_redir_type(tab[i].cmd[j].type);
-			ft_printf("\n");
+            ft_printf("\n");
+            ft_printf("We have %d commands\n", tab[i].nbr_cmd);
 			j++;
 		}
 		ft_printf("\n");

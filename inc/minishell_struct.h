@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/18 15:47:43 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:48:30 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_darray
 typedef struct s_stock
 {
 	int		nbr_elem;
+	int		nbr_cmd;
 	t_lexer	*cmd;
 }	t_stock;
 
@@ -110,7 +111,7 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
-typedef int (*builtin_func) (char ***env, t_command *cmd);
+typedef int	(*builtin_func) (char ***env, t_command *cmd);
 
 typedef struct s_builtin
 {
