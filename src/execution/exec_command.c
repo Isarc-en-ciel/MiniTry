@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/20 16:00:29 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:03:32 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ static char	**split_path_var(t_shell *shell, int n)
 	while (shell->env[i] && ft_strncmp("PATH=", shell->env[i], 5)) //not enough
 		i++;
 	if (!shell->env[i])
+	{
+		shell->tab[n].error = set_error(shell->tab[n].cmd[0], FILE_NO_EXIST);
 		return (NULL);
+	}
+	if (!shell->env[i])
 	env_path = shell->env[i] + ft_strlen("PATH=");
 	paths = ft_split(env_path, ':');
 	if (!paths)

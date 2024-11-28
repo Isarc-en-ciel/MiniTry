@@ -6,35 +6,30 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:19:23 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 16:01:54 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:36:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/* pwd is just a simple syscall getcwd */
+
 int	ft_pwd(char ***env, t_command *cmd)
 {
-	t_env_list	*head;
-	t_env_list	*pwd;
+	int			exit_status;
+	char		*str;
 
+	(void)env;
+	exit_status = 0;
+	str = NULL;
 	if (cmd->cmd[1])
+		return  (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, NULL));
+	str = getcwd(NULL, 0);
+	if (!str)
 	{
-		// not good 
-		// idk what to do
-		// go ask to people how to manage it
+		return (builtin_error(cmd, "getcwd", SYSCALL_ERROR, NULL));
 	}
-	head = array_to_list(*env);
-	if (!env)
-	{
-		// perror("malloc")
-		// return
-	}
-	pwd = get_env("PWD", head);
-	ft_printf("%s\n", pwd->value);
-	if (!pwd)
-	{
-		//return exit status pwd not found
-	}
-	destroy_lst(&head);
+	ft_printf("%s\n", str);
+	free(str);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 15:24:28 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/28 15:57:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	read_the_input(char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	(void)av;
+
 	if (ac != 1)
 		return (1);
 	if (read_the_input(envp) == 1)

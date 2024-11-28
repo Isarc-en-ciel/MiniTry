@@ -1,21 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_management.c                                   :+:      :+:    :+:   */
+/*   update_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 15:06:28 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 17:39:16 by csteylae         ###   ########.fr       */
+/*   Created: 2024/11/22 17:58:52 by csteylae          #+#    #+#             */
+/*   Updated: 2024/11/26 14:27:10 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	env_error(t_command *cmd, char *str, enum e_error code)
+void	create_new_env(t_env_list **head, char *key, char *value, t_command *cmd)
 {
-	cmd->error = set_error(str, code);
-	return ;
+	t_env_list	*elem;
+
+	elem = new_env_list(key, value);
+	if (!elem)
+	{
+		cmd->error = set_error("malloc", MALLOC);
+		return ;
+	}
+	lst_addback(head, elem);
+}
+
+void	update_env(t_command *cmd, t_env_list **head, char *key, char *value)
+{
+	t_env_list	*elem;
+
+	elem = get_env(key, *head);
+	if (!elem)
+		create_new_env(head, key, value, cmd);
+	else
+		replace_env(key, value, head, cmd);
 }
 
 t_env_list	*find_prev_env(t_env_list **head, char *key)
@@ -25,8 +43,11 @@ t_env_list	*find_prev_env(t_env_list **head, char *key)
 	tmp = *head;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->next->key, key, ft_strlen(tmp->next->key)))
-			break;
+		if (tmp->next)
+		{
+			if (!ft_strncmp(tmp->next->key, key, ft_strlen(tmp->next->key)))
+				break;
+		}
 		tmp = tmp->next;
 	}
 	return (tmp);
@@ -39,7 +60,10 @@ void	replace_env(char *key, char *value, t_env_list **head, t_command *cmd)
 
 	new = new_env_list(key, value);
 	if (!new)
-		return (env_error(cmd, "malloc", MALLOC));
+	{
+		cmd->error = set_error("malloc", MALLOC);
+		return ;
+	}
 	tmp = find_prev_env(head, key);
 	if (!tmp)
 		return ;
@@ -57,7 +81,8 @@ t_env_list	*get_env(char *key, t_env_list *head)
 	tmp = head;
 	while (tmp)
 	{
-		if (!ft_strncmp(key, tmp->key, ft_strlen(tmp->key)))
+		if (!ft_strncmp(key, tmp->key, ft_strlen(key)) 
+				&& !ft_strncmp(key, tmp->key, ft_strlen(tmp->key)))
 			return (tmp);
 		tmp = tmp->next;
 	}
