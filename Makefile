@@ -1,7 +1,8 @@
 NAME= minishell
 CC=cc
-CFLAGS= -Wall -Wextra -Werror $(DFLAGS)
+CFLAGS= -Wall -Wextra -Werror
 DFLAGS= -g -O0 -fsanitize=address
+VALGRIND_FLAGS= -g -O0
 
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a
@@ -71,5 +72,7 @@ re: fclean all
 
 debug: CFLAGS += $(DFLAGS)
 debug: re
+valgrind: CFLAGS += $(VALGRIND_FLAGS)
+valgrind: re
 
 .PHONY: all clean fclean re

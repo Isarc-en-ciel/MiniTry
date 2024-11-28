@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:24:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/28 13:48:03 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:57:32 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	manage_undefined_behavior(char **retp, char *word, int i)
 
 	seq_begin = i;
 	var = NULL;
-	while (word[i] && word[i] == '$' && ((word[i + 1] && word[i + 1] == '$') || (word[i + 1] == '\0')))
+	while (word[i] && word[i] == '$'
+		   	&& ((word[i + 1] && word[i + 1] == '$') || (word[i + 1] == '\0')))
 	{
 		i++;
 	}
@@ -65,79 +66,47 @@ static int	parse_expansion(char **retp, char *word, int i)
 	return (i);
 }
 
-char	*expand_var(t_shell *sh, char *word)
+static int	get_expansion_status(int i, char **word, char **ret)
 {
-	char	*ret;
-	size_t		i;
+	if (i == -1)
+	{
+		if (*word)
+			free(*word);
+		if (*ret)
+			free(*ret);
+		return (-1);
+	}
+	if (*word)
+		free(*word);
+	*word = *ret;
+	return (0);
+}
+
+int	expand_var(t_shell *sh, char **wordp)
+{
+	char		*ret;
+	char		*word;
+	int			i;
 
 	ret = NULL;
+	word = *wordp;
 	i = 0;
-	while(word[i] && i <= ft_strlen(word))
+	while (i != -1 && word[i] && (size_t)i <= ft_strlen(word))
 	{
 		if (word[i] && word[i] != '$')
-		{
 			i =  get_word(&ret, word, i);
-		}
 		else 
 		{
 			i = parse_expansion(&ret, word, i);
-			if (!word[i])
+			if (i == -1 || !word[i])
 				break ;
 			if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] == '?')
-			{
 				i += expand_exit_status(&ret, sh->exit_status);
-			}
-			else if (word[i] && word[i] == '$')
-			{
+			else if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] != ' ') 
 				i = expand_env_var(&ret, word, i, sh->env);
-			}
 		}
-		if ((size_t)i >= ft_strlen(word))
-			break ;
 	}
-	ft_printf("return : %s\n", ret);
-	return (ret);
+	i = get_expansion_status(i, wordp, &ret);
+	ft_printf("expanded value : %s\n", *wordp);
+	return (i);
 }
-
-
-//char	*expand_var(t_shell *sh, char *word)
-//{
-//	char	*ret;
-//	size_t		i;
-//
-//	ret = NULL;
-//	i = 0;
-//	while(word[i] && i <= ft_strlen(word))
-//	{
-//		if (word[i] && word[i] != '$')
-//		{
-//			i =  get_word(&ret, word, i);
-//		}
-//		else if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] == '?')
-//		{
-//			i += expand_exit_status(&ret, sh->exit_status);
-//		}
-//		else if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] == ' ')
-//		{
-//			ret = update_expanded_value(ret, "$ ", 2);
-//			i += ft_strlen("$ ");
-//		}
-//		else if (word[i] && word[i] == '$' && word[i + 1] == '\0')
-//		{
-//			ret = update_expanded_value(ret, "$", 1);
-//			i++;
-//		}
-//		else if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] == '$')
-//		{
-//			i = manage_undefined_behavior(&ret, word, i); 
-//		}
-//		else
-//		{ 
-//			i = find_env_var(&ret, word, i, sh->env);
-//		}
-//		if (i >= ft_strlen(word))
-//			break ;
-//	}
-//	ft_printf("return : %s\n", ret);
-//	return (ret);
-//}

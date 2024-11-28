@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:54:38 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/27 19:12:20 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:14:19 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*update_expanded_value(char *ret, char *word, int count)
 	ft_memcpy(var, word, count);
 	if (!var)
 	{
-		free(ret);
 		return (NULL);
 	}
 	if (!ret)

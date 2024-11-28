@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/27 19:24:29 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:55:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void		ft_print_list(t_env_list *head);
 void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
 void		create_new_env(t_env_list **head, char *key, char *value, t_command *cmd);
 
-/* repo expandern */
-char	*expand_var(t_shell *shell, char *word);
+/* repo expander */
+int		expand_var(t_shell *shell, char **word);
 char	*update_expanded_value(char *ret, char *word, int count);
 int		expand_exit_status(char **retp, int exit_status);
 int		expand_env_var(char **retp, char *word, int i, char **env);

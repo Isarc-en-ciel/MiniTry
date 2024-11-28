@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:53:15 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/27 18:57:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:00:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	expand_exit_status(char **retp, int exit_status)
 		return (-1);
 	}
 	*retp = update_expanded_value(*retp, var, ft_strlen(var));
+	free(var);
 	if (!*retp)
 		return (0);
 	return (2);

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:59:12 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/28 13:48:01 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/28 15:08:30 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	char	*find_env_var(char *var, char **env, int *flag)
 		*flag = -1;
 	ptr = get_env(var, head);
 	if (!ptr)
-		expanded_value  = "";
+		expanded_value = NULL;
 	else
 	{
 		expanded_value = ft_strdup(ptr->value);
@@ -62,11 +62,9 @@ int	expand_env_var(char **retp, char *word, int i, char **env)
 	char	*var;
 
 	var = get_value_to_expand(word, &i);
-	ft_printf("var : %s\n", var);
 	if (!var)
 	{
 		free(*retp);
-		*retp = NULL;
 		return (-1);
 	}
 	var = find_env_var(var, env, &i);
@@ -76,6 +74,14 @@ int	expand_env_var(char **retp, char *word, int i, char **env)
 		free(*retp);
 		return (-1);
 	}
-	*retp = update_expanded_value(*retp, var, ft_strlen(var));
+	if (var)
+	{
+		*retp = update_expanded_value(*retp, var, ft_strlen(var));
+		free(var);
+	}
+	else
+		*retp = update_expanded_value(*retp, "", 0);
+	if (!*retp)
+		i = -1;
 	return (i);
 }
