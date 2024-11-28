@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:59:12 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/27 19:24:32 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:48:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static char	*get_value_to_expand(char *word, int *i)
 	seq_begin = *i;
 	count = 0;
 	var = NULL;
-	i++;
+	*i = *i + 1;
 	while (word[*i] && word[*i] != ' ' &&  word[*i] != '$')
 	{
 		count++;
-		i++;
+		*i = *i + 1;;
 	}
 	var = update_expanded_value(var, word + seq_begin + 1, count);
 	if (!var)
@@ -62,6 +62,7 @@ int	expand_env_var(char **retp, char *word, int i, char **env)
 	char	*var;
 
 	var = get_value_to_expand(word, &i);
+	ft_printf("var : %s\n", var);
 	if (!var)
 	{
 		free(*retp);
