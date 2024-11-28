@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 15:19:34 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:14:44 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	expand_cmd(t_lexer *cmd, t_shell *shell)
 	int	i;
 
 	i = 0;
-    (void) shell;
-    printf("Here\n");
+	(void) shell;
+	printf("Here\n");
 	while (&cmd[i])
 	{
 		if (cmd[i].type == WORD || cmd[i].type == D_QUOTE)
@@ -101,15 +101,15 @@ int	ft_strcmp(const char *s, char n)
 	return (1);
 }
 
-char *ft_strcpy(const char *s1, char *s2)
+char	*ft_strcpy(const char *s1, char *s2)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (s1[i])
-    {
-        s2[i] = s1[i];
-        i++;
-    }
-    return (s2);
+	i = 0;
+	while (s1[i])
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	return (s2);
 }

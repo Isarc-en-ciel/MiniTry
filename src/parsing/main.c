@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 15:57:33 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:16:28 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	read_the_input(char **envp)
 			continue ;
 		add_history(input);
 		shell.tab = parsing(input, &shell);
-        if (shell.tab == NULL)
-            continue ;
+		if (shell.tab == NULL)
+			continue ;
 		//exec_prompt(&shell);
 		free(input);
 		input = NULL;
@@ -65,7 +65,7 @@ t_command	*parsing(char *input, t_shell *shell)
 	if (tokens == NULL || tokens->content == NULL)
 		return (NULL);
 	tab = parsing_starter(tokens, tab);
-    if (tab == NULL)
+	if (tab == NULL)
 		return (NULL);
 	free_final_array(tokens);
 	if (expander(tab, shell) == -1)

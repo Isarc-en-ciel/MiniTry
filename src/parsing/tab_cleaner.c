@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 14:58:56 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:13:08 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_stock	*tab_cleaner(t_stock *tab)
 {
-	int	i;
+	int		i;
 	t_stock	*new_tab;
 
 	i = 0;
@@ -33,7 +33,7 @@ t_stock	*tab_cleaner(t_stock *tab)
 
 int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (count_new_elem(cmd) == 0)
@@ -53,12 +53,12 @@ int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd)
 	return (0);
 }
 
-int count_new_elem(t_lexer *cmd)
+int	count_new_elem(t_lexer *cmd)
 {
-	int i;
+	int	i;
 	int	n;
-	
-	i =0;
+
+	i = 0;
 	n = 0;
 	while (&cmd[i])
 	{
@@ -69,7 +69,7 @@ int count_new_elem(t_lexer *cmd)
 	return (n);
 }
 
-int copy_token(t_lexer *cmd, t_lexer **new_cmd)
+int	copy_token(t_lexer *cmd, t_lexer **new_cmd)
 {
 	int	i;
 
