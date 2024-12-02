@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/22 12:46:27 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:28:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **hea
 		cmd->error = set_error(str, code);
 	if (head && *head)
 		destroy_lst(head);
-	return (1);
+	return (FAIL);
 }
 
 void	build_envp(t_env_list **head, t_command *cmd, char ***envp)

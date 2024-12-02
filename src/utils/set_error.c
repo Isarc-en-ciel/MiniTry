@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:14:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/22 13:19:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:34:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_error	set_error(char *str, enum e_error code)
 		ft_putstr_fd(" : no option allowed\n", 1);
 		return (new_error);
 	}
-	else if (str)
+	else if (code != CD_ERROR) 
 		perror(str);
 	return (new_error);
 }

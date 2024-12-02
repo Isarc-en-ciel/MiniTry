@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/25 14:02:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:34:41 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ enum e_error
 	MALLOC,
 	SYSCALL_ERROR = 1,
 	PIPE_ERROR,
+	CD_ERROR,
 };
 
 enum
@@ -57,6 +58,8 @@ enum
 	WRITE_TO = 1
 };
 
+# define SUCCESS 0
+# define FAIL 1
 # define HEREDOC_FILE "/Users/csteylae/goinfre/minishell_heredoc"
 
 #endif
