@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/26 15:48:30 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/03 12:10:20 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
-typedef int	(*builtin_func) (char ***env, t_command *cmd);
+typedef int	(*builtin_func) (char ***env, t_command *cmd, int exit_status);
 
 typedef struct s_builtin
 {

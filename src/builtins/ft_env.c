@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/22 18:29:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:12:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 //this function must must be called at the level of the initiation, before the while (1) in main function
 
 
-int	ft_env(char ***envp, t_command *cmd)
+int	ft_env(char ***envp, t_command *cmd, int exit_status)
 {
 	t_env_list	*head;
 	int			i;
+	(void)exit_status;
 
 	head = NULL;
 	i = 0;

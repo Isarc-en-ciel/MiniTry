@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/02 15:56:54 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:01:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ bool	get_builtin(t_shell *sh, t_command *cmd)
 	i = 0;
 	builtin = sh->builtin_cmds[i];
 	cmd_name = cmd->cmd[0];
-	while (i != 6)
+	while (i != 7)
 	{
 		if (!ft_strncmp(builtin.name, cmd_name, ft_strlen(builtin.name)))
 		{
-			sh->exit_status = builtin.func(&sh->env, cmd);
+			sh->exit_status = builtin.func(&sh->env, cmd, sh->exit_status);
 			return (true);
 		}
 		i++;
@@ -75,6 +75,6 @@ int	exec_prompt(t_shell *shell)
 	else
 		exec_pipeline(shell);
 	shell = clean_prompt(shell);
-//	ft_printf("exit status : %d\n", shell->exit_status);
+	ft_printf("exit status : %d\n", shell->exit_status);
 	return (0);
 }

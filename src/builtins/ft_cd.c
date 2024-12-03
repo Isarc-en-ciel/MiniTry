@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/02 15:37:41 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:11:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ void	set_cwd(t_command *cmd, t_env_list **head)
 void	change_directory(t_command *cmd, t_env_list **head)
 {
 	char	*path;
+	int		status;
 
 	path = cmd->cmd[1];
-	ft_printf("path : %s\n", path);
+	status = 0;
 	set_cwd(cmd, head);
 	if (cmd->error.code != OK)
 		return ;
@@ -46,19 +47,18 @@ void	change_directory(t_command *cmd, t_env_list **head)
 			return ;
 		}
 	}
-	if (chdir(path) != 0)
-	{
-		cmd->error = set_error("chdir", SYSCALL_ERROR);
-		return ;
-	}
+	status = chdir(path);
+	if (status != SUCCESS)
+		cmd->error = set_error("cd", status);
 	set_cwd(cmd, head);
 }
 
-int	ft_cd(char ***envp, t_command *cmd)
+int	ft_cd(char ***envp, t_command *cmd, int exit_status)
 {
 	int			status;
 	t_env_list	*head;
 
+	(void)exit_status;
 	status = 0;
 	head = array_to_list(*envp);
 	if (!head)

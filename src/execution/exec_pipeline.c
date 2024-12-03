@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/20 14:52:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:12:53 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	exec_pipeline(t_shell *shell)
 		{
 			if (pipe(pipe_fd) == -1)
 			{
-				shell->tab[i].error = set_error("pipe", PIPE_ERROR);
-				error_pipeline(shell, &child_pid,  pipe_fd, prev_fd);
+				shell->tab[i].error = set_error("pipe", SYSCALL_ERROR);
+				error_pipeline(shell, &child_pid, pipe_fd, prev_fd);
 			}
 		}
 		perform_redirection(shell, &shell->tab[i]);

@@ -6,21 +6,19 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:50:11 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/02 16:01:26 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:12:23 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/* the output wont be the same whether we use write() syscall or our ft_putstr_fd */
-
-bool	check_n_option(char *arg)
+static bool	check_n_option(char *arg)
 {
 	int	i;
 
+	i = 0;
 	if (!arg)
 		return (false);
-	i = 0;
 	if (arg[i] != '-')
 		return (false);
 	i++;
@@ -33,22 +31,21 @@ bool	check_n_option(char *arg)
 	return (true);
 }
 
-int	ft_echo(char ***env, t_command *cmd)
+int	ft_echo(char ***env, t_command *cmd, int exit_status)
 {
 	int	i;
 	int	fd;
 	int	flag_opt;
 
 	(void) env;
+	(void) exit_status;
 	fd = STDOUT_FILENO;
 	flag_opt = 0;
+	i = 1;
 	if (cmd->fd_out > 0)
 		fd = cmd->fd_out;
-	i = 1;
 	if (check_n_option(cmd->cmd[i]))
 		flag_opt = 1;
-//	if (flag_opt == 0)
-//		write(fd, "\n", 1);
 	while (check_n_option(cmd->cmd[i]))
 		i++;
 	while (cmd->cmd[i])

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:19:23 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/22 13:36:25 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:13:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 /* pwd is just a simple syscall getcwd */
 
-int	ft_pwd(char ***env, t_command *cmd)
+int	ft_pwd(char ***env, t_command *cmd, int exit_status)
 {
-	int			exit_status;
+	int			status;
 	char		*str;
 
 	(void)env;
-	exit_status = 0;
+	(void) exit_status;
+	status = 0;
 	str = NULL;
 	if (cmd->cmd[1])
 		return  (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, NULL));

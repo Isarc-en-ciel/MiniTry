@@ -20,6 +20,8 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/builtins/ft_env.c \
 	  src/builtins/ft_pwd.c \
 	  src/builtins/ft_echo.c \
+	  src/builtins/ft_exit.c \
+	  src/builtins/ft_unset.c \
 	  src/parsing/create_tokens.c \
 	  src/parsing/create_tokens2.c \
 	  src/parsing/darray_utils.c \

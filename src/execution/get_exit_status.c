@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/20 22:07:21 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:15:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 		else
 			exit_status = 1;
 	}
-	if (cmd->error.code != OK)
-		exit_status = cmd->error.code;
+//	if (cmd->error.code != SUCCESS)
+//		exit_status = cmd->error.code;
 	return (exit_status);
 }
 
