@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 12:11:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 11:46:34 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ void	change_directory(t_command *cmd, t_env_list **head)
 
 int	ft_cd(char ***envp, t_command *cmd, int exit_status)
 {
-	int			status;
 	t_env_list	*head;
 
 	(void)exit_status;
-	status = 0;
 	head = array_to_list(*envp);
 	if (!head)
 		return (builtin_error(cmd, "malloc", MALLOC, NULL));

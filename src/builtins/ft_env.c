@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 12:12:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 11:48:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 int	ft_env(char ***envp, t_command *cmd, int exit_status)
 {
 	t_env_list	*head;
-	int			i;
 	(void)exit_status;
 
 	head = NULL;
-	i = 0;
 	if (cmd->cmd[1])
 		return (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, &head));
 	if (*envp)
