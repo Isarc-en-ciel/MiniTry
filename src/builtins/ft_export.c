@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/05 20:32:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 20:53:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static bool	is_less_than(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-	if (!ft_strncmp(s1, s2, ft_strlen(s1)) && !ft_strncmp(s1, s2, ft_strlen(s2)))
-		return true;
+//	ft_printf("s1 : %s, s2 : %s\n", s1, s2);
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	if (s1[i] < s2[i])
@@ -37,36 +36,34 @@ static bool	is_less_than(char *s1, char *s2)
 
 static t_env_list	*ft_alpha_sort(t_env_list *head)
 {
-	t_env_list	*sorted_list;
 	t_env_list	*tmp;
-	t_env_list	*smallest;
-	t_env_list	*new;
+	t_env_list	*swap;
 	int			len;
 
-	sorted_list = NULL;
-	smallest = head;
-	tmp = head;
+	tmp = head->next;
+	swap = NULL;
 	len = get_list_size(head);
 	while (len > 0)
 	{
 		while (tmp)
 		{
-			if (smallest != tmp && is_less_than(tmp->key, smallest->key))
-				smallest = tmp;
+			if (is_less_than(tmp->key, head->key))
+			{
+				swap = tmp;
+				ft_printf("tmp->key %s, head->key :%s\n", tmp->key, head->key);
+				tmp->value = head->value;
+				tmp->key = head->key;
+				head->value = swap->value;
+				head->key = swap->key;
+			}
 			tmp = tmp->next;
 		}
-		tmp = head;
-		new = new_env_list(smallest->key, smallest->value);
-		if (!new)
-		{
-			destroy_lst(&sorted_list);
-			return (NULL);
-		}
-		lst_addback(&sorted_list, new);
 		len--;
+		tmp = head->next;
 	}
-	ft_print_list(sorted_list);
-	return (sorted_list);
+//	ft_printf("len : %i\n", len);
+//	ft_print_list(head);
+	return (head);
 }
 
 
