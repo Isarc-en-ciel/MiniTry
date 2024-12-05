@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 14:35:39 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/05 17:23:42 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:33:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_strlen(const char *s)
 
 	i = 0;
 	if (s == NULL)
-		return (SIZE_T_MAX);
+		return (SSIZE_MAX);
 	while (s[i])
 		i++;
 	return (i);

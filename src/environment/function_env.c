@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:41:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 14:49:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 16:24:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,17 @@ void	lst_addback(t_env_list **head, t_env_list *new)
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = new;
+}
+
+void	lst_addfront(t_env_list **head, t_env_list *new)
+{
+	t_env_list	*tmp;
+
+	tmp = *head;
+	if (!head || !*head)
+		return ;
+	new->next = tmp;
+	*head = new;
 }
 
 void	delete_env(t_env_list *elem)
