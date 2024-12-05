@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/03 15:19:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:42:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 char		**init_env(char **envp); //env_list.c
 t_env_list	*new_env_list(char *key, char *value); //env_list_func.c
 void		lst_addback(t_env_list **head, t_env_list *new); //env_list_func.c
+void		lst_addfront(t_env_list **head, t_env_list *new);
 void		delete_env(t_env_list *elem);
 int			get_list_size(t_env_list *head); //env_list_func.c
 void		destroy_lst(t_env_list **head); //env_list_func.c
@@ -53,6 +54,7 @@ int			ft_pwd(char ***env, t_command *cmd, int exit_status);
 int			ft_echo(char ***env, t_command *cmd, int exit_status);
 int			ft_exit(char ***env, t_command *cmd, int exit_status);
 int			ft_unset(char ***env, t_command *cmd, int exit_status);
+int			ft_export(char ***env, t_command *cmd, int exit_status);
 
 /* repo execution */
 void		exec_command(t_shell *shell, int nb); /*file exec_command.c */

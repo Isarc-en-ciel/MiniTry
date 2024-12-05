@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/05 16:37:34 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 20:32:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,58 +17,58 @@ names is not a valid shell variable name, or -f is supplied with a name that is 
 */
 
 
-static bool	is_less_than(char *str1, char *str2)
+static bool	is_less_than(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
-	while (!ft_strncmp(s1, s2, i))
+	if (!ft_strncmp(s1, s2, ft_strlen(s1)) && !ft_strncmp(s1, s2, ft_strlen(s2)))
+		return true;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	if (s1[i] < s2[i])
 		return (true); //s1 is less than s2
-	if (!s1[i] && s2[i])
-		return (true); // s1 < s2
-	else if (s1[i] && !s2[i])
+	else if (!s1[i] && s2[i])
+		return (true);
+	else if (s1[i] && ! s2[i])
 		return (false);
-	return (false) // if s1[i] > s2[i]
+	return (false); // if s1[i] > s2[i]
 }
 
-static void	ft_alpha_sort(t_env_list *head)
+static t_env_list	*ft_alpha_sort(t_env_list *head)
 {
-	t_env_list	*tmp;
 	t_env_list	*sorted_list;
+	t_env_list	*tmp;
+	t_env_list	*smallest;
 	t_env_list	*new;
 	int			len;
-	char	*smallest;
-	int		i = 0;
 
-	sorted_list = new_env_list(head->key, head->value);
+	sorted_list = NULL;
+	smallest = head;
+	tmp = head;
 	len = get_list_size(head);
-	while (i != len)
+	while (len > 0)
 	{
-		while (tmp->next)
+		while (tmp)
 		{
-			if (is_less_than(tmp->key, sorted_list->next))
-			{
-				new =  new_env_list(tmp->key, tmp->value);
-				if (!new)
-				{
-					//error
-					return ;
-				}
-				ld_addfront(
-
-			
-
-
-
-
-
-
-
-
-
+			if (smallest != tmp && is_less_than(tmp->key, smallest->key))
+				smallest = tmp;
+			tmp = tmp->next;
+		}
+		tmp = head;
+		new = new_env_list(smallest->key, smallest->value);
+		if (!new)
+		{
+			destroy_lst(&sorted_list);
+			return (NULL);
+		}
+		lst_addback(&sorted_list, new);
+		len--;
+	}
+	ft_print_list(sorted_list);
+	return (sorted_list);
 }
+
 
 int	ft_export(char ***env, t_command *cmd, int exit_status)
 {
@@ -82,5 +82,7 @@ int	ft_export(char ***env, t_command *cmd, int exit_status)
 	{
 		ft_alpha_sort(head);
 	}
+	return (SUCCESS);
+}
 
 
