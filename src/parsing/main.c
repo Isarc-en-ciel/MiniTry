@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/06 15:07:53 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:23:42 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@ int	read_the_input(char **envp)
 {
 	char		*input;
 	t_shell		shell;
-//	t_darray	*tokens;
-//	t_stock		*tab;
 
-//	tab = NULL;
 	shell = init_shell();
 	shell.env = init_env(envp);
-//	tokens = NULL;
 	while (1)
 	{
 		input = readline("gib comand pliz> ");
