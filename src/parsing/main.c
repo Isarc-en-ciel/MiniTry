@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 16:42:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:07:53 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	read_the_input(char **envp)
 		else if (ft_strlen(input) == 0)
 			continue ;
 		add_history(input);
-		shell.tab = pseudo_parsing(&shell, input);
+		shell.tab = parsing(input, &shell);
 		if (shell.tab == NULL)
 			continue ;
 		exec_prompt(&shell);
@@ -47,7 +47,6 @@ int	read_the_input(char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	(void)av;
-
 	if (ac != 1)
 		return (1);
 	if (read_the_input(envp) == 1)

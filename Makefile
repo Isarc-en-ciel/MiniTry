@@ -29,7 +29,6 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/parsing/token_tester.c \
 	  src/parsing/parsing_starter.c \
 	  src/parsing/actual_parsing.c \
-	  src/parsing/init_struct_shell.c \
 	  src/parsing/expander.c \
 	  src/parsing/tab_cleaner.c \
 	  src/environment/init_env.c \

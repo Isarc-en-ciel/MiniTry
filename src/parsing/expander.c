@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 16:14:44 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:14:04 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int	expander(t_stock *tab, t_shell *shell)
 	int	i;
 
 	i = 0;
+	print_stock_tab(tab, tab[i].nbr_cmd);
 	while (i < tab[i].nbr_cmd)
 	{
-		if (expand_cmd(tab[i].cmd, shell) == -1)
+		if (expand_cmd(&tab[i].cmd, shell, tab[i].nbr_elem) == -1)
 			return (-1);
-		if (join_cmd(tab[i].cmd) == -1)
+		if (join_cmd(tab[i].cmd, tab[i].nbr_elem) == -1)
 			return (-1);
 		i++;
 	}
@@ -29,24 +30,23 @@ int	expander(t_stock *tab, t_shell *shell)
 	return (0);
 }
 
-int	expand_cmd(t_lexer *cmd, t_shell *shell)
+int	expand_cmd(t_lexer **cmd, t_shell *shell, int size)
 {
 	int	i;
 
 	i = 0;
 	(void) shell;
-	printf("Here\n");
-	while (&cmd[i])
+	while (i < size)
 	{
-		if (cmd[i].type == WORD || cmd[i].type == D_QUOTE)
+		printf("Here\n");
+		if (cmd[i]->type == WORD || cmd[i]->type == D_QUOTE)
 		{
-			if (ft_strcmp(cmd[i].word, '$') == 0)
+			if (ft_strcmp(cmd[i]->word, '$') == 0)
 			{
-				printf("Here\n");
 				//if (expand_var(shell, &cmd[i].word) == -1)
 				//	return (-1);
-				if (cmd[i].word == NULL || ft_strlen(cmd[i].word) == 0)
-					cmd[i]. is_there_a_space = -1;
+				if (cmd[i]->word == NULL || ft_strlen(cmd[i]->word) == 0)
+					cmd[i]->is_there_a_space = -1;
 			}
 		}
 		i++;
@@ -54,13 +54,14 @@ int	expand_cmd(t_lexer *cmd, t_shell *shell)
 	return (0);
 }
 
-int	join_cmd(t_lexer *cmd)
+int	join_cmd(t_lexer *cmd, int size)
 {
 	int	i;
 	int	a;
 
 	i = 0;
 	a = 1;
+	(void) size;
 	while (&cmd[i++])
 	{
 		if (cmd[i].is_there_a_space != -1)

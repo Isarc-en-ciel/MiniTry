@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 16:13:44 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:08:19 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab)
 		free_final_array(tokens);
 		return (NULL);
 	}
-	print_stock_tab(tab, i);
 	if (check_grammar(tab, i) == 1)
 		return (NULL);
 	return (tab);
@@ -104,12 +103,12 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 		else
 		{
 			tab[*j].cmd[n].word = malloc(sizeof(char)
-					* ft_strlen(tokens->content[*l].word));
+					* (ft_strlen(tokens->content[*l].word) + 1));
 			if (!tab[*j].cmd[n].word)
 				return (-1);
 			tab[*j].cmd[n].word = ft_memcpy(tab[*j].cmd[n].word,
 					tokens->content[*l].word,
-					ft_strlen(tokens->content[*l].word));
+					ft_strlen(tokens->content[*l].word) + 1);
 		}
 		n++;
 		*l += 1;

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/13 16:22:01 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/06 15:09:01 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_darray	*retrieve_cmd(char *input)
 	}
 	if (tab->actual_size == 0)
 		return (NULL);
-	print_token_tab(tab);
 	return (tab);
 }
 

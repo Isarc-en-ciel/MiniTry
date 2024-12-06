@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 15:55:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:12:50 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void		free_second_degree_tab(t_stock *tab, int i);
 
 //expander
 int			expander(t_stock *tab, t_shell *shell);
-int			expand_cmd(t_lexer *cmd, t_shell *shell);
-int			join_cmd(t_lexer *cmd);
+int			expand_cmd(t_lexer **cmd, t_shell *shell, int size);
+int			join_cmd(t_lexer *cmd, int size);
 int			ft_strcmp(const char *s, char n);
 char		*ft_strcpy(const char *s1, char *s2);
 t_stock		*tab_cleaner(t_stock *tab);
