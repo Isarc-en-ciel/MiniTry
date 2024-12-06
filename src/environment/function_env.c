@@ -6,32 +6,37 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:41:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/05 18:40:34 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:11:23 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_env_list	*new_env_list(char *key, char *value)
+t_env_list	*new_env_list(char *key, char *value, bool is_init)
 {
 	t_env_list	*new;
 
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
-	new->value = ft_strdup(value);
-	if (!new->value)
-	{
-		free(new);
-		return (NULL);
-	}
 	new->key = ft_strdup(key);
 	if (!new->key)
 	{
-		free(new->value);
-		free(new);
+		delete_env(new);
 		return (NULL);
 	}
+	if (!value)
+		new->value = NULL;
+	else
+	{
+		new->value = ft_strdup(value);
+		if (!new->value)
+		{
+			delete_env(new);
+			return (NULL);
+		}
+	}
+	new->is_init = is_init;
 	new->next = NULL;
 	return (new);
 }
@@ -60,6 +65,7 @@ void	delete_env(t_env_list *elem)
 	if (elem->key)
 		free(elem->key);
 	free(elem);
+	elem = NULL;
 }
 
 int		get_list_size(t_env_list *head)
@@ -83,12 +89,10 @@ void	destroy_lst(t_env_list **head)
 
 	if (!head || !*head)
 		return ;
-	while (*head != NULL)
+	while (*head)
 	{
 		tmp = (*head)->next;
-		free((*head)->key);
-		free((*head)->value);
-		free(*head);
+		delete_env(*head);
 		*head = tmp;
 	}
 }

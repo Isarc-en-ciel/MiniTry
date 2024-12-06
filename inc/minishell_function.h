@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/05 18:42:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:59:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 /*repo environment */
 char		**init_env(char **envp); //env_list.c
-t_env_list	*new_env_list(char *key, char *value); //env_list_func.c
+t_env_list	*new_env_list(char *key, char *value, bool is_init); //env_list_func.c
 void		lst_addback(t_env_list **head, t_env_list *new); //env_list_func.c
 void		lst_addfront(t_env_list **head, t_env_list *new);
 void		delete_env(t_env_list *elem);

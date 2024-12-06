@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/03 12:10:20 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 11:47:23 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,17 @@ typedef struct s_command
 /*
  *	A temp struct used inside builtins functions to manage the environment 
  *	easely. Before the return of the builtin function, once all modifications
- *	are done,  this struct will be copied into an array of str (char **env)
+ *	are done,  this struct will be copied into an array of str (char **env) and then destroyed; 
+ *
+ *	The bool is_init is to check if the environment is initialized (syntax : "export LOL=")
+ *	or if the var is just instancied ("export VAR")
  *	and then destroyed; 
  */
 typedef struct s_env_list
 {
 	char				*key;
 	char				*value;
+	bool				is_init;
 	struct s_env_list	*next;
 }	t_env_list;
 

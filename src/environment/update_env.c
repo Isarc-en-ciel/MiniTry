@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:58:52 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 14:54:28 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:02:30 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	create_new_env(t_env_list **head, char *key, char *value, t_command *cmd)
 {
 	t_env_list	*elem;
 
-	elem = new_env_list(key, value);
+	elem = new_env_list(key, value, true);
 	if (!elem)
 	{
 		cmd->error = set_error("malloc", MALLOC);
@@ -59,7 +59,7 @@ void	replace_env(char *key, char *value, t_env_list **head, t_command *cmd)
 	t_env_list	*tmp;
 	t_env_list	*new;
 
-	new = new_env_list(key, value);
+	new = new_env_list(key, value, true);
 	if (!new)
 	{
 		cmd->error = set_error("malloc", MALLOC);

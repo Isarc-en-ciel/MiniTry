@@ -6,13 +6,11 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:19:23 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/05 11:48:59 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:09:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-/* pwd is just a simple syscall getcwd */
 
 int	ft_pwd(char ***env, t_command *cmd, int exit_status)
 {

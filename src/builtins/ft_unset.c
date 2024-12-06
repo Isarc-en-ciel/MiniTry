@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 15:23:30 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:16:08 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	remove_env(t_env_list **head, char *key)
 
 	ptr = get_env(key, *head);
 	if (!ptr)
+	{
+		ft_printf("env var not found \n");
 		return ;
+	}
 	prev = get_prev_env(head, key);
 	if (!prev)
 		return ;
@@ -43,7 +46,6 @@ int	ft_unset(char ***envp, t_command *cmd, int exit_status)
 	int			i;
 
 	(void)exit_status;
-	ft_printf("here we are in unset lol\n");
 	head = array_to_list(*envp);
 	status = SUCCESS;
 	if (!head)
