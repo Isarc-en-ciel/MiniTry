@@ -20,6 +20,9 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/builtins/ft_env.c \
 	  src/builtins/ft_pwd.c \
 	  src/builtins/ft_echo.c \
+	  src/builtins/ft_exit.c \
+	  src/builtins/ft_unset.c \
+	  src/builtins/ft_export.c \
 	  src/parsing/create_tokens.c \
 	  src/parsing/create_tokens2.c \
 	  src/parsing/darray_utils.c \
@@ -36,6 +39,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/environment/array_to_list.c \
 	  src/environment/list_to_array.c \
 	  src/environment/update_env.c \
+	  src/environment/get_env_value.c \
 	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \

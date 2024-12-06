@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/28 16:41:58 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/03 14:20:24 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	search_absolute_path(t_shell *shell, int n)
 		return ;
 	if (access(path, X_OK) == 0)
 	{
+//		check_is_recalling_itself(shell, n);
 		if (execve(path, shell->tab[n].cmd, shell->env) < 0)
 		{
 			shell->tab[n].error = set_error("execve", SYSCALL_ERROR);

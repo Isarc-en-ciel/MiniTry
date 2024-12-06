@@ -16,13 +16,13 @@ int	read_the_input(char **envp)
 {
 	char		*input;
 	t_shell		shell;
-	t_darray	*tokens;
-	t_stock		*tab;
+//	t_darray	*tokens;
+//	t_stock		*tab;
 
-	tab = NULL;
+//	tab = NULL;
 	shell = init_shell();
 	shell.env = init_env(envp);
-	tokens = NULL;
+//	tokens = NULL;
 	while (1)
 	{
 		input = readline("gib comand pliz> ");

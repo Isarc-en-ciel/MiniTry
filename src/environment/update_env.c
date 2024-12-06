@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:58:52 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/26 14:27:10 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:02:30 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	create_new_env(t_env_list **head, char *key, char *value, t_command *cmd)
 {
 	t_env_list	*elem;
 
-	elem = new_env_list(key, value);
+	elem = new_env_list(key, value, true);
 	if (!elem)
 	{
 		cmd->error = set_error("malloc", MALLOC);
@@ -36,7 +36,7 @@ void	update_env(t_command *cmd, t_env_list **head, char *key, char *value)
 		replace_env(key, value, head, cmd);
 }
 
-t_env_list	*find_prev_env(t_env_list **head, char *key)
+t_env_list	*get_prev_env(t_env_list **head, char *key)
 {
 	t_env_list	*tmp;
 	
@@ -45,7 +45,8 @@ t_env_list	*find_prev_env(t_env_list **head, char *key)
 	{
 		if (tmp->next)
 		{
-			if (!ft_strncmp(tmp->next->key, key, ft_strlen(tmp->next->key)))
+			if (!ft_strncmp(tmp->next->key, key, ft_strlen(tmp->next->key)) 
+				&& ! ft_strncmp(tmp->next->key, key, ft_strlen(key)))
 				break;
 		}
 		tmp = tmp->next;
@@ -58,13 +59,13 @@ void	replace_env(char *key, char *value, t_env_list **head, t_command *cmd)
 	t_env_list	*tmp;
 	t_env_list	*new;
 
-	new = new_env_list(key, value);
+	new = new_env_list(key, value, true);
 	if (!new)
 	{
 		cmd->error = set_error("malloc", MALLOC);
 		return ;
 	}
-	tmp = find_prev_env(head, key);
+	tmp = get_prev_env(head, key);
 	if (!tmp)
 		return ;
 	new->next = tmp->next->next;

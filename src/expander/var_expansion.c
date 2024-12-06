@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:24:27 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/28 16:16:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 11:45:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ static int	get_word(char **retp, char *word, int i)
 
 static int	manage_undefined_behavior(char **retp, char *word, int i)
 {
-	int		seq_begin;
-	char	*var;
-
-	seq_begin = i;
-	var = NULL;
 	while (word[i] && word[i] == '$'
 		&& ((word[i + 1] && word[i + 1] == '$') || (word[i + 1] == '\0')))
 	{

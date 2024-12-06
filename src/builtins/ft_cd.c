@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/25 12:13:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:08:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
 
-void	change_directory(t_command *cmd, t_env_list **head)
+void	set_cwd(t_command *cmd, t_env_list **head)
 {
 	char	*value;
 
@@ -22,46 +22,53 @@ void	change_directory(t_command *cmd, t_env_list **head)
 		cmd->error = set_error("getcwd", SYSCALL_ERROR);
 		return ;
 	}
-	update_env(cmd, head, "OLDPWD", value);
-	free(value);
-	if (cmd->error.code != OK)
-		return ;
-	if (chdir(cmd->cmd[1]) != 0)
-	{
-		cmd->error = set_error("chdir", SYSCALL_ERROR);
-		return ;
-	}
-	value = getcwd(NULL, 0);
-	if (!value)
-	{
-		cmd->error = set_error("getcwd", SYSCALL_ERROR);
-		return ;
-	}
 	update_env(cmd, head, "PWD", value);
 	free(value);
+	value = NULL;
 }
 
-int	ft_cd(char ***envp, t_command *cmd)
+void	change_directory(t_command *cmd, t_env_list **head)
 {
-	int			status;
+	char	*path;
+	int		status;
+
+	path = cmd->cmd[1];
+	status = 0;
+	set_cwd(cmd, head);
+	if (cmd->error.code != OK)
+		return ;
+	if (!path)
+	{
+		path = get_env_value(*head, "HOME");
+		if (!path)
+		{
+			ft_putstr_fd("cd : HOME not set\n", STDOUT_FILENO);
+			cmd->error = set_error("cd", CD_ERROR);
+			return ;
+		}
+	}
+	status = chdir(path);
+	if (status != SUCCESS)
+		cmd->error = set_error("cd", status);
+	set_cwd(cmd, head);
+}
+
+int	ft_cd(char ***envp, t_command *cmd, int exit_status)
+{
 	t_env_list	*head;
 
-	status = 0;
-	head = NULL;
-	if (cmd->cmd[2])
+	(void)exit_status;
+	head = array_to_list(*envp);
+	if (!head)
+		return (builtin_error(cmd, "malloc", MALLOC, NULL));
+	if (cmd->cmd[1] && cmd->cmd[2])
 		return (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, NULL));
-	if (!*envp)
-	{
-		head = array_to_list(*envp);
-		if (!head)
-			return (builtin_error(cmd, "malloc", MALLOC, NULL));
-	}
 	change_directory(cmd, &head);
 	if (cmd->error.code != OK)
 		return (builtin_error(cmd, NULL, 0, &head));
 	build_envp(&head, cmd, envp);
-	if (cmd->error.code != OK)
-		status = 1;
 	destroy_lst(&head);
-	return (status);
+	if (cmd->error.code != OK)
+		return (FAIL);
+	return (SUCCESS);
 }

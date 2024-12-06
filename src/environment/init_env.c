@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:43:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/25 11:37:25 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:32:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ static char	**copy_env(char **envp)
 char	**init_env(char **envp)
 {
 	char	**new_env;
-	int		i;
 
-	i = 0;
 	new_env = NULL;
 	if (!envp || !*envp)
 	{

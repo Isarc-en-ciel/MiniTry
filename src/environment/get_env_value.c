@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_expanded_value.c                            :+:      :+:    :+:   */
+/*   get_env_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 18:54:38 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/06 15:02:32 by csteylae         ###   ########.fr       */
+/*   Created: 2024/12/02 15:09:51 by csteylae          #+#    #+#             */
+/*   Updated: 2024/12/02 15:14:37 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h" 
+#include "../../inc/minishell.h"
 
-char	*update_expanded_value(char *ret, char *word, int count)
+char	*get_env_value(t_env_list *head, char *key)
 {
-	char	*var;
+	t_env_list	*ptr;
 
-	var = NULL;
-	var = ft_calloc(count + 1, sizeof(char));
-	ft_memcpy(var, word, count);
-	if (!var)
+	ptr = head;
+	while (ptr)
 	{
-		return (NULL);
+		if (!ft_strncmp(key, ptr->key, ft_strlen(key)) 
+			&& !ft_strncmp(key, ptr->key, ft_strlen(ptr->key)))
+		{
+			return (ptr->value);
+		}
+		ptr = ptr->next;
 	}
-	if (!ret)
-		ret = var;
-	else
-	{
-		ret = ft_strjoin(ret, var, BOTH_MALLOC);
-		if (!ret)
-			return (NULL);
-	}
-	return (ret);
+	return (NULL);
 }
+
