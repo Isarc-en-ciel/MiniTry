@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/06 15:08:43 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:47:10 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
 
-void	set_cwd(t_command *cmd, t_env_list **head)
+void	set_cwd(t_command *cmd, t_env_list **head, char *key)
 {
 	char	*value;
 
@@ -22,7 +22,7 @@ void	set_cwd(t_command *cmd, t_env_list **head)
 		cmd->error = set_error("getcwd", SYSCALL_ERROR);
 		return ;
 	}
-	update_env(cmd, head, "PWD", value);
+	update_env(cmd, head, key, value);
 	free(value);
 	value = NULL;
 }
@@ -34,7 +34,7 @@ void	change_directory(t_command *cmd, t_env_list **head)
 
 	path = cmd->cmd[1];
 	status = 0;
-	set_cwd(cmd, head);
+	set_cwd(cmd, head, "OLDPWD");
 	if (cmd->error.code != OK)
 		return ;
 	if (!path)
@@ -50,7 +50,7 @@ void	change_directory(t_command *cmd, t_env_list **head)
 	status = chdir(path);
 	if (status != SUCCESS)
 		cmd->error = set_error("cd", status);
-	set_cwd(cmd, head);
+	set_cwd(cmd, head, "PWD");
 }
 
 int	ft_cd(char ***envp, t_command *cmd, int exit_status)

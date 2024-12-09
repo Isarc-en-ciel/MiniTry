@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/06 11:59:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:57:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			ft_echo(char ***env, t_command *cmd, int exit_status);
 int			ft_exit(char ***env, t_command *cmd, int exit_status);
 int			ft_unset(char ***env, t_command *cmd, int exit_status);
 int			ft_export(char ***env, t_command *cmd, int exit_status);
+void		print_all_env_var(t_env_list **head);
 
 /* repo execution */
 void		exec_command(t_shell *shell, int nb); /*file exec_command.c */
