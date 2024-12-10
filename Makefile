@@ -23,6 +23,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/builtins/ft_exit.c \
 	  src/builtins/ft_unset.c \
 	  src/builtins/ft_export.c \
+	  src/builtins/export_without_arg.c \
 	  src/parsing/create_tokens.c \
 	  src/parsing/create_tokens2.c \
 	  src/parsing/darray_utils.c \
