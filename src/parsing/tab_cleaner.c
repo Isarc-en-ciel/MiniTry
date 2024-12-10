@@ -6,11 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/28 16:13:08 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:53:27 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+//garder cmb d'elem j'ai par cmd et cmb de cmd j'ai mdr
 
 t_stock	*tab_cleaner(t_stock *tab)
 {
@@ -21,9 +23,10 @@ t_stock	*tab_cleaner(t_stock *tab)
 	new_tab = malloc(sizeof(tab[i].nbr_cmd));
 	if (!new_tab)
 		return (NULL);
+	print_stock_tab(tab, tab[0].nbr_cmd);
 	while (i < tab[i].nbr_cmd)
 	{
-		if (clean_cmd(tab[i].cmd, &new_tab[i].cmd) == -1)
+		if (clean_cmd(tab[i].cmd, &new_tab[i].cmd, tab[i].nbr_elem) == -1) //plutot evoyer tab pour pouoir rajouter nbr_cmd et nbr_elem ?
 			return (NULL);
 		i++;
 	}
@@ -31,17 +34,17 @@ t_stock	*tab_cleaner(t_stock *tab)
 	return (new_tab);
 }
 
-int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd)
+int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem)
 {
 	int	i;
 
 	i = 0;
-	if (count_new_elem(cmd) == 0)
+	if (count_new_elem(cmd, nbr_elem) == 0)
 		return (-1);
-	new_cmd = malloc(sizeof(t_lexer) * count_new_elem(cmd));
+	new_cmd = malloc(sizeof(t_lexer) * count_new_elem(cmd, nbr_elem));
 	if (!new_cmd)
 		return (-1);
-	while (&cmd[i])
+	while (i < nbr_elem)
 	{
 		if (cmd[i].is_there_a_space != -1)
 		{
@@ -53,14 +56,14 @@ int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd)
 	return (0);
 }
 
-int	count_new_elem(t_lexer *cmd)
+int	count_new_elem(t_lexer *cmd, int nbr_elem)
 {
 	int	i;
 	int	n;
 
 	i = 0;
 	n = 0;
-	while (&cmd[i])
+	while (i < nbr_elem)
 	{
 		if (cmd[i].is_there_a_space != -1)
 			n++;
@@ -73,6 +76,7 @@ int	copy_token(t_lexer *cmd, t_lexer **new_cmd)
 {
 	int	i;
 
+	printf("Here\n");
 	(*new_cmd)->is_there_a_space = cmd->is_there_a_space;
 	(*new_cmd)->type = cmd->type;
 	(*new_cmd)->word = NULL;

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/06 15:08:19 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/09 20:50:22 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,10 @@ int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
 			n++;
 			cmd_size++;
 		}
+		tab[j] = (t_stock){0};
 		tab[j].nbr_elem = cmd_size;
 		tab[j].nbr_cmd = i;
-		tab[j].cmd = malloc(sizeof(t_lexer) * (tab[j].nbr_elem));
+		tab[j].cmd = ft_calloc(sizeof(t_lexer), (tab[j].nbr_elem));
 		if (!tab[j].cmd)
 			return (-1);
 		n++;
