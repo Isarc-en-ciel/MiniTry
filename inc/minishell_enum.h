@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/03 13:13:48 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:48:02 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ enum
 
 # define SUCCESS 0
 # define FAIL 1
-# define HEREDOC_FILE "/Users/csteylae/goinfre/minishell_heredoc"
+# define HEREDOC_FILE "/tmp/minishell_heredoc"
+# define SHELL_INVOK "_=./minishell"
 
 #endif

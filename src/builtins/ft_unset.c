@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/06 15:47:12 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:11:16 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@
 void	remove_env(t_env_list **head, char *key)
 {
 	t_env_list	*ptr;
+	t_env_list	*second_elem;
 	t_env_list	*prev;
 
+	second_elem = (*head)->next;
 	ptr = get_env(key, *head);
 	if (!ptr)
+		return ;
+	if (!ft_strncmp((*head)->key, key, ft_strlen(key))
+			&& !(ft_strncmp((*head)->key, key, ft_strlen((*head)->key))))
 	{
-		ft_printf("env var not found \n");
+		delete_env(*head);
+		(*head) = second_elem;
 		return ;
 	}
 	prev = get_prev_env(head, key);
@@ -32,35 +38,28 @@ void	remove_env(t_env_list **head, char *key)
 	delete_env(ptr);
 }
 
-bool is_key_format(char *str)
-{
-	if (str[0] != '_' || !ft_isalpha(str[0])) //must modify this
-		return (false);
-	return (true);
-}
-
 int	ft_unset(char ***envp, t_command *cmd, int exit_status)
 {
 	t_env_list	*head;
-	int			status;
 	int			i;
 
-	(void)exit_status;
 	head = array_to_list(*envp);
-	status = SUCCESS;
+	exit_status = SUCCESS;
 	if (!head)
 		return (builtin_error(cmd, "malloc", MALLOC, NULL));
 	i = 1;
 	while (cmd->cmd[i])
 	{
-		if (!is_key_format(cmd->cmd[i]))
-			status = FAIL;
+		if (!is_key_format(cmd, cmd->cmd[i]))
+		{
+			exit_status = FAIL;
+		}
 		remove_env(&head, cmd->cmd[i]);
 		i++;
 	}
 	build_envp(&head, cmd, envp);
 	destroy_lst(&head);
-	if (cmd->error.code != SUCCESS)
-		status = FAIL;
-	return (status);
+	if (cmd->error.code != OK)
+		exit_status = FAIL;
+	return (exit_status);
 }

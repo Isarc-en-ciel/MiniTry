@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/09 11:57:01 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:10:16 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char		*get_env_value(t_env_list *head, char *key);
 t_env_list	*get_prev_env(t_env_list **head, char *key);
 void		replace_env(char *key, char *value, t_env_list **head, t_command *cmd);
 void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
+void		update_underscore_var(t_shell *shell);
 
 /* repo expander */
 int		expand_var(t_shell *shell, char **word);
@@ -48,6 +49,7 @@ t_shell		init_shell(void);
 /* repo builtins */
 int			builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **head);
 void		build_envp(t_env_list **head, t_command *cmd, char ***envp);
+bool		is_key_format(t_command *cmd, char *str);
 int			ft_cd(char ***env, t_command *cmd, int exit_status);
 int			ft_env(char ***env, t_command *cmd, int exit_status);
 int			ft_pwd(char ***env, t_command *cmd, int exit_status);
