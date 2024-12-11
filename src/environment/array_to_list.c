@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:26:54 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/06 14:10:07 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:40:26 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,23 @@
 static t_env_list	*get_env_entry(char *str)
 {
 	t_env_list	*new;
-	char		*value;
 	char		**pair_key_value;
 	
 	new = NULL;
 	pair_key_value = NULL;
-	value = ft_strchr(str, '=');
-	if (!value)
+	if (!ft_strchr(str, '='))
 	{
 		new = new_env_list(str, NULL, false);
-	}
-	else if (!*(value + 1))
-	{
-		new = new_env_list(str, NULL, true);
 	}
 	else
 	{
 		pair_key_value = ft_split(str, '=');
 		if (!pair_key_value)
 			return (NULL);
-		new = new_env_list(pair_key_value[0], pair_key_value[1], true);
+		if (pair_key_value[1] == NULL)
+			new = new_env_list(pair_key_value[0], "", true);
+		else
+			new = new_env_list(pair_key_value[0], pair_key_value[1], true);
 		free_tab_char(pair_key_value);
 	}
 	return (new);
@@ -59,5 +56,6 @@ t_env_list	*array_to_list(char **env)
 		lst_addback(&head, new);
 		i++;
 	}
+	ft_printf("%i\n", i);
 	return (head);
 }

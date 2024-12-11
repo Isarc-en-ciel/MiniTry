@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/10 16:10:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:03:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@
 char		**init_env(char **envp); //env_list.c
 t_env_list	*new_env_list(char *key, char *value, bool is_init); //env_list_func.c
 void		lst_addback(t_env_list **head, t_env_list *new); //env_list_func.c
-void		lst_addfront(t_env_list **head, t_env_list *new);
 void		delete_env(t_env_list *elem);
 int			get_list_size(t_env_list *head); //env_list_func.c
 void		destroy_lst(t_env_list **head); //env_list_func.c
 t_env_list	*array_to_list(char **env);
 char		**list_to_array(t_env_list **head);
 void		ft_print_list(t_env_list *head);
-void		create_new_env(t_env_list **head, char *key, char *value, t_command *cmd);
-t_env_list	*get_env(char *key, t_env_list *head);
+t_env_list	*get_env(char *key, t_env_list **head);
 char		*get_env_value(t_env_list *head, char *key);
 t_env_list	*get_prev_env(t_env_list **head, char *key);
-void		replace_env(char *key, char *value, t_env_list **head, t_command *cmd);
+//void		replace_env(t_env_list *env_to_change, t_env_list **head, t_command *cmd);
+//void		replace_env(char *key, char *value, t_env_list **head, t_command *cmd);
 void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
 void		update_underscore_var(t_shell *shell);
+bool		key_found(char *s1, char *s2);
 
 /* repo expander */
 int		expand_var(t_shell *shell, char **word);

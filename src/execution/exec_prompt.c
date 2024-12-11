@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/10 15:52:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:00:53 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exec_prompt(t_shell *shell)
 	if (shell->tab_size == 1)
 	{
 		exec_simple_cmd(shell);
-		update_underscore_var(shell);
+//		update_underscore_var(shell);
 	}
 	else
 		exec_pipeline(shell);

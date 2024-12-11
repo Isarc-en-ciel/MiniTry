@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/10 16:53:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:51:18 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,19 @@ int	ft_export(char ***env, t_command *cmd, int exit_status)
 			i++;
 			continue ;
 		}
-		value = ft_strchr(cmd->cmd[i], '=');
-		ft_printf("value :%s\n", value);
+		if (!ft_strchr(cmd->cmd[i], '='))
+			update_env(cmd, &head, key, NULL);
+		else
+		{
+			value = ft_strchr(cmd->cmd[i], '=') + 1;
+			if (value[0])
+				value = "";
+		}
 		update_env(cmd, &head, key, value);
 		if (cmd->error.code != 0)
+		{
 			return (builtin_error(cmd, "malloc", MALLOC, &head));
+		}
 		free(key);
 		exit_status = SUCCESS;
 		i++;

@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_underscore_var.c                            :+:      :+:    :+:   */
+/*   compare_key.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 14:52:18 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/11 11:49:36 by csteylae         ###   ########.fr       */
+/*   Created: 2024/12/11 12:06:29 by csteylae          #+#    #+#             */
+/*   Updated: 2024/12/11 12:55:16 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	update_underscore_var(t_shell *sh)
+bool	key_found(char *s1, char *s2)
 {
-	t_command 	*last_cmd;
-	t_env_list	*head;
-
-	last_cmd = &sh->tab[sh->tab_size - 1];
-	head = array_to_list(sh->env);
-	if (!head)
-	{
-		last_cmd->error = set_error("malloc", MALLOC);
-		sh->exit_status = 1;
-		return ;
-	}
-	update_env(last_cmd, &head, "_", last_cmd->cmd[0]);
-	build_envp(&head, last_cmd, &sh->env);
-	destroy_lst(&head);
+	if (!s1 || !s2)
+		return (false);
+	if (!ft_strncmp(s1, s2, ft_strlen(s1))
+		  && !ft_strncmp(s1, s2, ft_strlen(s2)))
+		return (true);
+	else
+		return (false);
 }

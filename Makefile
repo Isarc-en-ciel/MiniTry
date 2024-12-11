@@ -1,6 +1,6 @@
 NAME= minishell
 CC=cc
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror -fsanitize=address
 DFLAGS= -g -O0 -fsanitize=address
 VALGRIND_FLAGS= -g -O0
 
@@ -42,6 +42,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/environment/update_env.c \
 	  src/environment/get_env_value.c \
 	  src/environment/update_underscore_var.c \
+	  src/environment/compare_key.c \
 	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \

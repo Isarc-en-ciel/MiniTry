@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:41:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/06 15:11:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:33:00 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,18 @@ t_env_list	*new_env_list(char *key, char *value, bool is_init)
 		return (NULL);
 	}
 	if (!value)
+	{
 		new->value = NULL;
+	}
+	else if (value[0] == '\0')
+	{
+		new->value = ft_calloc(1, sizeof(char));
+		if (!new->value)
+		{
+			delete_env(new);
+			return (NULL);
+		}
+	}
 	else
 	{
 		new->value = ft_strdup(value);

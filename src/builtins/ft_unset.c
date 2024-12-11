@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/10 16:11:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:55:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ void	remove_env(t_env_list **head, char *key)
 	t_env_list	*prev;
 
 	second_elem = (*head)->next;
-	ptr = get_env(key, *head);
+	ptr = get_env(key, head);
 	if (!ptr)
 		return ;
-	if (!ft_strncmp((*head)->key, key, ft_strlen(key))
-			&& !(ft_strncmp((*head)->key, key, ft_strlen((*head)->key))))
+	if (key_found((*head)->key, key))
 	{
 		delete_env(*head);
 		(*head) = second_elem;
