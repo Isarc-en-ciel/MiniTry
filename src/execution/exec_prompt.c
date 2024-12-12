@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/11 15:00:53 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:27:36 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	exec_simple_cmd(t_shell *shell)
 	pid_t	pid;
 
 	perform_redirection(shell, &shell->tab[0]);
+	if (!shell->tab[0].cmd[0]) // !!
+		return ;
 	if (shell->tab[0].error.code != OK)
 		return ;
 	if (get_builtin(shell, &shell->tab[0]))
