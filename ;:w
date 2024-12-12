@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/12 13:00:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:45:41 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ static char	*get_key(char *str)
 	key = NULL;
 	while (str[i] && str[i] != '=')
 		i++;
-//	if (!str[i])
-//		return (str);
+	if (!str[i])
+		return (str);
 	key = calloc(i, sizeof(char) + 1);
 	if (!key)
 		return (NULL);
 	ft_memcpy(key, str, i);
+	ft_printf("key : %s\n");
 	return (key);
 }
 
@@ -68,14 +69,13 @@ int	ft_export(char ***env, t_command *cmd, int exit_status)
 			value = ft_strchr(cmd->cmd[i], '=') + 1;
 			if (value[0])
 				value = "";
-			update_env(cmd, &head, key, value);
 		}
+		update_env(cmd, &head, key, value);
 		if (cmd->error.code != 0)
 		{
 			return (builtin_error(cmd, "malloc", MALLOC, &head));
 		}
 		free(key);
-		key = NULL;
 		exit_status = SUCCESS;
 		i++;
 	}

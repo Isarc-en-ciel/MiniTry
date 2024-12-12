@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:41:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/11 16:33:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:39:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_env_list	*new_env_list(char *key, char *value, bool is_init)
 	}
 	if (!value)
 	{
+		ft_printf("oh this is null\n");
 		new->value = NULL;
 	}
 	else if (value[0] == '\0')
