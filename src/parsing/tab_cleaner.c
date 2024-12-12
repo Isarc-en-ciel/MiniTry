@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/10 16:53:27 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:55:20 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ t_stock	*tab_cleaner(t_stock *tab)
 	t_stock	*new_tab;
 
 	i = 0;
-	new_tab = malloc(sizeof(tab[i].nbr_cmd));
+	new_tab = malloc(sizeof(tab[i].nbr_cmd)); //il se passe quoi si toute une commande disparait ?
 	if (!new_tab)
 		return (NULL);
 	print_stock_tab(tab, tab[0].nbr_cmd);
 	while (i < tab[i].nbr_cmd)
 	{
-		if (clean_cmd(tab[i].cmd, &new_tab[i].cmd, tab[i].nbr_elem) == -1) //plutot evoyer tab pour pouoir rajouter nbr_cmd et nbr_elem ?
+		if (clean_cmd(tab[i].cmd, &new_tab[i].cmd, tab[i].nbr_elem) == -1) //plutot evoyer tab pour pouvoir rajouter nbr_cmd et nbr_elem ?
 			return (NULL);
 		i++;
 	}
