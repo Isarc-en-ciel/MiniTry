@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 11:12:53 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:44:30 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	exec_pipeline(t_shell *shell)
 		{
 			prev_fd = pipe_fd[READ_FROM];
 		}
+		update_underscore_var(shell); //maybe check this in a better view ?
 		i++;
 	}
 	shell->exit_status = wait_children(shell, child_pid, i);

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:43:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/05 13:32:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:51:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ static char	*add_env_var(char *str)
 
 	if (!str)
 		return (NULL);
+	if (!ft_strncmp("_=", str, ft_strlen("_=")))
+	{
+		new_env_var = calloc(ft_strlen(SHELL_INVOK) + 1, sizeof(char));
+		if (!new_env_var)
+			return (NULL);
+		ft_memcpy(new_env_var, SHELL_INVOK, ft_strlen(SHELL_INVOK));
+		return (new_env_var);
+	}
 	new_env_var = calloc(ft_strlen(str) + 1, sizeof(char));
 	if (!new_env_var)
 		return (NULL);
@@ -29,7 +37,7 @@ static char	**init_empty_env(void)
 {
 	char	**empty_env;
 
-	empty_env = malloc(sizeof(char *) * (2 + 1));
+	empty_env = malloc(sizeof(char *) * (3 + 1));
 	if (!empty_env)
 		return (NULL);
 	empty_env[0] = getcwd(NULL, 0);
@@ -50,7 +58,8 @@ static char	**init_empty_env(void)
 		free_tab_char(empty_env);
 		return (NULL);
 	}
-	empty_env[2] = NULL;
+	empty_env[2] = ft_strjoin("_=", "./minishell", NO_MALLOC);
+	empty_env[3] = NULL;
 	return (empty_env);
 }
 
