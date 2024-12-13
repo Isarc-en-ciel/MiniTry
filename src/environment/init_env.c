@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:43:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/10 14:51:01 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:52:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ static char	**init_empty_env(void)
 	}
 	empty_env[0] = ft_strjoin("PWD=", empty_env[0], S2_MALLOC);
 	if (!empty_env[0])
-	{
-		free(empty_env);
 		return (NULL);
-	}
 	empty_env[1] = ft_strjoin("SHLVL=", "1", NO_MALLOC);
 	if (!empty_env[1])
 	{

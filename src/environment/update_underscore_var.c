@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:52:18 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/11 11:49:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:56:27 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	update_underscore_var(t_shell *sh)
 {
-	t_command 	*last_cmd;
+	t_command	*last_cmd;
 	t_env_list	*head;
 
 	last_cmd = &sh->tab[sh->tab_size - 1];

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:26:54 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/12 12:38:48 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:47:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_env_list	*get_env_entry(char *str)
 {
 	t_env_list	*new;
 	char		**pair_key_value;
-	
+
 	new = NULL;
 	pair_key_value = NULL;
 	if (!ft_strchr(str, '='))
@@ -56,6 +56,5 @@ t_env_list	*array_to_list(char **env)
 		lst_addback(&head, new);
 		i++;
 	}
-	ft_printf("%i\n", i);
 	return (head);
 }

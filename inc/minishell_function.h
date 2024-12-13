@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/11 13:03:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:49:00 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		expand_env_var(char **retp, char *word, int i, char **env);
 t_shell		init_shell(void);
 
 /* repo builtins */
+bool		init_env_list(t_env_list **head, t_command *cmd, char **env);
 int			builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **head);
 void		build_envp(t_env_list **head, t_command *cmd, char ***envp);
 bool		is_key_format(t_command *cmd, char *str);

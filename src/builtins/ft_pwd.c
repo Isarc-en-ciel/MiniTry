@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:19:23 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/06 15:09:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:31:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_pwd(char ***env, t_command *cmd, int exit_status)
 	(void) exit_status;
 	str = NULL;
 	if (cmd->cmd[1])
-		return  (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, NULL));
+		return (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, NULL));
 	str = getcwd(NULL, 0);
 	if (!str)
 	{
