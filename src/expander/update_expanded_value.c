@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:54:38 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/06 15:02:32 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:40:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ char	*update_expanded_value(char *ret, char *word, int count)
 
 	var = NULL;
 	var = ft_calloc(count + 1, sizeof(char));
-	ft_memcpy(var, word, count);
 	if (!var)
 	{
 		return (NULL);
 	}
+	ft_memcpy(var, word, count);
 	if (!ret)
+	{
 		ret = var;
+	}
 	else
 	{
 		ret = ft_strjoin(ret, var, BOTH_MALLOC);
