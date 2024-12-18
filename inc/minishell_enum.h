@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/10 14:48:02 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:27:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ enum e_error
 {
 	SUCCESS = 0,
 	OK = 0,
-	BUILTIN_OPT = 2,
+	BUILTIN_OPT = 1,
 	BAD_ARG, 
 	OPEN_FILE,
 	FILE_NO_EXIST = 127,
@@ -64,5 +64,5 @@ enum
 # define FAIL 1
 # define HEREDOC_FILE "/tmp/minishell_heredoc"
 # define SHELL_INVOK "_=./minishell"
-
+# define NOENT_PERROR "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
 #endif
