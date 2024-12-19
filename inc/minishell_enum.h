@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/18 17:27:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:44:07 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ enum
 	WRITE_TO = 1
 };
 
+# define NB_OF_BUILTIN 7
+# define CHILD_PROCESS 0
 # define SUCCESS 0
 # define FAIL 1
 # define HEREDOC_FILE "/tmp/minishell_heredoc"

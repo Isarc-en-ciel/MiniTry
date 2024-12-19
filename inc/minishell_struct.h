@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/06 11:47:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:25:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ typedef struct s_shell
 	t_command	*tab; //parsing
 	int			tab_size; //nb of cmd
 	int			exit_status;
-	t_builtin	builtin_cmds[7];
+	t_builtin	builtin_cmds[NB_OF_BUILTIN];
 }	t_shell;
 
 #endif

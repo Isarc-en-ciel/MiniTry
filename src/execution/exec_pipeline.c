@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/19 15:24:39 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:05:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,61 @@ void	error_pipeline(t_shell *shell, pid_t **children, int pipe_fd[2], int prev_f
 That is, each command reads the previous command’s output. 
 This connection is performed before any redirections specified by command1. 
 */
+
+static bool	init_pipe(int i, int tab_size, int pipe_fd[2])
+{
+	int	last_cmd;
+
+	last_cmd = tab_size - 1;
+	if (i == last_cmd)
+	{
+		return (true);
+	}
+	if (pipe(pipe_fd) < 0)
+		return (false);
+	else
+		return (true);
+}
+
+static void	end_pipeline(t_shell *sh, pid_t *child_pid, int prev_fd)
+{
+	sh->exit_status = wait_children(sh, child_pid);
+	if (prev_fd > 2)
+		close(prev_fd);
+}
+
+void	launch_cmd
+void	exec_pipeline(t_shell *sh)
+{
+	int		i;
+	int		pipe_fd[2];
+	pid_t	*child_pid;
+	int		prev_fd;
+
+	i = 0;
+	child_pid = malloc(sizeof(*child_pid) * sh->tab_size);
+	if (!child_pid)
+		return ;
+	while (i != sh->tab_size)
+	{
+		if (!init_pipe(i, sh->tab_size, pipe_fd))
+			return ; //ERROR
+		perform_redirection(sh, &sh->tab[i]);
+		child_pid[i] = fork();
+		if (child_pid[i] < 0)
+			return ;//ERROR
+		else if (child_pid[i] == CHILD_PROCESS)
+		{
+			launch_cmd(sh, i, pipe_fd, prev_fd); //redirect pipeline then check if builtin or then exec the cmd
+		}
+		prev_fd = get_next_cmd_input(); //close the appropriate fds in parent and finds the new prev_fd
+		i++;
+	}
+	end_pipeline(sh, child_pid, prev_fd);
+}
+	
+
+
 void	exec_pipeline(t_shell *shell)
 {
 	int		i;
@@ -139,10 +194,8 @@ void	exec_pipeline(t_shell *shell)
 				free(child_pid);
 				exit(shell->exit_status);
 			}
-			exec_comman(shell, i);
-			free_shell(shell);
-			free(child_pid);
-			exit(shell->exit_status);
+			else
+				exec_command(shell, i);
 		}
 		close(pipe_fd[WRITE_TO]);
 //		if (i != 0 && prev_fd > 2)

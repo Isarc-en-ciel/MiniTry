@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/19 15:38:58 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:11:09 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static void	ft_print_env(t_env_list *head, int fd)
 		if (tmp->is_init)
 		{
 			ft_putstr_fd(tmp->key, fd);
+			ft_putstr_fd("=", fd);
 			if (tmp->is_init && tmp->value[0] == '\0')
 			{
-				ft_putstr_fd("=""\n", fd);
-//				ft_printf("%s=%s\n", tmp->key, "");
+				ft_putstr_fd("""\n", fd);
 			}
 			else
 			{
 				ft_putstr_fd(tmp->value, fd);
-				ft_putstr_fd("\n". fd);
+				ft_putstr_fd("\n", fd);
 			}
 /*			else
 				ft_printf("%s=%s\n", tmp->key, tmp->value); */

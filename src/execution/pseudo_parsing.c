@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:57:01 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:51 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/19 18:16:30 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_redirect	new_redir(char *arg)
 	if (redir.type == REDIR_HEREDOC)
 	{
 		redir.hd_delimiter = ft_strdup(arg + 2);
-		ft_printf("DEL : %s\n", redir.hd_delimiter);
+		//ft_printf("DEL : %s\n", redir.hd_delimiter);
 	}
 	else
 		redir.hd_delimiter = NULL;
