@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/19 15:24:39 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/19 14:01:27 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int prev_fd
 	last_cmd = shell->tab_size - 1;
 	in = shell->tab[i].fd_in;
 	out = shell->tab[i].fd_out;
+
 	if (i == first_cmd)
 	{
 		close(pipe_fd[READ_FROM]);
@@ -121,28 +122,19 @@ void	exec_pipeline(t_shell *shell)
 			if (pipe(pipe_fd) == -1)
 			{
 				shell->tab[i].error = set_error("pipe", SYSCALL_ERROR);
-				return (error_pipeline(shell, &child_pid, pipe_fd, prev_fd)); //what to do when a pipe error occur ? should we continue to launch the pipeline ? ==> think we can manage it as we want			
+				error_pipeline(shell, &child_pid, pipe_fd, prev_fd);
 			}
 		}
-		perform_redirection(shell, &shell->tab[i]); //we check the possible error in the child process
+		perform_redirection(shell, &shell->tab[i]);
 		child_pid[i] = fork();
 		if (child_pid[i] < 0)
-			return (error_pipeline(shell, &child_pid, pipe_fd, prev_fd));
+			exit_error(shell, "fork");
 		else if (child_pid[i] == 0)
 		{
 			if (shell->tab[i].error.code != OK)
 				error_pipeline(shell, &child_pid,  pipe_fd, prev_fd);
 			redirect_pipeline(shell, i, pipe_fd, prev_fd);
-			if (is_builtin(shell, &shell->tab[i]))
-			{
-				free_shell(shell);
-				free(child_pid);
-				exit(shell->exit_status);
-			}
-			exec_comman(shell, i);
-			free_shell(shell);
-			free(child_pid);
-			exit(shell->exit_status);
+			exec_command(shell, i);
 		}
 		close(pipe_fd[WRITE_TO]);
 //		if (i != 0 && prev_fd > 2)

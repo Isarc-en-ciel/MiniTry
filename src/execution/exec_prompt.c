@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 18:26:18 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/19 15:22:15 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-bool	get_builtin(t_shell *sh, t_command *cmd)
+bool	is_builtin(t_shell *sh, t_command *cmd)
 {
 	int			i;
 	t_builtin	builtin;
@@ -26,6 +26,7 @@ bool	get_builtin(t_shell *sh, t_command *cmd)
 		builtin = sh->builtin_cmds[i];
 		if (!ft_strncmp(builtin.name, cmd_name, ft_strlen(builtin.name)))
 		{
+//			return (true);
 			sh->exit_status = builtin.func(&sh->env, cmd, sh->exit_status);
 			return (true);
 		}
@@ -43,8 +44,10 @@ void	exec_simple_cmd(t_shell *shell)
 		return ;
 	if (shell->tab[0].error.code != OK)
 		return ;
-	if (get_builtin(shell, &shell->tab[0]))
+	if (is_builtin(shell, &shell->tab[0]))
+	{
 		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork"));

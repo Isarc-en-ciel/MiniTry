@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:47 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/19 13:54:06 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	hd_del = redir->hd_delimiter;
 	while (1)
 	{
+		write(STDIN_FILENO, ">", 1);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			exit_error(shell, "get_next_line\n");
@@ -71,7 +72,7 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 	pid = fork();
 	if (pid < 0)
 	{
-		cmd->error = set_error("fork", FORK);
+		cmd->error = set_error("fork", SYSCALL_ERROR);
 		return ;
 	}
 	else if (pid == 0)
