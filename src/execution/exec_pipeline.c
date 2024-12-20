@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/19 19:05:21 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:03:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ That is, each command reads the previous command’s output.
 This connection is performed before any redirections specified by command1. 
 */
 
-static bool	init_pipe(int i, int tab_size, int pipe_fd[2])
+static bool	init_pipe(t_shell *sh, int i, int tab_size, int pipe_fd[2])
 {
 	int	last_cmd;
 
@@ -113,7 +113,10 @@ static bool	init_pipe(int i, int tab_size, int pipe_fd[2])
 		return (true);
 	}
 	if (pipe(pipe_fd) < 0)
+	{
+		sh->tab[i].error = set_error("pipe", SYSCALL_ERROR);
 		return (false);
+	}
 	else
 		return (true);
 }
@@ -125,38 +128,125 @@ static void	end_pipeline(t_shell *sh, pid_t *child_pid, int prev_fd)
 		close(prev_fd);
 }
 
-void	launch_cmd
-void	exec_pipeline(t_shell *sh)
+bool	is_only_one_builtin(t_shell *sh, int i)
 {
-	int		i;
-	int		pipe_fd[2];
-	pid_t	*child_pid;
-	int		prev_fd;
+	t_builtin	*builtin;
+
+	builtin = find_buildint(sh, sh->tab[i]);
+	if (sh->tab_size != 1)
+		return (false)
+	if (builtin)
+	{
+		sh->exit_status = builtin.func(&sh->env, sh->tab[i], sh->exit_status);
+		return (true);
+	}
+	else
+	{
+		return (false);
+	}
+}
+
+void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
+{
+	t_command *cmd;
+	t_builtin *builtin;
+
+	cmd = sh->tab[i];
+	builtin = find_builtin(sh, cmd);
+	redirect_pipeline(sh, i, pipe_fd, prev_fd);
+	if (builtin)
+	{
+		sh->exit_status = builtin->func(&sh->env, cmd, sh->exit_status);
+		//i cannot free in that case the array of pid...but it seems cool and logic that
+		//these array belong to the shell struct hell yeah
+	}
+	else
+		exec_command(sh, i);
+}
+
+bool	init_fork(int pid, t_command *cmd)
+{
+	pid = fork();
+	if (pid < 0)
+	{
+		cmd->error = set_error("fork", SYSCALL_ERROR);
+		return (false);
+	}
+	return (true);
+}
+
+void	lauch_pipeline(t_shell *sh, int **child_pid, int prev_fd);
+{
+	int	i;
+	int	pipe_fd[2];
+	int	*pid;
 
 	i = 0;
-	child_pid = malloc(sizeof(*child_pid) * sh->tab_size);
-	if (!child_pid)
-		return ;
+	pid = *child_pid;
 	while (i != sh->tab_size)
 	{
-		if (!init_pipe(i, sh->tab_size, pipe_fd))
-			return ; //ERROR
-		perform_redirection(sh, &sh->tab[i]);
-		child_pid[i] = fork();
-		if (child_pid[i] < 0)
-			return ;//ERROR
-		else if (child_pid[i] == CHILD_PROCESS)
+		cmd = sh->tab[i];
+		if (!init_pipe(sh, i, sh->tab_size, pipe_fd))
+			return ;
+		perform_redirection(sh, cmd); //or &sh->tab[i]?
+		if (sh->tab[i].error.code != OK)
+			continue ;
+		if (is_only_one_builtin(sh, i))
+			return ;
+		if (!init_fork(child_pid[i], cmd))
+			return ;
+		if (pid[i] == CHILD_PROCESS)
 		{
-			launch_cmd(sh, i, pipe_fd, prev_fd); //redirect pipeline then check if builtin or then exec the cmd
+			launch_cmd(sh, i, pipe_fd, prev_fd);
 		}
-		prev_fd = get_next_cmd_input(); //close the appropriate fds in parent and finds the new prev_fd
+		prev_fd = get_next_cmd_input(pipe_fd, prev_fd); //close the appropriate fds in parent and finds the new prev_fd
+		i++;
+	}
+}
+
+bool	init_pipeline(t_shell *sh, int i, int pipe_fd[2])
+{
+	if (!init_pipe(sh, i, sh->tab_size, pipe_fd))
+	{
+		return (false);
+	}
+	perform_redirection(sh, sh->tab[i]);
+	if (sh->tab[i].error.code != OK)
+	{
+		return (false);
+	}
+	sh->child_pid[i] = fork();
+	if (sh->child_pid < 0)
+	{
+		sh->tab[i].error = set_error("fork", SYSCALL_ERROR);
+		return (false)
+	}
+	return (true);
+}
+
+void	exec_pipeline(t_shell *sh)
+{
+	int		pipe_fd[2];
+	int		prev_fd;
+	int		i;
+
+	prev_fd = NO_REDIR;
+	i = 0;
+	while (i != sh->tab_size)
+	{
+		if (!init_pipeline())
+			return ;
+		if (sh->child_pid[i] == CHILD_PROCESS)
+		{
+			lauch_cmd();
+		}
+		prev_fd = get_next_input(pipe_fd, prev_fd);
 		i++;
 	}
 	end_pipeline(sh, child_pid, prev_fd);
 }
 	
-
-
+/*
 void	exec_pipeline(t_shell *shell)
 {
 	int		i;
@@ -221,3 +311,4 @@ void	exec_pipeline(t_shell *shell)
 	if (prev_fd > 2)
 		close(prev_fd);
 }
+*/

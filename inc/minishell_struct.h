@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/19 18:25:22 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/20 17:56:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,11 @@ typedef struct s_builtin
 typedef struct s_shell
 {
 	char		**env;
-	t_command	*tab; //parsing
+	t_command	*tab; //parsing, the array of cmd
 	int			tab_size; //nb of cmd
-	int			exit_status;
-	t_builtin	builtin_cmds[NB_OF_BUILTIN];
+	int			exit_status; //init to 0
+	pid_t		*child_pid; // init to tab_size
+	t_builtin	builtin_cmds[NB_OF_BUILTIN];//builtin struct 
 }	t_shell;
 
 #endif
