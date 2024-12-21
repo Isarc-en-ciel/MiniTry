@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 18:29:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:38:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 		value = get_value(cmd->cmd[i]);
 		update_env(cmd, head, key, value);
 		if (cmd->error.code != 0)
-			break ;
+			return ;
 		free(key);
 		*exit_status = SUCCESS;
 		i++;
@@ -81,7 +81,7 @@ int	ft_export(char ***env, t_command *cmd, int exit_status)
 		return (FAIL);
 	if (!cmd->cmd[1])
 	{
-		print_all_env_var(&head);
+		export_without_arg(&head, cmd);
 		destroy_lst(&head);
 		return (SUCCESS);
 	}
@@ -90,5 +90,7 @@ int	ft_export(char ***env, t_command *cmd, int exit_status)
 		return (builtin_error(cmd, NULL, 0, &head));
 	build_envp(&head, cmd, env);
 	destroy_lst(&head);
+	if (cmd->error.code != OK)
+		exit_status = FAIL;
 	return (exit_status);
 }

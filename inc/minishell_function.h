@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/20 16:40:07 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/21 17:18:26 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int			ft_echo(char ***env, t_command *cmd, int exit_status);
 int			ft_exit(char ***env, t_command *cmd, int exit_status);
 int			ft_unset(char ***env, t_command *cmd, int exit_status);
 int			ft_export(char ***env, t_command *cmd, int exit_status);
-void		print_all_env_var(t_env_list **head);
+void		export_without_arg(t_env_list **head, t_command *cmd);
 
 /* repo execution */
 void		exec_command(t_shell *shell, int nb); /*file exec_command.c */
@@ -75,6 +75,9 @@ t_command	*pseudo_parsing(t_shell *shell, char *input);
 void		create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
 int			get_exit_status(t_command *cmd, pid_t pid);
 int			wait_children(t_shell *shell, pid_t *child_pid, int child_nb);
+bool		init_pipeline(t_shell *sh, int i, int pipe_fd[2]);
+bool		is_only_one_builtin(t_shell *sh, int i);
+void		redirect_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd);
 
 /* repo utils */
 void		free_tab_char(char **tab);

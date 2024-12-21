@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 13:15:22 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:25:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ int	wait_children(t_shell *shell, pid_t	*child_pid, int	child_nb)
 		exit_status = get_exit_status(&shell->tab[i], child_pid[i]);
 		i++;
 	}
-	free(child_pid);
 	return (exit_status);
 }

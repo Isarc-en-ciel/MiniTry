@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/20 17:49:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:23:57 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ static	t_shell	*clean_prompt(t_shell *shell)
 	free_tab_cmd(shell->tab_size, shell->tab);
 	shell->tab_size = 0;
 	shell->tab = NULL;
+	if (shell->child_pid)
+	{
+		free(shell->child_pid);
+		shell->child_pid = NULL;
+	}
 	return (shell);
 }
 

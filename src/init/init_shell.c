@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/19 18:21:26 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:07:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_shell	init_shell(void)
 		.env = NULL,
 		.tab_size = 0,
 		.exit_status = 0,
+		.child_pid = NULL,
 		.builtin_cmds = 
 		{ 
 			{ "echo", ft_echo },

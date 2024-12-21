@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:51:41 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 18:28:58 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:39:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,26 @@ static t_env_list	*ft_alpha_sort(t_env_list *head)
 	return (head);
 }
 
-void	print_all_env_var(t_env_list **head)
+void	export_without_arg(t_env_list **head, t_command *cmd)
 {
 	t_env_list	*tmp;
+	int			fd;
 
 	*head = ft_alpha_sort(*head);
 	tmp = *head;
+	fd = STDOUT_FILENO;
+	if (cmd->fd_out != NO_REDIR)
+		fd = cmd->fd_out;
 	while (tmp)
 	{
+		ft_putstr_fd("declare -x", fd);
+		ft_putstr_fd(tmp->key, fd);
 		if (tmp->value)
-			ft_printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
-		else if (tmp->is_init == false)
-			ft_printf("declare -x %s\n", tmp->key);
+		{
+			ft_putstr_fd("=", fd);
+			ft_putstr_fd(tmp->value, fd);
+		}
+		ft_putstr_fd("\n", fd);
 		tmp = tmp->next;
 	}
 	destroy_lst(head);
