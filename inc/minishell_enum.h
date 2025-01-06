@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/19 18:44:07 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:08:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ enum e_error
 	OPEN_FILE,
 	FILE_NO_EXIST = 127,
 	FILE_NO_PERM,
-	CMD_NOT_FOUND = 127,
+	CMD_NOT_FOUND,
 	FORK,
 	MALLOC,
 	SYSCALL_ERROR = 1,
-	PIPE_ERROR,
 	CD_ERROR,
 };
 

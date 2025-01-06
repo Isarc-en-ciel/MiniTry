@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/21 17:18:26 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:16:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void		ft_print_list(t_env_list *head);
 t_env_list	*get_env(char *key, t_env_list **head);
 char		*get_env_value(t_env_list *head, char *key);
 t_env_list	*get_prev_env(t_env_list **head, char *key);
-//void		replace_env(t_env_list *env_to_change, t_env_list **head, t_command *cmd);
-//void		replace_env(char *key, char *value, t_env_list **head, t_command *cmd);
 void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
 void		update_underscore_var(t_shell *shell);
 bool		key_found(char *s1, char *s2);
@@ -62,22 +60,23 @@ int			ft_export(char ***env, t_command *cmd, int exit_status);
 void		export_without_arg(t_env_list **head, t_command *cmd);
 
 /* repo execution */
-void		exec_command(t_shell *shell, int nb); /*file exec_command.c */
+bool		init_pipeline(t_shell *sh, int i, int pipe_fd[2]);
+bool		init_child_pid(t_shell *sh);
 t_builtin	*find_builtin(t_shell *sh, t_command *cmd);
-//bool		is_builtin(t_shell *shell, t_command *cmd);
-//void		*is_builtin(t_shell *shell, t_command *cmd);
-int			exec_prompt(t_shell *shell); /* file exec_prompt.c */
-void		delete_heredoc_file(t_command *cmd);/* file exec_prompt.c */
-void		exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
+bool		is_only_one_builtin(t_shell *sh, int i);
 void		perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
-void		redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
-t_command	*pseudo_parsing(t_shell *shell, char *input);
 void		create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
+void		delete_heredoc_file(t_command *cmd);/* file exec_prompt.c */
+void		redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
+int			exec_prompt(t_shell *shell); /* file exec_prompt.c */
+void		exec_command(t_shell *shell, int nb); /*file exec_command.c */
+void		exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
+t_command	*pseudo_parsing(t_shell *shell, char *input);
 int			get_exit_status(t_command *cmd, pid_t pid);
 int			wait_children(t_shell *shell, pid_t *child_pid, int child_nb);
-bool		init_pipeline(t_shell *sh, int i, int pipe_fd[2]);
-bool		is_only_one_builtin(t_shell *sh, int i);
-void		redirect_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd);
+void		configure_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd);
+int			close_fd(int *p_fd);
+void		close_all_fds(int pipe_fd[2], int *prev_fd, int *in, int *out);
 
 /* repo utils */
 void		free_tab_char(char **tab);
