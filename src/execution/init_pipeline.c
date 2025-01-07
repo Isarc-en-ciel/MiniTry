@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:45:52 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/06 13:15:33 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/07 16:02:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,28 @@ static bool	init_pipe(t_shell *sh, int i, int tab_size, int pipe_fd[2])
 	return (true);
 }
 
-bool	init_pipeline(t_shell *sh, int i, int pipe_fd[2])
+void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 {
 	if (!init_pipe(sh, i, sh->tab_size, pipe_fd))
 	{
-		return (false);
+		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+		exit_error(sh, NULL);
 	}
 	perform_redirection(sh, &sh->tab[i]);
-	//do not fork a child process if a prb occur while trying 
-	// to open a file ? but a prb when wait the ? so fork and close ? disgutinf idea
 	sh->child_pid[i] = fork();
 	if (sh->child_pid[i] < 0)
 	{
+		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 		sh->tab[i].error = set_error("fork", SYSCALL_ERROR);
-		return (false);
+		exit_error(sh, NULL);
 	}
 	if (sh->child_pid[i] == CHILD_PROCESS)
 	{
-		if (sh->tab[i].error.code != OK) //aka an error occurs when attempting to open a file
-			exit_error(sh, NULL);
+		if (sh->tab[i].error.code != OK)
+		{
+			ft_printf("errno : %d\n", errno);
+			ft_printf("cmd->error.code : %d\n", sh->tab[i].error.code);
+			exit_child(sh, pipe_fd, prev_fd, i);
+		}
 	}
-	return (true);
 }

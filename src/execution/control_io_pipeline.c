@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:04:23 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/06 14:45:39 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:47:31 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	handle_middle_cmd(int *in, int *out, int pipe_fd[2], int prev_fd)
 	return (SUCCESS);
 }
 
-void	configure_pipeline(t_shell *shell, int i, int pipe_fd[2], int prev_fd)
+int	configure_pipeline(t_shell *shell, int i, int pipe_fd[2], int prev_fd)
 {
 	int	first_cmd;
 	int	last_cmd;
@@ -92,16 +92,14 @@ void	configure_pipeline(t_shell *shell, int i, int pipe_fd[2], int prev_fd)
 	if (i == first_cmd)
 		flag = handle_first_cmd(&in, &out, pipe_fd);
 	else if (i == last_cmd)
-	{
-		ft_printf("%d %d\n", pipe_fd[READ_FROM], pipe_fd[WRITE_TO]);
 		flag = handle_last_cmd(&in, &out, prev_fd);
-	}
 	else
 		flag = handle_middle_cmd(&in, &out, pipe_fd, prev_fd);
 	if (flag == FAIL)
 	{
-		close_all_fds(pipe_fd, &prev_fd, &in, &out);
-		exit_error(shell, NULL);
+//		close_all_fds(pipe_fd, &prev_fd, &in, &out);
+		return (FAIL);
 	}
 	redirect_io(shell, in, out);
+	return (SUCCESS);
 }

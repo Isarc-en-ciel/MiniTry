@@ -54,6 +54,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/execution/init_pipeline.c \
 	  src/execution/control_io_pipeline.c \
 	  src/execution/close_fd.c \
+	  src/execution/find_executable_path.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 	  src/utils/set_error.c \
