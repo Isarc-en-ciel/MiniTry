@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/07 15:37:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:59:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,23 @@ static void	terminate_pipeline(t_shell *sh, int i, int prev_fd)
 	close_fd(&prev_fd);
 }
 
+static void	critical_exec_error(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
+{
+	//if a syscall error triggered
+	int	n;
+
+	n = 0;
+	while (n != i)
+	{
+		kill(sh->child_pid[n], SIGTERM);
+		n++;
+	}
+	sh->exit_status = wait_children(sh, sh->child_pid, i);
+	close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+	free_shell(sh);
+	exit(EXIT_FAILURE);
+}
+
 void	exec_pipeline(t_shell *sh)
 {
 	int		pipe_fd[2];
@@ -104,7 +121,7 @@ void	exec_pipeline(t_shell *sh)
 		}
 		prev_fd = get_prev_fd(sh, i, pipe_fd, prev_fd);
 		if (sh->tab[i].error.code == SYSCALL_ERROR)
-			break ;
+			return (critical_exec_error(sh, i, pipe_fd, prev_fd));
 		i++;
 	}
 	terminate_pipeline(sh, i, prev_fd);

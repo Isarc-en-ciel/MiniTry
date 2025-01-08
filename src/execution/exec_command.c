@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/08 16:23:28 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:46:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	exec_external_command(t_shell *shell, int n)
 	path = find_executable_path(shell, n, cmd);
 	if (path)
 	{
-		exec_command(path, shell, n);
+		return (exec_command(path, shell, n));
 	}
 	cmd->error = set_error(cmd->cmd[0], CMD_NOT_FOUND);
 }
