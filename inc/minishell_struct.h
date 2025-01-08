@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/21 14:48:29 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:45:54 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct s_shell
 	int			tab_size; //nb of cmd
 	int			exit_status; //init to 0
 	pid_t		*child_pid; // init to tab_size, malloc(sizeof (pid_t) *tab_size);
-	t_builtin	builtin_cmds[NB_OF_BUILTIN];//builtin struct 
+	t_builtin	builtin[NB_OF_BUILTIN];//builtin struct 
 }	t_shell;
 
 #endif

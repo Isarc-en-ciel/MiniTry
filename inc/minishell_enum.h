@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/07 15:59:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:21:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,18 @@ enum e_tokens
 
 enum e_error
 {
-	SUCCESS = 0,
 	OK = 0,
+	FAIL = 1,
+	BAD_ARG = 2, 
+	MALLOC = -1,
+	SYSCALL_ERROR = -1,
+	CD_ERROR = 3,
 	BUILTIN_OPT = 1,
-	BAD_ARG, 
-	OPEN_FILE,
-	FILE_NO_EXIST = 127,
-	FILE_NO_PERM,
-	CMD_NOT_FOUND,
-	FORK,
-	MALLOC,
-	SYSCALL_ERROR = 1,
-	CD_ERROR,
+	CMD_NOT_FOUND = 127
 };
 
 enum
 {
-	LAST_PIPE_CLOSED = -2,
 	NO_REDIR = -1,
 	READ_FROM = 0,
 	WRITE_TO = 1

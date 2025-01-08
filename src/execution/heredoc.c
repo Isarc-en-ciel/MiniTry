@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/19 18:12:57 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:08:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 	heredoc = open(HEREDOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (heredoc == -1)
 	{
-		cmd->error = set_error("heredoc", OPEN_FILE);
+		cmd->error = set_error("heredoc", FAIL);
 		return ;
 	}
 	pid = fork();

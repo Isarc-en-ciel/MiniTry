@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/07 15:41:10 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:44:06 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		expand_exit_status(char **retp, int exit_status);
 int		expand_env_var(char **retp, char *word, int i, char **env);
 
 /* repo init */
-t_shell		init_shell(void);
+t_shell		init_shell(char **envp);
 
 /* repo builtins */
 bool		init_env_list(t_env_list **head, t_command *cmd, char **env);

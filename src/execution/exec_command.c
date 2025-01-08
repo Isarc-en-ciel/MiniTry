@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/07 12:53:55 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:23:28 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	exec_absolute_path(t_shell *shell, int n)
 		}
 	}
 	else if (access(path, F_OK) == 0 && access(path, X_OK) != 0)
-		shell->tab[n].error = set_error(path, FILE_NO_PERM);
+		shell->tab[n].error = set_error(path, FAIL);
 	else
 		shell->tab[n].error = set_error(path, CMD_NOT_FOUND);
 }
@@ -60,8 +60,5 @@ void	exec_external_command(t_shell *shell, int n)
 	{
 		exec_command(path, shell, n);
 	}
-	if (!cmd->error.str_perror)
-	{
-		cmd->error = set_error(cmd->cmd[0], cmd->error.code);
-	}
+	cmd->error = set_error(cmd->cmd[0], CMD_NOT_FOUND);
 }

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 14:20:45 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/07 14:26:54 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:29:40 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static char	**split_path_var(t_shell *shell, int n)
 		i++;
 	if (!shell->env[i])
 	{
-		shell->tab[n].error = set_error(shell->tab[n].cmd[0], FILE_NO_EXIST);
 		return (NULL);
 	}
 	env_path = shell->env[i] + ft_strlen("PATH=");
@@ -67,7 +66,7 @@ static char	*check_path_accessibility(char *full_path, t_command *cmd)
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		else
-			cmd->error.code = FILE_NO_PERM;
+			cmd->error.code = FAIL;
 	}
 	if (access(full_path, F_OK) != 0)
 		cmd->error.code = CMD_NOT_FOUND;
