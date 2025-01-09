@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/08 16:21:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:09:18 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ enum e_error
 	SYSCALL_ERROR = -1,
 	CD_ERROR = 3,
 	BUILTIN_OPT = 1,
-	CMD_NOT_FOUND = 127
+	CMD_NOT_FOUND = 127,
+	FILE_NO_PERM = FAIL,
 };
 
 enum

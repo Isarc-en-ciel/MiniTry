@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:45:52 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/07 16:02:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:31:26 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 		exit_error(sh, NULL);
 	}
-	perform_redirection(sh, &sh->tab[i]);
 	sh->child_pid[i] = fork();
 	if (sh->child_pid[i] < 0)
 	{
@@ -59,10 +58,8 @@ void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	}
 	if (sh->child_pid[i] == CHILD_PROCESS)
 	{
-		if (sh->tab[i].error.code != OK)
+		if (sh->tab[i].error.code != OK) //opening file error
 		{
-			ft_printf("errno : %d\n", errno);
-			ft_printf("cmd->error.code : %d\n", sh->tab[i].error.code);
 			exit_child(sh, pipe_fd, prev_fd, i);
 		}
 	}

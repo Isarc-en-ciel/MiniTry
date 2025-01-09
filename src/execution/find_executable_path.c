@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 14:20:45 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/08 16:29:40 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/09 11:08:09 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*check_path_accessibility(char *full_path, t_command *cmd)
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		else
-			cmd->error.code = FAIL;
+			cmd->error.code = FILE_NO_PERM;
 	}
 	if (access(full_path, F_OK) != 0)
 		cmd->error.code = CMD_NOT_FOUND;

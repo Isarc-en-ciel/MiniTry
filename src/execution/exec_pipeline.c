@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/08 16:59:38 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:31:06 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,30 @@ static void	exec_builtin(t_builtin *builtin, t_command *cmd, t_shell *sh)
 
 	status = builtin->func(&sh->env, cmd, sh->exit_status);
 	sh->exit_status = status;
+}
+
+static void	terminate_pipeline(t_shell *sh, int i, int prev_fd)
+{
+	sh->exit_status = wait_children(sh, sh->child_pid, i);
+	close_fd(&prev_fd);
+}
+
+static void	critical_exec_error(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
+{
+	//if a syscall error triggered
+	// it does not actually manage critical errors that triggered in children processes
+	int	n;
+
+	n = 0;
+	while (n != i)
+	{
+		kill(sh->child_pid[n], SIGTERM);
+		n++;
+	}
+	sh->exit_status = wait_children(sh, sh->child_pid, i);
+	close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+	free_shell(sh);
+	exit(EXIT_FAILURE);
 }
 
 static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
@@ -58,14 +82,9 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	t_command	*cmd;
 
 	cmd = &sh->tab[i];
-	if (close_fd(&pipe_fd[WRITE_TO]) == FAIL)
+	if (close_fd(&pipe_fd[WRITE_TO]) == FAIL || close_fd(&prev_fd) == FAIL)
 	{
-		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
-		cmd->error = set_error(NULL, SYSCALL_ERROR);
-		return (NO_REDIR);
-	}
-	if (close_fd(&prev_fd) == FAIL)
-	{
+		//CRITICAL ERROR 
 		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 		cmd->error = set_error(NULL, SYSCALL_ERROR);
 		return (NO_REDIR);
@@ -75,29 +94,6 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 		close(pipe_fd[READ_FROM]);
 	}
 	return (pipe_fd[READ_FROM]);
-}
-
-static void	terminate_pipeline(t_shell *sh, int i, int prev_fd)
-{
-	sh->exit_status = wait_children(sh, sh->child_pid, i);
-	close_fd(&prev_fd);
-}
-
-static void	critical_exec_error(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
-{
-	//if a syscall error triggered
-	int	n;
-
-	n = 0;
-	while (n != i)
-	{
-		kill(sh->child_pid[n], SIGTERM);
-		n++;
-	}
-	sh->exit_status = wait_children(sh, sh->child_pid, i);
-	close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
-	free_shell(sh);
-	exit(EXIT_FAILURE);
 }
 
 void	exec_pipeline(t_shell *sh)
@@ -114,6 +110,7 @@ void	exec_pipeline(t_shell *sh)
 		return ;
 	while (i != sh->tab_size)
 	{
+		perform_redirection(sh, &sh->tab[i]);
 		init_pipeline(sh, i, pipe_fd, prev_fd);
 		if (sh->child_pid[i] == CHILD_PROCESS)
 		{
