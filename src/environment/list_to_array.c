@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:29:05 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 18:15:42 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:00:46 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char **list_to_array(t_env_list **head)
 		i++;
 	}
 	env[i] = NULL;
+	ft_printf("list to array succeeded\n");
 	return (env);
 }
 

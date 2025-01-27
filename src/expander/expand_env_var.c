@@ -6,13 +6,13 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:59:12 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/28 16:14:32 by csteylae         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:46:23 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
 
-static	char	*find_env_var(char *var, char **env, int *flag)
+static	char	*find_env_var(char *var, char **env, int *error_flag)
 {
 	t_env_list	*head;
 	t_env_list	*ptr;
@@ -20,18 +20,19 @@ static	char	*find_env_var(char *var, char **env, int *flag)
 
 	head = array_to_list(env);
 	if (!head)
-		*flag = -1;
-	ptr = get_env(var, head);
+		*error_flag = -1;
+	ptr = get_env(var, &head);
 	if (!ptr)
 		expanded_value = NULL;
 	else
 	{
 		expanded_value = ft_strdup(ptr->value);
 		if (!expanded_value)
-			*flag = -1;
+			*error_flag = -1;
 	}
 	free(var);
 	var = NULL;
+	var = expanded_value;
 	destroy_lst(&head);
 	return (expanded_value);
 }
