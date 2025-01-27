@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/10 17:40:49 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/12 15:48:32 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ int			join_cmd(t_lexer *cmd, int size, int i, int a);
 int			ft_strcmp(const char *s, char n);
 char		*ft_strcpy(const char *s1, char *s2);
 t_stock		*tab_cleaner(t_stock *tab);
-int			clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem);
-int 		count_new_elem(t_lexer *cmd, int nbr_elem);
+int			clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *new_nbr_elem);
+int 		count_new_elem(t_lexer *cmd, int nbr_elem, int *new_nbr_elem);
 int 		copy_token(t_lexer *cmd, t_lexer **new_cmd);
 
 //testing parsing
