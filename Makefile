@@ -49,12 +49,13 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/execution/exec_pipeline.c \
 	  src/execution/redirection.c \
 	  src/execution/heredoc.c \
-	  src/execution/is_only_one_builtin.c \
 	  src/execution/get_exit_status.c \
 	  src/execution/init_pipeline.c \
 	  src/execution/control_io_pipeline.c \
 	  src/execution/close_fd.c \
 	  src/execution/find_executable_path.c \
+	  src/execution/exec_builtins.c \
+	  src/execution/terminate_pipeline.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 	  src/utils/set_error.c \

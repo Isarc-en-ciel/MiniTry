@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/08 10:44:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:16:42 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int			close_fd(int *p_fd);
 void		close_all_fds(int pipe_fd[2], int *prev_fd, int *in, int *out);
 char		*find_executable_path(t_shell *sh, int n, t_command *cmd);
 void		exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i);
+void		exec_builtin(t_builtin *builtin, t_command *cmd, t_shell *sh);
+void		terminate_pipeline(t_shell *sh, int i, int prev_fd);
 
 /* repo utils */
 void		free_tab_char(char **tab);

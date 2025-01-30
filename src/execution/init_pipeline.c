@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:45:52 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/09 16:31:26 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:40:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	init_pipe(t_shell *sh, int i, int tab_size, int pipe_fd[2])
 		pipe_fd[WRITE_TO] = NO_REDIR;
 		return (true);
 	}
-	if (pipe(pipe_fd) < 0)
+	else if (pipe(pipe_fd) < 0)
 	{
 		sh->tab[i].error = set_error("pipe", SYSCALL_ERROR);
 		return (false);
@@ -44,6 +44,8 @@ static bool	init_pipe(t_shell *sh, int i, int tab_size, int pipe_fd[2])
 
 void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 {
+	pipe_fd[READ_FROM] = NO_REDIR;
+	pipe_fd[WRITE_TO] = NO_REDIR;
 	if (!init_pipe(sh, i, sh->tab_size, pipe_fd))
 	{
 		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
@@ -55,12 +57,5 @@ void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 		sh->tab[i].error = set_error("fork", SYSCALL_ERROR);
 		exit_error(sh, NULL);
-	}
-	if (sh->child_pid[i] == CHILD_PROCESS)
-	{
-		if (sh->tab[i].error.code != OK) //opening file error
-		{
-			exit_child(sh, pipe_fd, prev_fd, i);
-		}
 	}
 }

@@ -1,38 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_fd.c                                         :+:      :+:    :+:   */
+/*   terminate_pipeline.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/25 17:12:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/30 11:33:18 by csteylae         ###   ########.fr       */
+/*   Created: 2025/01/30 11:15:41 by csteylae          #+#    #+#             */
+/*   Updated: 2025/01/30 11:24:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	close_fd(int *fd)
+void	terminate_pipeline(t_shell *sh, int i, int prev_fd)
 {
-	if (fd && *fd && *fd > 2)
-	{
-		if (close(*fd) < 0)
-		{
-			perror("close");
-			*fd = NO_REDIR;
-			return (FAIL);
-		}
-	}
-	if (fd)
-		*fd = NO_REDIR;
-	return (SUCCESS);
-}
-
-void	close_all_fds(int pipe_fd[2], int *prev_fd, int *in, int *out)
-{
-	close_fd(&pipe_fd[READ_FROM]);
-	close_fd(&pipe_fd[WRITE_TO]);
-	close_fd(prev_fd);
-	close_fd(in);
-	close_fd(out);
+	sh->exit_status = wait_children(sh, sh->child_pid, i);
+	close_fd(&prev_fd);
 }

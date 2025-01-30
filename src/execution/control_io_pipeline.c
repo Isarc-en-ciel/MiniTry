@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:04:23 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/09 16:13:18 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:47:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static int	handle_first_cmd(int *in, int *out, int pipe_fd[2])
 			return (FAIL);
 	}
 	else
-	{
 		*out = pipe_fd[WRITE_TO];
-	}
 	return (SUCCESS);
 }
 
@@ -38,13 +36,9 @@ static int	handle_last_cmd(int *in, int *out, int prev_fd)
 			return (FAIL);
 	}
 	else
-	{
 		*in = prev_fd;
-	}
 	if (*out == NO_REDIR)
-	{
 		*out = STDOUT_FILENO;
-	}
 	return (SUCCESS);
 }
 
@@ -58,22 +52,16 @@ static int	handle_middle_cmd(int *in, int *out, int pipe_fd[2], int prev_fd)
 			return (FAIL);
 	}
 	else if (*in == NO_REDIR && prev_fd != NO_REDIR)
-	{
 		*in = prev_fd;
-	}
 	else if (*in == NO_REDIR && prev_fd == NO_REDIR)
-	{
 		*in = STDIN_FILENO;
-	}
 	if (*out != NO_REDIR)
 	{
 		if (close_fd(&pipe_fd[WRITE_TO]) == FAIL)
 			return (FAIL);
 	}
 	else if (*out == NO_REDIR)
-	{
 		*out = pipe_fd[WRITE_TO];
-	}
 	return (SUCCESS);
 }
 
@@ -96,10 +84,7 @@ int	configure_pipeline(t_shell *shell, int i, int pipe_fd[2], int prev_fd)
 	else
 		flag = handle_middle_cmd(&in, &out, pipe_fd, prev_fd);
 	if (flag == FAIL)
-	{
-//		close_all_fds(pipe_fd, &prev_fd, &in, &out);
 		return (FAIL);
-	}
 	redirect_io(shell, in, out);
 	return (SUCCESS);
 }

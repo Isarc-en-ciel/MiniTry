@@ -6,32 +6,11 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/08 15:50:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:12:14 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-t_builtin	*find_builtin(t_shell *sh, t_command *cmd)
-{
-	int			i;
-	t_builtin	*builtin;
-	char		*cmd_name;
-
-	i = 0;
-	builtin = &sh->builtin[i];
-	cmd_name = cmd->cmd[0];
-	while (i != 7)
-	{
-		builtin = &sh->builtin[i];
-		if (!ft_strncmp(builtin->name, cmd_name, ft_strlen(builtin->name)))
-		{
-			return (builtin);
-		}
-		i++;
-	}
-	return (NULL);
-}
 
 static	t_shell	*clean_prompt(t_shell *shell)
 {
