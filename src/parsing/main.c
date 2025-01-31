@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/08 15:19:28 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/31 11:49:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	read_the_input(char **envp)
 	t_shell		shell;
 
 	shell = init_shell(envp);
+	incr_shlvl(&shell);
 	while (1)
 	{
 		input = readline("gib comand pliz> ");

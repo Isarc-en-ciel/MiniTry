@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/30 11:16:42 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/31 11:48:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_env_list	*get_prev_env(t_env_list **head, char *key);
 void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
 void		update_underscore_var(t_shell *shell);
 bool		key_found(char *s1, char *s2);
+void		incr_shlvl(t_shell *sh);
 
 /* repo expander */
 int		expand_var(t_shell *shell, char **word);

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:58:52 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 19:56:28 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/31 11:38:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ static void	replace_env_value(t_env_list *elem, char *new_value, t_command *cmd)
 	{
 		elem->value = ft_strdup(new_value);
 		if (!elem->value)
-			cmd->error = set_error("malloc", MALLOC);
+		{
+			if (cmd)
+				cmd->error = set_error("malloc", MALLOC);
+		}
 	}
 }
 

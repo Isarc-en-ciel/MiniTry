@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:51:41 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/21 16:39:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/31 11:25:50 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	export_without_arg(t_env_list **head, t_command *cmd)
 		fd = cmd->fd_out;
 	while (tmp)
 	{
-		ft_putstr_fd("declare -x", fd);
+		ft_putstr_fd("declare -x ", fd);
 		ft_putstr_fd(tmp->key, fd);
 		if (tmp->value)
 		{

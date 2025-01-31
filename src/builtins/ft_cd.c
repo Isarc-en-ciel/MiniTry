@@ -6,17 +6,11 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/18 17:28:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/31 11:55:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
-
-/* if errno == ENOENT we should let chdir continue to work in order to find an
-   existent directory. 
-   So this error should not stop the workflow such as a malloc
-   error 
-  */
 
 char	*get_path(t_env_list *head, char *str, t_command *cmd)
 {
