@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 14:20:45 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/09 11:08:09 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:54:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,9 @@ char	*find_executable_path(t_shell *sh, int n, t_command *cmd)
 	i = 0;
 	path_array = split_path_var(sh, n);
 	if (!path_array)
+	{
 		return (NULL);
+	}
 	while (path_array[i])
 	{
 		path = construct_path(path_array[i], cmd->cmd[0]);

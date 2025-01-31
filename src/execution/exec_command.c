@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/09 11:11:01 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:54:46 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ void	exec_external_command(t_shell *shell, int n)
 	{
 		return (exec_command(path, shell, n));
 	}
-	cmd->error = set_error(cmd->cmd[0], cmd->error.code);
+	ft_printf("%s : No such file or directory\n", cmd->cmd[0]); //no the good exit status if !PATH
+	return ;
 }
