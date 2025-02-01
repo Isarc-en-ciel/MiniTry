@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 14:47:31 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:26:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 char	*get_path(t_env_list *head, char *str, t_command *cmd)
 {
 	char		*path;
-	char		*dir_path;
 
 	path = str;
-	dir_path = NULL;
 	if (!str)
 	{
 		path = get_env_value(head, "HOME");
@@ -38,10 +36,7 @@ char	*get_path(t_env_list *head, char *str, t_command *cmd)
 			ft_printf("cd: OLDPWD not set\n");
 		}
 	}
-	dir_path = ft_strdup(path);
-	if (!dir_path)
-		return (NULL);
-	return (dir_path);
+	return (ft_strdup(path));
 }
 
 void	set_cwd(t_command *cmd, t_env_list **head, char *key)
@@ -62,7 +57,8 @@ void	set_cwd(t_command *cmd, t_env_list **head, char *key)
 			cmd->error = set_error(NULL, ENOENT);
 		return ;
 	}
-	update_env(cmd, head, key, value);
+	if (!update_env(head, key, value))
+		cmd->error = set_error(NULL, MALLOC);
 	free(value);
 	value = NULL;
 }

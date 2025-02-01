@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_underscore_var.c                            :+:      :+:    :+:   */
+/*   get_previous_env_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 14:52:18 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 15:17:55 by csteylae         ###   ########.fr       */
+/*   Created: 2025/02/01 15:13:27 by csteylae          #+#    #+#             */
+/*   Updated: 2025/02/01 15:29:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	update_underscore_var(t_shell *sh)
+t_env_list	*get_prev_env(t_env_list **head, char *key)
 {
-	t_command	*last_cmd;
-	t_env_list	*head;
+	t_env_list	*tmp;
 
-	last_cmd = &sh->tab[sh->tab_size - 1];
-	head = array_to_list(sh->env);
-	if (!head)
+	if (!head || !*head || !key)
+		return (NULL);
+	tmp = *head;
+	while (tmp)
 	{
-		last_cmd->error = set_error("malloc", MALLOC);
-		sh->exit_status = 1;
-		return ;
+		if (tmp->next)
+		{
+			if (key_found(tmp->next->key, key))
+				return (tmp);
+		}
+		tmp = tmp->next;
 	}
-	update_env(&head, "_", last_cmd->cmd[0]);
-	build_envp(&head, last_cmd, &sh->env);
-	destroy_lst(&head);
+	return (NULL);
 }

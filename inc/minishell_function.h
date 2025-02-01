@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/01 13:58:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:07:13 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		ft_print_list(t_env_list *head);
 t_env_list	*get_env(char *key, t_env_list **head);
 char		*get_env_value(t_env_list *head, char *key);
 t_env_list	*get_prev_env(t_env_list **head, char *key);
-void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
+bool		update_env(t_env_list **head, char *key, char *value);
 void		update_underscore_var(t_shell *shell);
 bool		key_found(char *s1, char *s2);
 void		incr_shlvl(t_shell *sh);

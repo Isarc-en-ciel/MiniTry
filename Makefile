@@ -44,6 +44,8 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/environment/update_underscore_var.c \
 	  src/environment/compare_key.c \
 	  src/environment/increment_shlvl.c \
+	  src/environment/get_previous_env_var.c \
+	  src/environment/ft_get_env.c \
 	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \

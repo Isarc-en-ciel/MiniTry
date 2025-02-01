@@ -6,31 +6,35 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:58:52 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 14:12:26 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:29:50 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	create_env(t_env_list **head, char *key, char *val, t_command *cmd)
+static bool	create_env(t_env_list **head, char *key, char *val)
 {
 	t_env_list	*elem;
 
 	elem = new_env_list(key, val, true);
 	if (!elem)
 	{
-		cmd->error = set_error("malloc", MALLOC);
-		return ;
+		perror("malloc");
+		return (false);
 	}
 	lst_addback(head, elem);
+	return (true);
 }
 
-static void	replace_env_value(t_env_list *elem, char *new_value, t_command *cmd)
+static t_env_list	*replace_env_value(t_env_list *elem, char *new_value)
 {
 	if (!elem)
-		return ;
+		return (NULL);
 	if (elem->value)
+	{
 		free(elem->value);
+		elem->value = NULL;
+	}
 	if (!new_value)
 		elem->value = NULL;
 	else
@@ -38,57 +42,27 @@ static void	replace_env_value(t_env_list *elem, char *new_value, t_command *cmd)
 		elem->value = ft_strdup(new_value);
 		if (!elem->value)
 		{
-			if (cmd)
-				cmd->error = set_error("malloc", MALLOC);
+			perror("malloc");
+			return (NULL);
 		}
 	}
+	return (elem);
 }
 
-t_env_list	*get_env(char *key, t_env_list **head)
-{
-	t_env_list	*tmp;
-
-	if (!head || !*head || !key)
-		return (NULL);
-	tmp = *head;
-	while (tmp)
-	{
-		if (key_found(key, tmp->key))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-void	update_env(t_command *cmd, t_env_list **head, char *key, char *value)
+bool	update_env(t_env_list **head, char *key, char *value)
 {
 	t_env_list	*elem;
 
 	elem = get_env(key, head);
 	if (!elem)
 	{
-		create_env(head, key, value, cmd);
-		return ;
+		if (!create_env(head, key, value))
+			return (false);
 	}
 	else
-		replace_env_value(elem, value, cmd);
-}
-
-t_env_list	*get_prev_env(t_env_list **head, char *key)
-{
-	t_env_list	*tmp;
-
-	if (!head || !*head || !key)
-		return (NULL);
-	tmp = *head;
-	while (tmp)
 	{
-		if (tmp->next)
-		{
-			if (key_found(tmp->next->key, key))
-				return (tmp) ;
-		}
-		tmp = tmp->next;
+		if (!replace_env_value(elem, value))
+			return (false);
 	}
-	return (NULL);
+	return (true);
 }

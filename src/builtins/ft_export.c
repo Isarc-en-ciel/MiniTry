@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/21 16:38:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:11:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 			continue ;
 		}
 		value = get_value(cmd->cmd[i]);
-		update_env(cmd, head, key, value);
-		if (cmd->error.code != 0)
+		if (!update_env(head, key, value))
+		{
+			cmd->error = set_error(NULL, MALLOC);
 			return ;
+		}
 		free(key);
 		*exit_status = SUCCESS;
 		i++;
