@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/31 11:55:43 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:47:31 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 char	*get_path(t_env_list *head, char *str, t_command *cmd)
 {
 	char		*path;
+	char		*dir_path;
 
 	path = str;
+	dir_path = NULL;
 	if (!str)
 	{
 		path = get_env_value(head, "HOME");
@@ -36,7 +38,10 @@ char	*get_path(t_env_list *head, char *str, t_command *cmd)
 			ft_printf("cd: OLDPWD not set\n");
 		}
 	}
-	return (path);
+	dir_path = ft_strdup(path);
+	if (!dir_path)
+		return (NULL);
+	return (dir_path);
 }
 
 void	set_cwd(t_command *cmd, t_env_list **head, char *key)
@@ -52,13 +57,9 @@ void	set_cwd(t_command *cmd, t_env_list **head, char *key)
 	else if (!value && errno == ENOENT)
 	{
 		if (key_found("PWD", key))
-		{
 			cmd->error = set_error(NOENT_PERROR, ENOENT);
-		}
 		else
-		{
 			cmd->error = set_error(NULL, ENOENT);
-		}
 		return ;
 	}
 	update_env(cmd, head, key, value);
@@ -73,7 +74,6 @@ void	change_directory(t_command *cmd, t_env_list **head)
 
 	status = 0;
 	path = get_path(*head, cmd->cmd[1], cmd);
-	path = ft_strdup(path);
 	if (!path)
 	{
 		cmd->error = set_error("malloc", MALLOC);
@@ -100,6 +100,7 @@ int	ft_cd(char ***envp, t_command *cmd, int exit_status)
 	t_env_list	*head;
 
 	head = NULL;
+	(void)exit_status;
 	if (!init_env_list(&head, cmd, *envp))
 		return (FAIL);
 	if (cmd->cmd[1] && cmd->cmd[2])
@@ -107,6 +108,12 @@ int	ft_cd(char ***envp, t_command *cmd, int exit_status)
 	change_directory(cmd, &head);
 	if (cmd->error.code != OK && cmd->error.code != ENOENT)
 		return (builtin_error(cmd, NULL, 0, &head));
-	exit_status = rebuild_envp(envp, cmd, &head);
-	return (exit_status);
+	build_envp(&head, cmd, envp);
+	if (cmd->error.code != OK)
+	{
+		destroy_lst(&head);
+		return (FAIL);
+	}
+	destroy_lst(&head);
+	return (SUCCESS);
 }

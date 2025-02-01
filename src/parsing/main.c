@@ -6,11 +6,22 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/31 14:17:41 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:31:16 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	handle_eof(char *input, t_shell *shell)
+{
+	if (!input || input[0] == '\0')
+	{
+		free_shell(shell);
+		free(input);
+		ft_printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
+}
 
 int	read_the_input(char **envp)
 {
@@ -22,12 +33,8 @@ int	read_the_input(char **envp)
 	while (1)
 	{
 		input = readline("gib comand pliz> ");
-		if (!input)
-		{
-			ft_printf("Error input is NULL bouuuuh\n");
-			break ;
-		}
-		else if (ft_strlen(input) == 0)
+		handle_eof(input, &shell);
+		if (ft_strlen(input) == 0) //if the input is just spaces
 			continue ;
 		add_history(input);
 		shell.tab = pseudo_parsing(&shell, input);

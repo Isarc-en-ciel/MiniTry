@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 11:27:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/31 12:13:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:10:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	update_lvl(char *value)
 	return (lvl);
 }
 
-void	update_shlvl(t_env_list *shlvl)
+static void	update_shlvl(t_env_list *shlvl)
 {
 	int	lvl_incr;
 
@@ -33,7 +33,7 @@ void	update_shlvl(t_env_list *shlvl)
 	shlvl->value = NULL;
 	shlvl->value = ft_itoa(lvl_incr);
 	if (!shlvl->value)
-		return ;
+		shlvl->value = NULL;
 }
 
 void	incr_shlvl(t_shell *sh)
@@ -59,4 +59,7 @@ void	incr_shlvl(t_shell *sh)
 			exit_error(sh, "malloc");
 	}
 	build_envp(&head, NULL, &sh->env);
+	destroy_lst(&head);
+	if (!sh->env)
+		exit_error(sh, NULL);
 }

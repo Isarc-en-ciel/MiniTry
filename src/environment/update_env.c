@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:58:52 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/31 11:38:12 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:12:26 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ t_env_list	*get_env(char *key, t_env_list **head)
 	while (tmp)
 	{
 		if (key_found(key, tmp->key))
-			break ;
+			return (tmp);
 		tmp = tmp->next;
 	}
-	return (tmp);
+	return (NULL);
 }
 
 void	update_env(t_command *cmd, t_env_list **head, char *key, char *value)
@@ -71,9 +71,7 @@ void	update_env(t_command *cmd, t_env_list **head, char *key, char *value)
 		return ;
 	}
 	else
-	{
 		replace_env_value(elem, value, cmd);
-	}
 }
 
 t_env_list	*get_prev_env(t_env_list **head, char *key)
@@ -88,9 +86,9 @@ t_env_list	*get_prev_env(t_env_list **head, char *key)
 		if (tmp->next)
 		{
 			if (key_found(tmp->next->key, key))
-				break ;
+				return (tmp) ;
 		}
 		tmp = tmp->next;
 	}
-	return (tmp);
+	return (NULL);
 }

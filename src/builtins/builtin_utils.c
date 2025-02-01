@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/18 17:32:48 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:09:47 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ bool	init_env_list(t_env_list **head, t_command *cmd, char **env)
 	*head = array_to_list(env);
 	if (!*head)
 	{
-		cmd->error = set_error("malloc", MALLOC);
+		if (cmd)
+			cmd->error = set_error("malloc", MALLOC);
+		else
+			perror("malloc");
 		return (false);
 	}
 	return (true);
@@ -26,8 +29,13 @@ bool	init_env_list(t_env_list **head, t_command *cmd, char **env)
 
 int	builtin_error(t_command *cmd, char *s, enum e_error code, t_env_list **head)
 {
-	if (cmd->error.code == OK)
-		cmd->error = set_error(s, code);
+	if (cmd)
+	{
+		if (cmd->error.code == OK)
+			cmd->error = set_error(s, code);
+		else
+			perror(s);
+	}
 	if (head && *head)
 		destroy_lst(head);
 	return (FAIL);
@@ -42,19 +50,9 @@ void	build_envp(t_env_list **head, t_command *cmd, char ***envp)
 	{
 		ft_printf("cannot list to array :(\n");
 		builtin_error(cmd, "malloc", MALLOC, head);
-		return ;
 	}
 	free_tab_char(*envp);
 	*envp = new_envp;
-}
-
-int	rebuild_envp(char ***envp, t_command *cmd, t_env_list **head)
-{
-	build_envp(head, cmd, envp);
-	destroy_lst(head);
-	if (cmd->error.code != OK)
-		return (FAIL);
-	return (SUCCESS);
 }
 
 bool	is_key_format(t_command *cmd, char *str)
