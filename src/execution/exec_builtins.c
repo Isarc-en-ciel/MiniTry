@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:11:21 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/30 11:18:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:43:57 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_builtin	*find_builtin(t_shell *sh, t_command *cmd)
 	while (i != 7)
 	{
 		builtin = &sh->builtin[i];
-		if (!ft_strncmp(builtin->name, cmd_name, ft_strlen(builtin->name)))
+		if (key_found((char*)builtin->name, cmd_name))
 		{
 			return (builtin);
 		}

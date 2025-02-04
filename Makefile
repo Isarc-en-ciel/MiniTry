@@ -1,6 +1,6 @@
 NAME= minishell
 CC=cc
-CFLAGS= -Wall -Wextra -Werror -g -gdwarf-4 -O0 #-fsanitize=address
+CFLAGS= -Wall -Wextra -Werror -g -gdwarf-4 -O0 -fsanitize=address
 DFLAGS= -g -O0 -fsanitize=address
 VALGRIND_FLAGS= -g -O0
 

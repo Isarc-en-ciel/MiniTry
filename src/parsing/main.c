@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/01 12:31:16 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:39:06 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	handle_eof(char *input, t_shell *shell)
 {
-	if (!input || input[0] == '\0')
+	if (!input)
 	{
 		free_shell(shell);
-		free(input);
 		ft_printf("exit\n");
 		exit(EXIT_SUCCESS);
 	}
@@ -34,7 +33,7 @@ int	read_the_input(char **envp)
 	{
 		input = readline("gib comand pliz> ");
 		handle_eof(input, &shell);
-		if (ft_strlen(input) == 0) //if the input is just spaces
+		if (input && ft_strlen(input) == 0) //if the input is just spaces
 			continue ;
 		add_history(input);
 		shell.tab = pseudo_parsing(&shell, input);
