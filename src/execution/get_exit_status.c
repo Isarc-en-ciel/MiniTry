@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/06 14:50:35 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:09:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ int	wait_children(t_shell *shell, pid_t *child_pid, int child_nb)
 	{
 		exit_status = get_exit_status(&shell->tab[i], child_pid[i]);
 		i++;
+	}
+	if (g_signal_received == SIGINT)
+	{
+		ft_printf("signal received is sigint\n");
+		g_signal_received = 0;
 	}
 	return (exit_status);
 }

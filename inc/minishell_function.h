@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/01 15:07:13 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:28:40 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include "minishell_struct.h"
 # include "minishell_lib.h"
 # include "minishell_enum.h"
+
+/* repo signal */
+void	setup_signal(void(*fct)(int));
+void	handle_sigint(int signum);
 
 /*repo environment */
 char		**init_env(char **envp); //env_list.c

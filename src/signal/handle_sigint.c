@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   handle_sigint.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 16:33:24 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/05 14:05:03 by csteylae         ###   ########.fr       */
+/*   Created: 2025/01/31 13:55:49 by csteylae          #+#    #+#             */
+/*   Updated: 2025/02/05 14:25:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
+#include "../../inc/minishell.h"
 
-# define MINISHELL_H
+void	handle_sigint(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_signal_received = SIGINT;
+	}
+	write(1, "\n", 1);
+}
 
-# include "minishell_lib.h"
-# include "minishell_enum.h"
-# include "minishell_struct.h"
-# include "minishell_function.h"
-extern volatile sig_atomic_t	g_signal_received;
+void	handle_ctrl_c(t_shell *sh)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (i != sh->tab_size)
+	{
+	}
+
+}

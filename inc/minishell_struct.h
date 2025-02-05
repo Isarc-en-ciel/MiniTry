@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/04 14:15:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:03:55 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "minishell_enum.h"
 # include "minishell_lib.h"
 
-static volatile sig_atomic_t	g_signal_received;
+//volatile sig_atomic_t	g_signal_received;
 
 typedef struct s_lexer
 {
