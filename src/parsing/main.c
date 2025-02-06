@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/05 14:18:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:44:46 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int	read_the_input(char **envp)
 			handle_ctrl_c(&shell);
 		input = readline("gib comand pliz> ");
 		handle_eof(input, &shell);
-		if (input && ft_strlen(input) == 0) //if the input is just spaces
-			continue ;
+		if (input && !ft_strlen(input)) //if the input is just spaces
+			continue;
+			
 		add_history(input);
 		shell.tab = pseudo_parsing(&shell, input);
 		//shell.tab = parsing(input, &shell);
@@ -60,7 +61,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	if (read_the_input(envp) == 1)
 		write (1, "ho no it's fucked\n", 18);
-	eturn (0);
+	return (0);
 }
 
 t_command	*parsing(char *input, t_shell *shell)

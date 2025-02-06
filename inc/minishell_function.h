@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/05 12:28:40 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:35:46 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 /* repo signal */
 void	setup_signal(void(*fct)(int));
 void	handle_sigint(int signum);
+void	handle_ctrl_c(t_shell *sh);
 
 /*repo environment */
 char		**init_env(char **envp); //env_list.c

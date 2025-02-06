@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:13:27 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 15:29:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:45:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,4 @@ t_env_list	*get_prev_env(t_env_list **head, char *key)
 	}
 	return (NULL);
 }
+
