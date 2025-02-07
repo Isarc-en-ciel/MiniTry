@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:11:21 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 13:22:35 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:47:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ bool	is_only_one_builtin(t_shell *sh, int i)
 	if (!builtin)
 		return (false);
 	perform_redirection(sh, &sh->tab[i]);
-	if (sh->tab[i].error.code != SUCCESS)
-		exit_error(sh, NULL); //will quit minishell its an error
-	sh->exit_status = builtin->func(sh, &sh->tab[i]);
+	if (sh->tab[i].error.code == SUCCESS)
+		sh->exit_status = builtin->func(sh, &sh->tab[i]);
 	return (true);
 }
 

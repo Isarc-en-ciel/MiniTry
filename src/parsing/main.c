@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/06 14:44:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:04:06 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	handle_eof(char *input, t_shell *shell)
 	}
 }
 
+void	ft_new_line()
+{
+	g_signal_received = 0;
+}
+
 int	read_the_input(char **envp)
 {
 	char		*input;
@@ -35,14 +40,19 @@ int	read_the_input(char **envp)
 	incr_shlvl(&shell);
 	while (1)
 	{
-		handle_sigint(g_signal_received);
-		if (g_signal_received == SIGINT)
-			handle_ctrl_c(&shell);
 		input = readline("gib comand pliz> ");
 		handle_eof(input, &shell);
+		if (g_signal_received == SIGINT)
+		{
+			free(input);
+			g_signal_received = 0;
+			continue ;
+		}
 		if (input && !ft_strlen(input)) //if the input is just spaces
+		{
+			free(input);
 			continue;
-			
+		}
 		add_history(input);
 		shell.tab = pseudo_parsing(&shell, input);
 		//shell.tab = parsing(input, &shell);
@@ -50,6 +60,7 @@ int	read_the_input(char **envp)
 			continue ;
 		exec_prompt(&shell);
 		free(input);
+		g_signal_received = 0;
 	}
 	return (0);
 }
