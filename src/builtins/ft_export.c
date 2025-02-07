@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 15:11:22 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:40:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 	}
 }
 
-int	ft_export(char ***env, t_command *cmd, int exit_status)
+int	ft_export(t_shell *sh, t_command *cmd)
 {
 	t_env_list	*head;
 
 	head = NULL;
-	if (!init_env_list(&head, cmd, *env))
+	if (!init_env_list(&head, cmd, sh->env))
 		return (FAIL);
 	if (!cmd->cmd[1])
 	{
@@ -87,12 +87,12 @@ int	ft_export(char ***env, t_command *cmd, int exit_status)
 		destroy_lst(&head);
 		return (SUCCESS);
 	}
-	export_var(&head, cmd, &exit_status);
-	if (cmd->error.code != OK)
+	export_var(&head, cmd, &sh->exit_status);
+	if (cmd->error.code != SUCCESS)
 		return (builtin_error(cmd, NULL, 0, &head));
-	build_envp(&head, cmd, env);
+	build_envp(&head, cmd, &sh->env);
 	destroy_lst(&head);
-	if (cmd->error.code != OK)
-		exit_status = FAIL;
-	return (exit_status);
+	if (cmd->error.code != SUCCESS)
+		sh->exit_status = FAIL;
+	return (sh->exit_status);
 }

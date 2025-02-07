@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 15:11:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:28:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static int	update_underscore(t_env_list **head, char ***envp, t_command *cmd)
 	if (!update_env(head, "_", "./src/builtins/ft_env.c"))
 		return (FAIL);
 	build_envp(head, cmd, envp);
-	if (cmd->error.code != OK)
+	if (cmd->error.code != SUCCESS)
 		return (FAIL);
 	return (SUCCESS);
 }
 
-int	ft_env(char ***envp, t_command *cmd, int exit_status)
+int	ft_env(t_shell *sh, t_command *cmd)
 {
 	t_env_list	*head;
 	int			fd;
@@ -56,17 +56,17 @@ int	ft_env(char ***envp, t_command *cmd, int exit_status)
 	fd = STDOUT_FILENO;
 	if (cmd->fd_out != NO_REDIR)
 		fd = cmd->fd_out;
-	if (!init_env_list(&head, cmd, *envp))
+	if (!init_env_list(&head, cmd, sh->env))
 		return (FAIL);
 	if (cmd->cmd[1])
-		return (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, &head));
-	if (update_underscore(&head, envp, cmd) == FAIL)
-		exit_status = builtin_error(cmd, NULL, 0, &head);
+		return (builtin_error(cmd, cmd->cmd[0], FAIL, &head));
+	if (update_underscore(&head, &sh->env, cmd) == FAIL)
+		sh->exit_status = builtin_error(cmd, NULL, 0, &head);
 	else
 	{
-		exit_status = SUCCESS;
+		sh->exit_status = SUCCESS;
 		ft_print_env(head, fd);
 		destroy_lst(&head);
 	}
-	return (exit_status);
+	return (sh->exit_status);
 }

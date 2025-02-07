@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:14:42 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 19:06:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:29:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ static bool	check_validity(char *str)
 	return (true);
 }
 
-int	ft_exit(char ***env, t_command *cmd, int exit_status)
+int	ft_exit(t_shell *sh, t_command *cmd)
 {
 	int	status;
 
-	(void)env;
 	status = 0;
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
@@ -52,7 +51,8 @@ int	ft_exit(char ***env, t_command *cmd, int exit_status)
 		}
 	}
 	else
-		status = exit_status;
-	ft_printf("exit\n");
+		status = sh->exit_status;
+	if (sh->tab_size == 1)
+		ft_printf("exit\n");
 	exit(status);
 }

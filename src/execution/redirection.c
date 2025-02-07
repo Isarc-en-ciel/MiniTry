@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:49:43 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/30 11:49:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:57:09 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int	open_file(t_command *cmd, int prev_fd, t_redirect redir, int flags)
 	else
 		fd = open(redir.filename, flags);
 	if (fd < 0)
-	{
 		cmd->error = set_error(redir.filename, FAIL);
-	}
 	return (fd);
 }
 
@@ -92,7 +90,7 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 	while (i != redir->size)
 	{
 		flags = get_flags(shell, cmd, &redir->array[i], redir->array[i].type);
-		if (cmd->error.code != OK)
+		if (cmd->error.code != SUCCESS)
 			return ;
 		if (redir->array[i].type == REDIR_HEREDOC)
 			cmd->fd_in = open_file(cmd, cmd->fd_in, redir->array[i], flags);
@@ -100,7 +98,7 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 			cmd->fd_in = open_file(cmd, cmd->fd_in, redir->array[i], flags);
 		else
 			cmd->fd_out = open_file(cmd, cmd->fd_out, redir->array[i], flags);
-		if (cmd->error.code != OK)
+		if (cmd->error.code != SUCCESS)
 			return ;
 		i++;
 	}

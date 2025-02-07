@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:57:01 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/21 17:18:03 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:53:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	set_all_members_to_NULL(t_command *tab, int size)
 		tab[i].redirection.array = NULL;
 		tab[i].redirection.size = 0;
 		tab[i].error.str_perror = NULL; 
-		tab[i].error.code = OK;
+		tab[i].error.code = SUCCESS;
 		tab[i].fd_in = NO_REDIR;
 		tab[i].fd_out = NO_REDIR;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/06 10:35:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:26:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ bool		init_env_list(t_env_list **head, t_command *cmd, char **env);
 int			builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **head);
 void		build_envp(t_env_list **head, t_command *cmd, char ***envp);
 bool		is_key_format(t_command *cmd, char *str);
-int			ft_cd(char ***env, t_command *cmd, int exit_status);
-int			ft_env(char ***env, t_command *cmd, int exit_status);
-int			ft_pwd(char ***env, t_command *cmd, int exit_status);
-int			ft_echo(char ***env, t_command *cmd, int exit_status);
-int			ft_exit(char ***env, t_command *cmd, int exit_status);
-int			ft_unset(char ***env, t_command *cmd, int exit_status);
-int			ft_export(char ***env, t_command *cmd, int exit_status);
+int			ft_cd(t_shell *sh, t_command *cmd);
+int			ft_env(t_shell *sh, t_command *cmd);
+int			ft_pwd(t_shell *sh, t_command *cmd);
+int			ft_echo(t_shell *sh, t_command *cmd);
+int			ft_exit(t_shell *sh, t_command *cmd);
+int			ft_unset(t_shell *sh, t_command *cmd);
+int			ft_export(t_shell *sh, t_command *cmd);
 void		export_without_arg(t_env_list **head, t_command *cmd);
 
 /* repo execution */

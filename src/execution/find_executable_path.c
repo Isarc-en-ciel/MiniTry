@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 14:20:45 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/31 17:54:12 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 12:14:27 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ static char	**split_path_var(t_shell *shell, int n)
 	while (shell->env[i] && ft_strncmp("PATH=", shell->env[i], 5))
 		i++;
 	if (!shell->env[i])
-	{
 		return (NULL);
-	}
 	env_path = shell->env[i] + ft_strlen("PATH=");
 	paths = ft_split(env_path, ':');
 	if (!paths)
@@ -48,14 +46,10 @@ static char	*construct_path(char *path, char *cmd_name)
 	full_path = NULL;
 	slash_cmd = ft_strjoin("/", cmd_name, NO_MALLOC);
 	if (!slash_cmd)
-	{
 		return (NULL);
-	}
 	full_path = ft_strjoin(path, slash_cmd, S2_MALLOC);
 	if (!path)
-	{
 		return (NULL);
-	}
 	return (full_path);
 }
 
@@ -87,6 +81,7 @@ char	*find_executable_path(t_shell *sh, int n, t_command *cmd)
 	path_array = split_path_var(sh, n);
 	if (!path_array)
 	{
+		cmd->error = set_error(cmd->cmd[0], CMD_NOT_FOUND);
 		return (NULL);
 	}
 	while (path_array[i])

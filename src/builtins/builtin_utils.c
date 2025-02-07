@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 14:09:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:54:13 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	builtin_error(t_command *cmd, char *s, enum e_error code, t_env_list **head)
 {
 	if (cmd)
 	{
-		if (cmd->error.code == OK)
+		if (cmd->error.code == SUCCESS)
 			cmd->error = set_error(s, code);
 		else
 			perror(s);

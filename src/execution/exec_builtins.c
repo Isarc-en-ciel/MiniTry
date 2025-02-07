@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:11:21 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/04 13:43:57 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:22:35 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,13 @@ bool	is_only_one_builtin(t_shell *sh, int i)
 
 	builtin = find_builtin(sh, &sh->tab[i]);
 	if (sh->tab_size != 1)
-	{
 		return (false);
-	}
 	if (!builtin)
-	{
 		return (false);
-	}
 	perform_redirection(sh, &sh->tab[i]);
-	if (sh->tab[i].error.code != OK)
-	{
-		exit_error(sh, NULL);
-	}
-	sh->exit_status = builtin->func(&sh->env, &sh->tab[i], sh->exit_status);
+	if (sh->tab[i].error.code != SUCCESS)
+		exit_error(sh, NULL); //will quit minishell its an error
+	sh->exit_status = builtin->func(sh, &sh->tab[i]);
 	return (true);
 }
 
@@ -47,9 +41,7 @@ t_builtin	*find_builtin(t_shell *sh, t_command *cmd)
 	{
 		builtin = &sh->builtin[i];
 		if (key_found((char*)builtin->name, cmd_name))
-		{
 			return (builtin);
-		}
 		i++;
 	}
 	return (NULL);
@@ -59,6 +51,6 @@ void	exec_builtin(t_builtin *builtin, t_command *cmd, t_shell *sh)
 {
 	int	status;
 
-	status = builtin->func(&sh->env, cmd, sh->exit_status);
+	status = builtin->func(sh, cmd);
 	sh->exit_status = status;
 }

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/30 12:39:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 12:24:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 
 	cmd = &sh->tab[i];
 	builtin = find_builtin(sh, cmd);
-	if (cmd->error.code != OK)
+	if (cmd->error.code != SUCCESS)
 		exit_child(sh, pipe_fd, prev_fd, i);
 	if (configure_pipeline(sh, i, pipe_fd, prev_fd) == FAIL)
 		exit_child(sh, pipe_fd, prev_fd, i);
@@ -70,9 +70,7 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 		return (NO_REDIR);
 	}
 	if (cmd->fd_out != NO_REDIR)
-	{
 		close_fd(&pipe_fd[READ_FROM]);
-	}
 	return (pipe_fd[READ_FROM]);
 }
 
@@ -93,9 +91,7 @@ void	exec_pipeline(t_shell *sh)
 		perform_redirection(sh, &sh->tab[i]);
 		init_pipeline(sh, i, pipe_fd, prev_fd);
 		if (sh->child_pid[i] == CHILD_PROCESS)
-		{
 			launch_cmd(sh, i, pipe_fd, prev_fd);
-		}
 		prev_fd = get_prev_fd(sh, i, pipe_fd, prev_fd);
 		i++;
 	}

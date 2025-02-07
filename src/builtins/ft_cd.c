@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 15:26:35 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:27:27 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	change_directory(t_command *cmd, t_env_list **head)
 		return ;
 	}
 	set_cwd(cmd, head, "OLDPWD");
-	if (cmd->error.code != OK && cmd->error.code != ENOENT)
+	if (cmd->error.code != SUCCESS && cmd->error.code != ENOENT)
 	{
 		free(path);
 		return ;
@@ -91,21 +91,20 @@ void	change_directory(t_command *cmd, t_env_list **head)
 	set_cwd(cmd, head, "PWD");
 }
 
-int	ft_cd(char ***envp, t_command *cmd, int exit_status)
+int	ft_cd(t_shell *sh, t_command *cmd)
 {
 	t_env_list	*head;
 
 	head = NULL;
-	(void)exit_status;
-	if (!init_env_list(&head, cmd, *envp))
+	if (!init_env_list(&head, cmd, sh->env))
 		return (FAIL);
 	if (cmd->cmd[1] && cmd->cmd[2])
-		return (builtin_error(cmd, cmd->cmd[0], BUILTIN_OPT, NULL));
+		return (builtin_error(cmd, cmd->cmd[0], FAIL, NULL));
 	change_directory(cmd, &head);
-	if (cmd->error.code != OK && cmd->error.code != ENOENT)
+	if (cmd->error.code != SUCCESS && cmd->error.code != ENOENT)
 		return (builtin_error(cmd, NULL, 0, &head));
-	build_envp(&head, cmd, envp);
-	if (cmd->error.code != OK)
+	build_envp(&head, cmd, &sh->env);
+	if (cmd->error.code != SUCCESS)
 	{
 		destroy_lst(&head);
 		return (FAIL);

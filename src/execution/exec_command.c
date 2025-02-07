@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/31 17:54:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 12:24:00 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,5 @@ void	exec_external_command(t_shell *shell, int n)
 		return (exec_absolute_path(shell, n));
 	path = find_executable_path(shell, n, cmd);
 	if (path)
-	{
 		return (exec_command(path, shell, n));
-	}
-	ft_printf("%s : No such file or directory\n", cmd->cmd[0]); //no the good exit status if !PATH
-	return ;
 }

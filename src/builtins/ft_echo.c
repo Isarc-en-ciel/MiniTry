@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:50:11 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 18:26:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:41:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ static int	parse_option(char **cmd_arg)
 	return (i);
 }
 
-int	ft_echo(char ***env, t_command *cmd, int exit_status)
+int	ft_echo(t_shell *sh, t_command *cmd)
 {
 	int		i;
 	int		fd;
 	bool	flag_opt;
 
-	(void) env;
 	fd = STDOUT_FILENO;
 	flag_opt = false;
 	if (cmd->fd_out > 0)
@@ -63,8 +62,8 @@ int	ft_echo(char ***env, t_command *cmd, int exit_status)
 		i++;
 	}
 	if (!flag_opt)
-		exit_status = write(fd, "\n", 1);
-	if (exit_status < 0)
+		sh->exit_status = write(fd, "\n", 1);
+	if (sh->exit_status < 0)
 		return (FAIL);
 	return (SUCCESS);
 }
