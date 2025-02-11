@@ -6,21 +6,19 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:45:52 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/30 12:40:35 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:22:07 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-bool	init_child_pid(t_shell *sh)
+void	init_child_pid(t_shell *sh)
 {
 	sh->child_pid = malloc(sizeof(sh->child_pid) * sh->tab_size);
 	if (!sh->child_pid)
 	{
-		perror("malloc");
-		return (false);
+		exit_error(sh, "malloc");
 	}
-	return (true);
 }
 
 static bool	init_pipe(t_shell *sh, int i, int tab_size, int pipe_fd[2])

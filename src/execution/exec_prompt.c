@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/30 11:12:14 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:24:07 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static	t_shell	*clean_prompt(t_shell *shell)
 
 int	exec_prompt(t_shell *shell)
 {
+	if (is_only_one_builtin(shell, 0))
+		return (shell->exit_status);
 	exec_pipeline(shell);
 	shell = clean_prompt(shell);
 	ft_printf("exit status : %d\n", shell->exit_status);

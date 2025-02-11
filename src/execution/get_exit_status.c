@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 15:02:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:42:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 	if (WIFEXITED(status))
 	{
 		exit_status = WEXITSTATUS(status);
-		ft_printf("normal exit with status : %d\n", exit_status);
+//		ft_printf("normal exit with status : %d\n", exit_status);
 	}
 	else if (WIFSIGNALED(status))
 	{
@@ -43,9 +43,15 @@ int	wait_children(t_shell *shell, pid_t *child_pid, int child_nb)
 	while (i != child_nb)
 	{
 		exit_status = get_exit_status(&shell->tab[i], child_pid[i]);
-		if (g_signal_received == SIGINT)
-			g_signal_received = 0;
+//		if (g_signal_received == SIGINT)
+//			g_signal_received = 0;
 		i++;
 	}
 	return (exit_status);
+}
+
+void	terminate_pipeline(t_shell *sh, int i, int prev_fd)
+{
+	sh->exit_status = wait_children(sh, sh->child_pid, i);
+	close_fd(&prev_fd);
 }

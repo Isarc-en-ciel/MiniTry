@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 12:24:25 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:26:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,24 @@ void	exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i)
 	exit(exit_status);
 }
 
-/*
-static void	critical_exec_error(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
-{
-	int	n;
-
-	n = 0;
-	while (n != i)
-	{
-		kill(sh->child_pid[n], SIGTERM);
-		n++;
-	}
-	sh->exit_status = wait_children(sh, sh->child_pid, i);
-	close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
-	free_shell(sh);
-	exit(EXIT_FAILURE);
-}
-*/
 static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 {
 	t_command	*cmd;
 	t_builtin	*builtin;
 
 	cmd = &sh->tab[i];
-	builtin = find_builtin(sh, cmd);
-	if (cmd->error.code != SUCCESS)
+	perform_redirection(sh, &sh->tab[i]);
+	if (cmd->error.code != SUCCESS || !cmd->cmd[0])
 		exit_child(sh, pipe_fd, prev_fd, i);
+	builtin = find_builtin(sh, cmd);
 	if (configure_pipeline(sh, i, pipe_fd, prev_fd) == FAIL)
 		exit_child(sh, pipe_fd, prev_fd, i);
 	if (builtin)
 		exec_builtin(builtin, cmd, sh);
 	else
+	{
 		exec_external_command(sh, i);
+	}
 	exit_child(sh, pipe_fd, prev_fd, i);
 }
 
@@ -74,26 +60,55 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	return (pipe_fd[READ_FROM]);
 }
 
+struct sigaction 	setup_signal_in_children(void)
+{
+	struct	sigaction act;
+
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = SIG_DFL;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	if (sigaction(SIGINT, &act, NULL) != SUCCESS)
+		exit(EXIT_FAILURE);
+	return (act);
+}
+
+struct sigaction	setup_signal_in_parent(void)
+{
+	struct	sigaction act;
+
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = SIG_IGN;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	if (sigaction(SIGINT, &act, NULL) != SUCCESS)
+		exit(EXIT_FAILURE);
+	return (act);
+}
+
 void	exec_pipeline(t_shell *sh)
 {
-	int		pipe_fd[2];
-	int		prev_fd;
-	int		i;
+	int					pipe_fd[2];
+	int					prev_fd;
+	int					i;
+	struct sigaction	old_act;
 
+	sigaction(SIGINT, NULL, &old_act);
 	prev_fd = NO_REDIR;
 	i = 0;
-	if (is_only_one_builtin(sh, i))
-		return ;
-	if (!init_child_pid(sh))
-		return ;
+	init_child_pid(sh);
+	sh->signal_act = setup_signal_in_parent();
 	while (i != sh->tab_size)
 	{
-		perform_redirection(sh, &sh->tab[i]);
 		init_pipeline(sh, i, pipe_fd, prev_fd);
 		if (sh->child_pid[i] == CHILD_PROCESS)
+		{
+			sh->signal_act = setup_signal_in_children();
 			launch_cmd(sh, i, pipe_fd, prev_fd);
+		}
 		prev_fd = get_prev_fd(sh, i, pipe_fd, prev_fd);
 		i++;
 	}
 	terminate_pipeline(sh, i, prev_fd);
+	sigaction(SIGINT, &old_act, NULL);
 }

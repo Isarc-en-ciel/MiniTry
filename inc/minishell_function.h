@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/07 13:26:22 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:26:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include "minishell_enum.h"
 
 /* repo signal */
-void	setup_signal(void(*fct)(int));
-void	handle_sigint(int signum);
-void	handle_ctrl_c(t_shell *sh);
+struct sigaction	init_sigaction(void(*fct)(int));
+void				setup_signal(t_shell *sh, void(*fct)(int));
+void				handle_sigint_interactive_mode(int signum);
+void				handle_sigint_child_process(int signum);
 
 /*repo environment */
 char		**init_env(char **envp); //env_list.c
@@ -46,6 +47,8 @@ int		expand_var(t_shell *shell, char **word);
 char	*update_expanded_value(char *ret, char *word, int count);
 int		expand_exit_status(char **retp, int exit_status);
 int		expand_env_var(char **retp, char *word, int i, char **env);
+bool	is_the_exit_status(char *word, int i);
+bool	is_an_env_var(char *word, int i);
 
 /* repo init */
 t_shell		init_shell(char **envp);
@@ -66,7 +69,7 @@ void		export_without_arg(t_env_list **head, t_command *cmd);
 
 /* repo execution */
 void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd);
-bool		init_child_pid(t_shell *sh);
+void		init_child_pid(t_shell *sh);
 t_builtin	*find_builtin(t_shell *sh, t_command *cmd);
 bool		is_only_one_builtin(t_shell *sh, int i);
 void		perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c

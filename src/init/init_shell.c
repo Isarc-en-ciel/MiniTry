@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:22:47 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/08 15:14:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:03:50 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ t_shell	init_shell(char **envp)
 	shell.builtin[5].func = ft_env;
 	shell.builtin[6].name = "exit";
 	shell.builtin[6].func = ft_exit;
+	shell.signal_act = init_sigaction(&handle_sigint_interactive_mode);
+	incr_shlvl(&shell);
 	return (shell);
 }

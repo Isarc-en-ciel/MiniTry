@@ -6,11 +6,18 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:53:15 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/28 15:00:12 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:37:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+bool	is_the_exit_status(char *word, int i)
+{
+	if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] == '?')
+		return (true);
+	return (false);
+}
 
 int	expand_exit_status(char **retp, int exit_status)
 {

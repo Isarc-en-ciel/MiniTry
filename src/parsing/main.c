@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/07 18:04:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:38:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,36 +24,32 @@ void	handle_eof(char *input, t_shell *shell)
 	}
 }
 
-void	ft_new_line()
-{
-	g_signal_received = 0;
-}
-
 int	read_the_input(char **envp)
 {
 	char		*input;
 	t_shell		shell;
 
 	g_signal_received = 0;
-	setup_signal(&handle_sigint);
 	shell = init_shell(envp);
-	incr_shlvl(&shell);
 	while (1)
 	{
+		g_signal_received = 0;
+	//	setup_signal(&shell, &handle_sigint_interactive_mode);
 		input = readline("gib comand pliz> ");
-		handle_eof(input, &shell);
 		if (g_signal_received == SIGINT)
 		{
-			free(input);
 			g_signal_received = 0;
-			continue ;
 		}
+		handle_eof(input, &shell);
 		if (input && !ft_strlen(input)) //if the input is just spaces
 		{
 			free(input);
 			continue;
 		}
 		add_history(input);
+//		int ret;
+//		ret = expand_var(&shell, &input);
+//		ft_printf("return of expansion : %d; input expanded : %s\n",ret, input);
 		shell.tab = pseudo_parsing(&shell, input);
 		//shell.tab = parsing(input, &shell);
 		if (shell.tab == NULL)

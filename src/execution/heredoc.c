@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/04 16:56:22 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:57:37 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static bool	del_found(char *hd_del, char *line)
 	if (!ft_strncmp(hd_del, line, ft_strlen(hd_del)) 
 		&& line[ft_strlen(hd_del)] == '\n')
 		return (true);
-	else
-		return (false);
+	return (false);
 }
 
 void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
@@ -55,6 +54,35 @@ void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	free_shell(shell);
 	exit(EXIT_SUCCESS);
 }
+
+
+/*
+void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
+{
+	char	*line;
+
+	line = NULL;
+	while (1)
+	{
+		write(STDIN_FILENO, "> ", 2);
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
+		{
+			ft_printf("warning : heredoc terminate with eof\n");
+			break ;
+		}
+		if (del_found(redir->hd_delimiter, line))
+			break ;
+		write(fd_hd, line, ft_strlen(line));
+		free(line);
+	}
+	if (line)
+		free(line);
+	close(fd_hd);
+	free_shell(shell);
+	exit(EXIT_SUCCESS);
+}
+*/
 
 void	get_hd_filename(t_command *cmd, t_redirect *redir)
 {
