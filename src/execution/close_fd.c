@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_exit_status.c                               :+:      :+:    :+:   */
+/*   close_fd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 18:53:15 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/10 12:37:44 by csteylae         ###   ########.fr       */
+/*   Created: 2024/12/25 17:12:48 by csteylae          #+#    #+#             */
+/*   Updated: 2025/01/30 11:33:18 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-bool	is_the_exit_status(char *word, int i)
+int	close_fd(int *fd)
 {
-	if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] == '?')
-		return (true);
-	return (false);
+	if (fd && *fd && *fd > 2)
+	{
+		if (close(*fd) < 0)
+		{
+			perror("close");
+			*fd = NO_REDIR;
+			return (FAIL);
+		}
+	}
+	if (fd)
+		*fd = NO_REDIR;
+	return (SUCCESS);
 }
 
-int	expand_exit_status(char **retp, int exit_status)
+void	close_all_fds(int pipe_fd[2], int *prev_fd, int *in, int *out)
 {
-	char	*var;
-
-	var = ft_itoa(exit_status);
-	if (!var)
-	{
-		free(*retp);
-		*retp = NULL;
-		return (-1);
-	}
-	*retp = update_expanded_value(*retp, var, ft_strlen(var));
-	free(var);
-	if (!*retp)
-		return (0);
-	return (2);
+	close_fd(&pipe_fd[READ_FROM]);
+	close_fd(&pipe_fd[WRITE_TO]);
+	close_fd(prev_fd);
+	close_fd(in);
+	close_fd(out);
 }

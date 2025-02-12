@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/11 12:55:21 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:39:36 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,26 @@ void	remove_env(t_env_list **head, char *key)
 	delete_env(ptr);
 }
 
-int	ft_unset(char ***envp, t_command *cmd, int exit_status)
+int	ft_unset(t_shell *sh, t_command *cmd)
 {
 	t_env_list	*head;
 	int			i;
 
-	head = array_to_list(*envp);
-	exit_status = SUCCESS;
+	head = array_to_list(sh->env);
+	sh->exit_status = SUCCESS;
 	if (!head)
 		return (builtin_error(cmd, "malloc", MALLOC, NULL));
 	i = 1;
 	while (cmd->cmd[i])
 	{
 		if (!is_key_format(cmd, cmd->cmd[i]))
-		{
-			exit_status = FAIL;
-		}
+			sh->exit_status = FAIL;
 		remove_env(&head, cmd->cmd[i]);
 		i++;
 	}
-	build_envp(&head, cmd, envp);
+	build_envp(&head, cmd, &sh->env);
 	destroy_lst(&head);
-	if (cmd->error.code != OK)
-		exit_status = FAIL;
-	return (exit_status);
+	if (cmd->error.code != SUCCESS)
+		sh->exit_status = FAIL;
+	return (sh->exit_status);
 }

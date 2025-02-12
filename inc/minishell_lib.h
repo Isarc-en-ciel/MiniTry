@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:26:55 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/13 16:28:14 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/01/30 13:13:20 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <signal.h>
 
 #endif 

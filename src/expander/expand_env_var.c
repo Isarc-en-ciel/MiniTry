@@ -6,11 +6,18 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:59:12 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/11 12:46:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:42:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h" 
+
+bool	is_an_env_var(char *word, int i)
+{
+	if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] != ' ')
+		return (true);
+	return (false);
+}
 
 static	char	*find_env_var(char *var, char **env, int *error_flag)
 {
@@ -44,8 +51,8 @@ static char	*get_value_to_expand(char *word, int *i)
 	int		count;
 
 	seq_begin = *i;
-	count = 0;
 	var = NULL;
+	count = 0;
 	*i = *i + 1;
 	while (word[*i] && word[*i] != ' ' && word[*i] != '$')
 	{

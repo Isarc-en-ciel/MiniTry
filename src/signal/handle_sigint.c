@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_exit_status.c                               :+:      :+:    :+:   */
+/*   handle_sigint.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 18:53:15 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/10 12:37:44 by csteylae         ###   ########.fr       */
+/*   Created: 2025/01/31 13:55:49 by csteylae          #+#    #+#             */
+/*   Updated: 2025/02/11 13:56:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-bool	is_the_exit_status(char *word, int i)
+void	handle_sigint_interactive_mode(int signum)
 {
-	if (word[i] && word[i] == '$' && word[i + 1] && word[i + 1] == '?')
-		return (true);
-	return (false);
+	//it works but rl function arent safe in a signal handler.
+	if (signum == SIGINT)
+	{
+		g_signal_received = SIGINT;
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-int	expand_exit_status(char **retp, int exit_status)
+void	handle_sigint_child_process(int signum)
 {
-	char	*var;
-
-	var = ft_itoa(exit_status);
-	if (!var)
+	if (signum == SIGINT)
 	{
-		free(*retp);
-		*retp = NULL;
-		return (-1);
+		g_signal_received = SIGINT;
+		write(1, "\n", 1);
 	}
-	*retp = update_expanded_value(*retp, var, ft_strlen(var));
-	free(var);
-	if (!*retp)
-		return (0);
-	return (2);
 }

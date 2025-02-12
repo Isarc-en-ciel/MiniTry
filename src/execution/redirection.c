@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:49:43 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:54 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/07 11:57:09 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,43 +35,25 @@ void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
 	}
 }
 
-static bool	check_file_accessibility(t_command *cmd, t_redirect redir)
-{
-	if (access(redir.filename, F_OK) != 0 && redir.type == REDIR_IN)
-	{
-		cmd->error = set_error(redir.filename, FILE_NO_EXIST);
-		return (false);
-	}
-	else if (access(redir.filename, R_OK) != 0 && redir.type == REDIR_IN)
-	{
-		cmd->error = set_error(redir.filename, FILE_NO_PERM);
-		return (false);
-	}
-	else if (access(redir.filename, F_OK) == 0
-		&& access(redir.filename, W_OK) != 0
-		&& (redir.type == REDIR_OUT || redir.type == REDIR_APP))
-	{
-		cmd->error = set_error(redir.filename, FILE_NO_PERM);
-		return (false);
-	}
-	return (true);
-}
-
 int	open_file(t_command *cmd, int prev_fd, t_redirect redir, int flags)
 {
 	int	fd;
 
 	fd = 0;
 	if (prev_fd > 2)
-		close(prev_fd);
-	if (!check_file_accessibility(cmd, redir))
-		return (NO_REDIR);
+	{
+		if (close_fd(&prev_fd) == FAIL)
+		{
+			cmd->error = set_error(NULL, SYSCALL_ERROR);
+			return (NO_REDIR);
+		}
+	}
 	if (flags & O_CREAT)
 		fd = open(redir.filename, flags, 0644);
 	else
 		fd = open(redir.filename, flags);
 	if (fd < 0)
-		cmd->error = set_error(redir.filename, OPEN_FILE);
+		cmd->error = set_error(redir.filename, FAIL);
 	return (fd);
 }
 
@@ -108,7 +90,7 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 	while (i != redir->size)
 	{
 		flags = get_flags(shell, cmd, &redir->array[i], redir->array[i].type);
-		if (cmd->error.code != OK)
+		if (cmd->error.code != SUCCESS)
 			return ;
 		if (redir->array[i].type == REDIR_HEREDOC)
 			cmd->fd_in = open_file(cmd, cmd->fd_in, redir->array[i], flags);
@@ -116,7 +98,7 @@ void	perform_redirection(t_shell *shell, t_command *cmd)
 			cmd->fd_in = open_file(cmd, cmd->fd_in, redir->array[i], flags);
 		else
 			cmd->fd_out = open_file(cmd, cmd->fd_out, redir->array[i], flags);
-		if (cmd->error.code != OK)
+		if (cmd->error.code != SUCCESS)
 			return ;
 		i++;
 	}

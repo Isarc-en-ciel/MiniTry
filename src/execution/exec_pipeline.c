@@ -6,157 +6,109 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/10 15:44:30 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:26:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*The output of each command in the pipeline is connected via a pipe to the input of the next command. 
-That is, each command reads the previous command’s output. 
-This connection is performed before any redirections specified by command1. 
-*/
-static void	redirect_pipeline(t_shell *shell, int i, int pipe_fd[2], int prev_fd)
+void	exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i)
 {
-	int	first_cmd;
-	int	last_cmd;
-	int	in;
-	int	out;
+	int	exit_status;
 
-	first_cmd = 0;
-	last_cmd = shell->tab_size - 1;
-	in = shell->tab[i].fd_in;
-	out = shell->tab[i].fd_out;
+	sh->exit_status = sh->tab[i].error.code;
+	exit_status = sh->exit_status;
+	close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+	free_shell(sh);
+	exit(exit_status);
+}
 
-	if (i == first_cmd)
-	{
-		close(pipe_fd[READ_FROM]);
-		if (shell->tab[i].fd_in != NO_REDIR)
-			in = shell->tab[i].fd_in;
-		else
-			in = STDIN_FILENO;
-		out = pipe_fd[WRITE_TO];
-		if (shell->tab[i].fd_out != NO_REDIR)
-		{
-			close(pipe_fd[WRITE_TO]);
-			out = shell->tab[i].fd_out;
-		} 
-	}
-	else if (i == last_cmd)
-	{
-		//no pipe
-		if (prev_fd != NO_REDIR)
-			in = prev_fd;
-		if (shell->tab[i].fd_in != NO_REDIR)
-		{
-			close(prev_fd);
-			in = shell->tab[i].fd_in;
-		}
-		if (shell->tab[i].fd_out != NO_REDIR)
-			out = shell->tab[i].fd_out;
-		else
-			out = STDOUT_FILENO;
-	}
+static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
+{
+	t_command	*cmd;
+	t_builtin	*builtin;
+
+	cmd = &sh->tab[i];
+	perform_redirection(sh, &sh->tab[i]);
+	if (cmd->error.code != SUCCESS || !cmd->cmd[0])
+		exit_child(sh, pipe_fd, prev_fd, i);
+	builtin = find_builtin(sh, cmd);
+	if (configure_pipeline(sh, i, pipe_fd, prev_fd) == FAIL)
+		exit_child(sh, pipe_fd, prev_fd, i);
+	if (builtin)
+		exec_builtin(builtin, cmd, sh);
 	else
 	{
-		close(pipe_fd[READ_FROM]);
-		if (prev_fd > -1)
-		{
-			in = prev_fd;
-		}
-		else
-			in = STDIN_FILENO;
-		if (shell->tab[i].fd_in != NO_REDIR)
-		{
-			if (prev_fd > -1)
-				close(prev_fd);
-			in = shell->tab[i].fd_in;
-		}
-		out = pipe_fd[WRITE_TO];
-		if (shell->tab[i].fd_out != NO_REDIR)
-		{
-			close(pipe_fd[WRITE_TO]);
-			out = shell->tab[i].fd_out;
-		}
+		exec_external_command(sh, i);
 	}
-	redirect_io(shell, in, out);
+	exit_child(sh, pipe_fd, prev_fd, i);
 }
 
-void	error_pipeline(t_shell *shell, pid_t **children, int pipe_fd[2], int prev_fd)
+static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 {
-	//should free also child_pid 
-	if (*children)
+	t_command	*cmd;
+
+	cmd = &sh->tab[i];
+	if (close_fd(&pipe_fd[WRITE_TO]) == FAIL || close_fd(&prev_fd) == FAIL)
 	{
-		free(*children);
-		children = NULL;
+		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+		cmd->error = set_error(NULL, SYSCALL_ERROR);
+		return (NO_REDIR);
 	}
-	if (prev_fd > 2)
-		close(prev_fd);
-	if (pipe_fd[READ_FROM] > 2)
-		close(pipe_fd[READ_FROM]);
-	if (pipe_fd[WRITE_TO] > 2)
-		close(pipe_fd[WRITE_TO]);
-	exit_error(shell, NULL);
+	if (cmd->fd_out != NO_REDIR)
+		close_fd(&pipe_fd[READ_FROM]);
+	return (pipe_fd[READ_FROM]);
 }
 
-/*The output of each command in the pipeline is connected via a pipe to the input of the next command. 
-That is, each command reads the previous command’s output. 
-This connection is performed before any redirections specified by command1. 
-*/
-void	exec_pipeline(t_shell *shell)
+struct sigaction 	setup_signal_in_children(void)
 {
-	int		i;
-	int		pipe_fd[2];
-	pid_t	*child_pid;
-	int		prev_fd;
+	struct	sigaction act;
 
-	i = 0;
-	child_pid = malloc(sizeof(*child_pid) * shell->tab_size);
-	if (!child_pid)
-		exit_error(shell, "malloc");
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = SIG_DFL;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	if (sigaction(SIGINT, &act, NULL) != SUCCESS)
+		exit(EXIT_FAILURE);
+	return (act);
+}
+
+struct sigaction	setup_signal_in_parent(void)
+{
+	struct	sigaction act;
+
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = SIG_IGN;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	if (sigaction(SIGINT, &act, NULL) != SUCCESS)
+		exit(EXIT_FAILURE);
+	return (act);
+}
+
+void	exec_pipeline(t_shell *sh)
+{
+	int					pipe_fd[2];
+	int					prev_fd;
+	int					i;
+	struct sigaction	old_act;
+
+	sigaction(SIGINT, NULL, &old_act);
 	prev_fd = NO_REDIR;
-	while (i != shell->tab_size) 
+	i = 0;
+	init_child_pid(sh);
+	sh->signal_act = setup_signal_in_parent();
+	while (i != sh->tab_size)
 	{
-		if (i != shell->tab_size - 1)
+		init_pipeline(sh, i, pipe_fd, prev_fd);
+		if (sh->child_pid[i] == CHILD_PROCESS)
 		{
-			if (pipe(pipe_fd) == -1)
-			{
-				shell->tab[i].error = set_error("pipe", SYSCALL_ERROR);
-				error_pipeline(shell, &child_pid, pipe_fd, prev_fd);
-			}
+			sh->signal_act = setup_signal_in_children();
+			launch_cmd(sh, i, pipe_fd, prev_fd);
 		}
-		perform_redirection(shell, &shell->tab[i]);
-		child_pid[i] = fork();
-		if (child_pid[i] < 0)
-			exit_error(shell, "fork");
-		else if (child_pid[i] == 0)
-		{
-			if (shell->tab[i].error.code != OK)
-				error_pipeline(shell, &child_pid,  pipe_fd, prev_fd);
-			redirect_pipeline(shell, i, pipe_fd, prev_fd);
-			exec_command(shell, i);
-		}
-		close(pipe_fd[WRITE_TO]);
-//		if (i != 0 && prev_fd > 2)
-//		{
-//			close(prev_fd);
-//			prev_fd = NO_REDIR;
-//		}
-		if (prev_fd > 2)
-			close(prev_fd);
-		if (i != 0 && shell->tab[i - 1].fd_out != NO_REDIR)
-		{
-			close(pipe_fd[READ_FROM]);
-			prev_fd = LAST_PIPE_CLOSED;
-		}
-		else
-		{
-			prev_fd = pipe_fd[READ_FROM];
-		}
-		update_underscore_var(shell); //maybe check this in a better view ?
+		prev_fd = get_prev_fd(sh, i, pipe_fd, prev_fd);
 		i++;
 	}
-	shell->exit_status = wait_children(shell, child_pid, i);
-	if (prev_fd > 2)
-		close(prev_fd);
+	terminate_pipeline(sh, i, prev_fd);
+	sigaction(SIGINT, &old_act, NULL);
 }

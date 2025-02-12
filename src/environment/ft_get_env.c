@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_get_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 17:03:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/18 17:04:07 by csteylae         ###   ########.fr       */
+/*   Created: 2025/02/01 15:14:57 by csteylae          #+#    #+#             */
+/*   Updated: 2025/02/01 15:30:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **head)
+t_env_list	*get_env(char *key, t_env_list **head)
 {
-	cmd->error = set_error(str, code);
-	if (head && *head)
-		destroy_lst(head);
-	return (-1);
-}
+	t_env_list	*tmp;
 
-void	build_envp(t_env_list **head, t_command *cmd, char **envp)
-{
-	char **new_envp;
-
-	new_envp = list_to_array(head);
-	if (!new_envp)
+	if (!head || !*head || !key)
+		return (NULL);
+	tmp = *head;
+	while (tmp)
 	{
-		builtin_error(cmd, "malloc", MALLOC, head);
-		return ;
+		if (key_found(key, tmp->key))
+			return (tmp);
+		tmp = tmp->next;
 	}
-	free_tab_char(envp);
-	envp = new_envp;
-	destroy_lst(head);
-	return ;
+	return (NULL);
 }

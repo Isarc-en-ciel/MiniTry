@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:52:53 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:37:15 by iwaslet          ###   ########.fr       */
+/*   Updated: 2024/12/21 15:06:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,9 @@ void	free_shell(t_shell *shell)
 		free_tab_cmd(shell->tab_size, shell->tab);
 	if (shell->env)
 		free_tab_char(shell->env);
+	if (shell->child_pid)
+	{
+		free(shell->child_pid);
+		shell->child_pid = NULL;
+	}
 }

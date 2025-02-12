@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:50:11 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/03 12:12:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:41:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,39 @@ static bool	check_n_option(char *arg)
 	return (true);
 }
 
-int	ft_echo(char ***env, t_command *cmd, int exit_status)
+static int	parse_option(char **cmd_arg)
 {
 	int	i;
-	int	fd;
-	int	flag_opt;
 
-	(void) env;
-	(void) exit_status;
-	fd = STDOUT_FILENO;
-	flag_opt = 0;
 	i = 1;
+	while (check_n_option(cmd_arg[i]))
+		i++;
+	return (i);
+}
+
+int	ft_echo(t_shell *sh, t_command *cmd)
+{
+	int		i;
+	int		fd;
+	bool	flag_opt;
+
+	fd = STDOUT_FILENO;
+	flag_opt = false;
 	if (cmd->fd_out > 0)
 		fd = cmd->fd_out;
-	if (check_n_option(cmd->cmd[i]))
-		flag_opt = 1;
-	while (check_n_option(cmd->cmd[i]))
-		i++;
+	i = parse_option(cmd->cmd);
+	if (i > 1)
+		flag_opt = true;
 	while (cmd->cmd[i])
 	{
 		ft_putstr_fd(cmd->cmd[i], fd);
+		if (cmd->cmd[i + 1])
+			ft_putstr_fd(" ", fd);
 		i++;
 	}
-	if (flag_opt == 0)
-		write(fd, "\n", 1);
+	if (!flag_opt)
+		sh->exit_status = write(fd, "\n", 1);
+	if (sh->exit_status < 0)
+		return (FAIL);
 	return (SUCCESS);
 }

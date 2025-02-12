@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2024/11/05 17:35:47 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/10 15:57:37 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,68 @@
  */
 #include "../../inc/minishell.h"
 
+static bool	del_found(char *hd_del, char *line)
+{
+	if (!ft_strncmp(hd_del, line, ft_strlen(hd_del)) 
+		&& line[ft_strlen(hd_del)] == '\n')
+		return (true);
+	return (false);
+}
+
 void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 {
 	char	*line;
-	char	*hd_del;
 
 	line = NULL;
-	hd_del = redir->hd_delimiter;
 	while (1)
 	{
+		write(STDIN_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-			exit_error(shell, "get_next_line\n");
-		if (ft_strncmp(hd_del, line, ft_strlen(hd_del)) == 0
-			&& line[ft_strlen(hd_del)] == '\n')
+		{
+			ft_printf("warning : heredoc terminate with eof\n");
+			break ;
+		}
+		if (del_found(redir->hd_delimiter, line))
 			break ;
 		write(fd_hd, line, ft_strlen(line));
 		free(line);
-		line = NULL;
 	}
-	free(line);
-	line = NULL;
+	if (line)
+		free(line);
 	close(fd_hd);
 	free_shell(shell);
 	exit(EXIT_SUCCESS);
 }
+
+
+/*
+void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
+{
+	char	*line;
+
+	line = NULL;
+	while (1)
+	{
+		write(STDIN_FILENO, "> ", 2);
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
+		{
+			ft_printf("warning : heredoc terminate with eof\n");
+			break ;
+		}
+		if (del_found(redir->hd_delimiter, line))
+			break ;
+		write(fd_hd, line, ft_strlen(line));
+		free(line);
+	}
+	if (line)
+		free(line);
+	close(fd_hd);
+	free_shell(shell);
+	exit(EXIT_SUCCESS);
+}
+*/
 
 void	get_hd_filename(t_command *cmd, t_redirect *redir)
 {
@@ -65,13 +102,13 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 	heredoc = open(HEREDOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (heredoc == -1)
 	{
-		cmd->error = set_error("heredoc", OPEN_FILE);
+		cmd->error = set_error("heredoc", FAIL);
 		return ;
 	}
 	pid = fork();
 	if (pid < 0)
 	{
-		cmd->error = set_error("fork", FORK);
+		cmd->error = set_error("fork", SYSCALL_ERROR);
 		return ;
 	}
 	else if (pid == 0)

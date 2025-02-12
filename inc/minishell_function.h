@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/12 16:14:15 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/12 16:20:15 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # include "minishell_struct.h"
 # include "minishell_lib.h"
 # include "minishell_enum.h"
+
+/* repo signal */
+struct sigaction	init_sigaction(void(*fct)(int));
+void				setup_signal(t_shell *sh, void(*fct)(int));
+void				handle_sigint_interactive_mode(int signum);
+void				handle_sigint_child_process(int signum);
 
 /*repo environment */
 char		**init_env(char **envp); //env_list.c
@@ -31,45 +37,58 @@ void		ft_print_list(t_env_list *head);
 t_env_list	*get_env(char *key, t_env_list **head);
 char		*get_env_value(t_env_list *head, char *key);
 t_env_list	*get_prev_env(t_env_list **head, char *key);
-//void		replace_env(t_env_list *env_to_change, t_env_list **head, t_command *cmd);
-//void		replace_env(char *key, char *value, t_env_list **head, t_command *cmd);
-void		update_env(t_command *cmd, t_env_list **head, char *key, char *value);
+bool		update_env(t_env_list **head, char *key, char *value);
 void		update_underscore_var(t_shell *shell);
 bool		key_found(char *s1, char *s2);
+void		incr_shlvl(t_shell *sh);
 
 /* repo expander */
 int		expand_var(t_shell *shell, char **word);
 char	*update_expanded_value(char *ret, char *word, int count);
 int		expand_exit_status(char **retp, int exit_status);
 int		expand_env_var(char **retp, char *word, int i, char **env);
+bool	is_the_exit_status(char *word, int i);
+bool	is_an_env_var(char *word, int i);
 
 /* repo init */
-t_shell		init_shell(void);
+t_shell		init_shell(char **envp);
 
 /* repo builtins */
+bool		init_env_list(t_env_list **head, t_command *cmd, char **env);
 int			builtin_error(t_command *cmd, char *str, enum e_error code, t_env_list **head);
 void		build_envp(t_env_list **head, t_command *cmd, char ***envp);
 bool		is_key_format(t_command *cmd, char *str);
-int			ft_cd(char ***env, t_command *cmd, int exit_status);
-int			ft_env(char ***env, t_command *cmd, int exit_status);
-int			ft_pwd(char ***env, t_command *cmd, int exit_status);
-int			ft_echo(char ***env, t_command *cmd, int exit_status);
-int			ft_exit(char ***env, t_command *cmd, int exit_status);
-int			ft_unset(char ***env, t_command *cmd, int exit_status);
-int			ft_export(char ***env, t_command *cmd, int exit_status);
-void		print_all_env_var(t_env_list **head);
+int			ft_cd(t_shell *sh, t_command *cmd);
+int			ft_env(t_shell *sh, t_command *cmd);
+int			ft_pwd(t_shell *sh, t_command *cmd);
+int			ft_echo(t_shell *sh, t_command *cmd);
+int			ft_exit(t_shell *sh, t_command *cmd);
+int			ft_unset(t_shell *sh, t_command *cmd);
+int			ft_export(t_shell *sh, t_command *cmd);
+void		export_without_arg(t_env_list **head, t_command *cmd);
 
 /* repo execution */
-void		exec_command(t_shell *shell, int nb); /*file exec_command.c */
-int			exec_prompt(t_shell *shell); /* file exec_prompt.c */
-void		delete_heredoc_file(t_command *cmd);/* file exec_prompt.c */
-void		exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
+void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd);
+void		init_child_pid(t_shell *sh);
+t_builtin	*find_builtin(t_shell *sh, t_command *cmd);
+bool		is_only_one_builtin(t_shell *sh, int i);
 void		perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
-void		redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
-t_command	*pseudo_parsing(t_shell *shell, char *input);
 void		create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
+void		delete_heredoc_file(t_command *cmd);/* file exec_prompt.c */
+void		redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
+int			exec_prompt(t_shell *shell); /* file exec_prompt.c */
+void		exec_external_command(t_shell *shell, int nb); /*file exec_command.c */
+void		exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
+t_command	*pseudo_parsing(t_shell *shell, char *input);
 int			get_exit_status(t_command *cmd, pid_t pid);
 int			wait_children(t_shell *shell, pid_t *child_pid, int child_nb);
+int		configure_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd);
+int			close_fd(int *p_fd);
+void		close_all_fds(int pipe_fd[2], int *prev_fd, int *in, int *out);
+char		*find_executable_path(t_shell *sh, int n, t_command *cmd);
+void		exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i);
+void		exec_builtin(t_builtin *builtin, t_command *cmd, t_shell *sh);
+void		terminate_pipeline(t_shell *sh, int i, int prev_fd);
 
 /* repo utils */
 void		free_tab_char(char **tab);

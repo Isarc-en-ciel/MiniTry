@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/06 11:47:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:19:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 
 # include "minishell_enum.h"
 # include "minishell_lib.h"
+
+//volatile sig_atomic_t	g_signal_received;
+
+struct	s_shell;
 
 typedef struct s_lexer
 {
@@ -115,7 +119,8 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
-typedef int	(*builtin_func) (char ***env, t_command *cmd, int exit_status);
+//typedef int	(*builtin_func) (char ***env, t_command *cmd, int exit_status);
+typedef int	(*builtin_func) (struct s_shell *sh, t_command *cmd);
 
 typedef struct s_builtin
 {
@@ -133,11 +138,13 @@ typedef struct s_builtin
  */
 typedef struct s_shell
 {
-	char		**env;
-	t_command	*tab; //parsing
-	int			tab_size; //nb of cmd
-	int			exit_status;
-	t_builtin	builtin_cmds[7];
+	struct sigaction	signal_act;
+	char				**env;
+	t_command			*tab; //parsing, the array of cmd
+	int					tab_size; //nb of cmd
+	int					exit_status; //init to 0
+	pid_t				*child_pid; // init to tab_size, malloc(sizeof (pid_t) *tab_size);
+	t_builtin			builtin[NB_OF_BUILTIN];//builtin struct 
 }	t_shell;
 
 #endif

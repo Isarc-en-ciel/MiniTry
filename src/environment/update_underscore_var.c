@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:52:18 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/11 11:49:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:17:55 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	update_underscore_var(t_shell *sh)
 {
-	t_command 	*last_cmd;
+	t_command	*last_cmd;
 	t_env_list	*head;
 
 	last_cmd = &sh->tab[sh->tab_size - 1];
@@ -25,7 +25,7 @@ void	update_underscore_var(t_shell *sh)
 		sh->exit_status = 1;
 		return ;
 	}
-	update_env(last_cmd, &head, "_", last_cmd->cmd[0]);
+	update_env(&head, "_", last_cmd->cmd[0]);
 	build_envp(&head, last_cmd, &sh->env);
 	destroy_lst(&head);
 }

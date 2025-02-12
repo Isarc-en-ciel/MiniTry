@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_error.c                                        :+:      :+:    :+:   */
+/*   get_previous_env_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 12:14:27 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 12:23:55 by csteylae         ###   ########.fr       */
+/*   Created: 2025/02/01 15:13:27 by csteylae          #+#    #+#             */
+/*   Updated: 2025/02/06 14:45:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_error	set_error(char *str, enum e_error code)
+t_env_list	*get_prev_env(t_env_list **head, char *key)
 {
-	t_error	new_error;
+	t_env_list	*tmp;
 
-	new_error.str_perror = str;
-	new_error.code = code; 
-	if (code == CMD_NOT_FOUND)
+	if (!head || !*head || !key)
+		return (NULL);
+	tmp = *head;
+	while (tmp)
 	{
-		ft_printf("%s: command not found\n", str);
+		if (tmp->next)
+		{
+			if (key_found(tmp->next->key, key))
+				return (tmp);
+		}
+		tmp = tmp->next;
 	}
-	else if (str)
-		perror(str);
-	return (new_error);
+	return (NULL);
 }
+
