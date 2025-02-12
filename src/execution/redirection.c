@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:49:43 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 11:57:09 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:58:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ int	open_file(t_command *cmd, int prev_fd, t_redirect redir, int flags)
 	int	fd;
 
 	fd = 0;
-	if (prev_fd > 2)
+	if (close_fd(&prev_fd) == FAIL)
 	{
-		if (close_fd(&prev_fd) == FAIL)
-		{
-			cmd->error = set_error(NULL, SYSCALL_ERROR);
-			return (NO_REDIR);
-		}
+		cmd->error = set_error(NULL, SYSCALL_ERROR);
+		return (NO_REDIR);
 	}
 	if (flags & O_CREAT)
 		fd = open(redir.filename, flags, 0644);
