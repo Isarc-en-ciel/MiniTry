@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/09 20:50:22 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/12 16:16:06 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 		tab[*j].cmd[n].is_there_a_space
 			= tokens->content[*l].is_there_a_space;
 		tab[*j].cmd[n].type = tokens->content[*l].type;
-		if (ft_strlen(tokens->content[*l].word) == SIZE_T_MAX)
+		if (ft_strlen(tokens->content[*l].word) ==  0 && !tokens->content[*l].word)
 			tab[*j].cmd[n].word = NULL;
 		else
 		{
