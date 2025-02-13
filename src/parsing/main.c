@@ -101,9 +101,9 @@ t_command get_exec_struct(t_stock stock, int *status)
 {
 	t_command	exec_cmd;
 
-	exec_cmd.redirection.array = get_redirection(stock);
+	//check syntax(). the only point is if type == redir, type +1 = word
+	exec_cmd.redirection = get_redirection(stock);
 	exec_cmd.cmd = get_cmd_args(stock.nbr_elem, stock.cmd);
-	exec_cmd.redirection.size = 0;
 	exec_cmd.fd_in = NO_REDIR;
 	exec_cmd.fd_out = NO_REDIR;
 	exec_cmd.error.code = SUCCESS;
