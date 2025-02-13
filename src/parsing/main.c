@@ -68,28 +68,41 @@ int	main(int ac, char **av, char **envp)
 	return (0);
 }
 
-int	get_token_size(t_stock stock_line, int cmd_size, e_token type)
+int	ft_token_len(int size, t_lexer *tab, enum e_tokens type)
 {
 	int	i;
-	int	nb_of_type;
+	int	token_nb;
 
 	i = 0;
-	type_len = 0;
-	while (i != cmd_size)
+	token_nb = 0;
+	if (!tab)
 	{
-		if (stock_line[i].cmd.type == type)
-			nb_of_type++;
+		ft_printf("can not count ft_token_size :(\n");
+		return (0);
+	}
+	while (i != size)
+	{
+		if (tab[i] && tab[i].type == type)
+			token_nb++;
 		i++;
 	}
-	return (nb_of_type);
+	return (token_nb);
 }
 
-t_command transform_stock_to_cmd(t_lexer , int *status)
+char	**get_cmd_args(int size, t_lexer *cmd)
+{
+	char	**cmd_args;
+	int		len;
+
+	len = ft_token_len(size, cmd, WORD);
+}
+
+t_command get_exec_struct(t_stock stock, int *status)
 {
 	t_command	exec_cmd;
 
-	exec_cmd.cmd = get_cmd_args(stock_cmd);
-	exec_cmd.redirection.array = NULL;
+	exec_cmd.redirection.array = get_redirection(stock);
+	exec_cmd.cmd = get_cmd_args(stock.nbr_elem, stock.cmd);
 	exec_cmd.redirection.size = 0;
 	exec_cmd.fd_in = NO_REDIR;
 	exec_cmd.fd_out = NO_REDIR;
@@ -98,22 +111,22 @@ t_command transform_stock_to_cmd(t_lexer , int *status)
 	return (exec_cmd)
 }
 
-t_command *from_stock_to_cmd(t_stock *tab, t_shell *sh)
+t_command *from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
 {
 	t_command	*tab_exec_cmd;
 	int			i;
 
 	tab_exec_cmd = NULL;
 	i = 0;
-	tab_exec_cmd = malloc(sizeof(*tab_exec_cmd) * nbr_cmd);
+	tab_exec_cmd = malloc(sizeof(*tab_exec_cmd) * stock_array.nbr_cmd);
 	if (!tab_exec_cmd)
 	{
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-	while (i != tab.nbr_cmd)
+	while (i != stock.nbr_cmd)
 	{
-		tab_exec_cmd[i] = transform_lexer_to_cmd(tab.cmd[i], &sh->exit_status);
+		tab_exec_cmd[i] = get_exec_struct(stock_array[i], &sh->exit_status);
 		if (sh->exit_status != SUCCESS)
 		{
 			//free everything();
