@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:11:21 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 13:47:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:02:41 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ bool	is_only_one_builtin(t_shell *sh, int i)
 {
 	t_builtin	*builtin;
 
-	builtin = find_builtin(sh, &sh->tab[i]);
 	if (sh->tab_size != 1)
 		return (false);
+	builtin = find_builtin(sh, &sh->tab[i]);
 	if (!builtin)
 		return (false);
 	perform_redirection(sh, &sh->tab[i]);
