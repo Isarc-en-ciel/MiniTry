@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/12 17:54:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/14 10:54:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef struct s_lexer
 	enum e_tokens	type;
 }	t_lexer;
 
+typedef struct s_stock
+{
+	int		nbr_elem;
+	int		nbr_cmd;
+	t_lexer	*cmd;
+}	t_stock;
+
 typedef struct s_darray
 {
 	t_lexer	*content;
@@ -35,13 +42,6 @@ typedef struct s_darray
 	size_t	actual_size;
 	size_t	block;
 }	t_darray;
-
-typedef struct s_stock
-{
-	int		nbr_elem;
-	int		nbr_cmd;
-	t_lexer	*cmd;
-}	t_stock;
 
 /**
  * A struct containing all the potential necessary informations about redirction
