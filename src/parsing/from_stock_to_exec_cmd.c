@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/14 12:00:15 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/14 12:50:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	ft_token_len(int size, t_lexer *tab, enum e_tokens type)
 	return (token_nb);
 }
 
-bool	is_redir_operator(enum e_token type)
+bool	is_redir_operator(enum e_tokens type)
 {
 	if (type == REDIR_IN 
 		|| type == REDIR_OUT
-		|| type == REDIR_HEREDOR
-		|| type == REDIR_APPEND)
+		|| type == REDIR_HEREDOC
+		|| type == REDIR_APP)
 	{
 		return (true);
 	}
@@ -49,7 +49,7 @@ bool	is_valid_redir_syntax(t_lexer *cmd, int i, int cmd_size)
 {
 	if (is_redir_operator(cmd[i].type && i == cmd_size))
 		return (false);
-	if (is_redir_operator(cmd[i].type && &cmd[i + 1] && !is_redir_operator(&cmd[i + 1])))
+	if (is_redir_operator(cmd[i].type && &cmd[i + 1] && !is_redir_operator(cmd[i + 1].type)))
 		return (true);
 	else
 		return (false);
@@ -62,11 +62,11 @@ int	check_redirection_operator(t_lexer *cmd, int cmd_size)
 
 	nb_of_redir = 0;
 	i = 0;
-	while (i != cmd_size && )
+	while (i != cmd_size)
 	{
 		if (is_redir_operator(cmd[i].type))
 		{
-			if (!is_valid_redir_syntax(cmd, i, cmd_cmd_size))
+			if (!is_valid_redir_syntax(cmd, i, cmd_size))
 				return (-1);
 			nb_of_redir++;
 		}
@@ -77,35 +77,56 @@ int	check_redirection_operator(t_lexer *cmd, int cmd_size)
 
 t_redirect	*create_redirection_array(int array_size, t_lexer *cmd, int cmd_size)
 {
-	int	i;
+	int			i;
+	int			j;
 	t_redirect	*r_array;
 
+	i = 0;
+	j = 0;
 	r_array = malloc(sizeof(t_redirect) * array_size);
 	if (!r_array)
 		return (NULL);
-	while (i != array_size)
+	while (i != cmd_size)
 	{
-		r_array[i] = get_redir_from_lexer(cmd, cmd_size);
+		if (is_redir_operator(cmd[i].type))
+		{
+			r_array[j].type = cmd[i].type;
+			i++;
+			if (array_size && r_array[j].type == REDIR_HEREDOC)
+			{
+				r_array[j].hd_delimiter = ft_strdup(cmd[i].word);
+				r_array[j].filename = NULL;
+			}
+			else
+			{
+				r_array[j].filename = ft_strdup(cmd[i].word);
+				r_array[j].hd_delimiter = NULL;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (j != array_size)
+		ft_printf("wtf not the good nb of redir\n");
+	return (r_array);
 }
 
 t_redir_array	get_redirection_array(t_lexer *cmd, int cmd_size, int *pstatus)
 {
 	t_redir_array	redir_array;
-	int				i;
 
-	i = 0;
 	redir_array.size = check_redirection_operator(cmd, cmd_size);
 	if (redir_array.size < 0)
 	{
-		pstatus = SYNTAX_ERROR;
+		*pstatus = SYNTAX_ERROR;
 		return (redir_array);
 	}
 	if (redir_array.size == 0)
 	{
-		redir_array->array = NULL;
+		redir_array.array = NULL;
 		return (redir_array); //there is no redirection
 	}
-	redir_array->array = create_redirection_array(redir_array.size, cmd, cmd_size);
+	redir_array.array = create_redirection_array(redir_array.size, cmd, cmd_size);
 	return (redir_array);
 }
 
@@ -113,7 +134,7 @@ t_command get_exec_struct(t_stock stock, int *status)
 {
 	t_command	exec_cmd;
 
-	exec_cmd.redirection = get_redirection_array(&stock.cmd, stock.nbr_elem, status);
+	exec_cmd.redirection = get_redirection_array(stock.cmd, stock.nbr_elem, status);
 	exec_cmd.cmd = NULL;//get_cmd_args(stock.nbr_elem, stock.cmd);
 	exec_cmd.fd_in = NO_REDIR;
 	exec_cmd.fd_out = NO_REDIR;
