@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/21 13:20:22 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/14 11:37:42 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,20 @@ int	check_grammar(t_stock *tab, int cmds)
 		j = 0;
 		while (j < tab[i].nbr_elem)
 		{
-			if ((tab[i].cmd[j].type == REDIR_IN
+			if (j + 1 < tab[i].nbr_elem)
+			{
+				if ((tab[i].cmd[j].type == REDIR_IN
 					|| tab[i].cmd[j].type == REDIR_OUT
 					|| tab[i].cmd[j].type == REDIR_APP
 					|| tab[i].cmd[j].type == REDIR_HEREDOC)
-				&& tab[i].cmd[j + 1].type != WORD)
+					&& (tab[i].cmd[j + 1].type == WORD 
+					|| tab[i].cmd[j + 1].type == D_QUOTE 
+					|| tab[i].cmd[j + 1].type == QUOTE))
+					ft_print_redir_type(tab[i].cmd[j + 1].type);
+				j++;
+			}
+			else
 				return (1);
-			j++;
 		}
 		i++;
 	}

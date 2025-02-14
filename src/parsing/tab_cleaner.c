@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/12 16:13:50 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:37:33 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *new_nbr_elem)
 	{
 		if (cmd[i].is_there_a_space != -1)
 		{
+			printf("here's a number: %i\n", i);
 			//*new_cmd[j] = (t_lexer){0}; //mise a null > utile?
-			if (copy_token(cmd[i], &new_cmd[j]) == -1) // il reecrit par dessus !
+			if (copy_token(cmd[i], &(new_cmd[0][j])) == -1) // il reecrit par dessus !
 				return (-1);
 			j++;
 		}
@@ -85,20 +86,19 @@ int	count_new_elem(t_lexer *cmd, int nbr_elem, int *new_nbr_elem)
 	return (n);
 }
 
-int	copy_token(t_lexer cmd, t_lexer **new_cmd)
+int	copy_token(t_lexer cmd, t_lexer *new_cmd)
 {
 	// int	i;
 
-	printf("HERE1\n");
-	(*new_cmd)->is_there_a_space = cmd.is_there_a_space;
-	printf("HERE2\n");
-	(*new_cmd)->type = cmd.type;
-	(*new_cmd)->word = NULL;
+	printf("HERE\n");
+	(new_cmd)->is_there_a_space = cmd.is_there_a_space;
+	(new_cmd)->type = cmd.type;
+	(new_cmd)->word = NULL;
 	if (cmd.word)
 	{
 		// i = ft_strlen(cmd.word);
-		(*new_cmd)->word = ft_strdup(cmd.word); /*malloc(sizeof(char) * i);*/
-		if (!(*new_cmd)->word)
+		(new_cmd)->word = ft_strdup(cmd.word); /*malloc(sizeof(char) * i);*/
+		if (!(new_cmd)->word)
 			return (-1);
 		/*(new_cmd)->word = ft_strcpy(cmd.word, (new_cmd)->word);*/
 	}

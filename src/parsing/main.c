@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/12 16:35:36 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/14 11:33:49 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	read_the_input(char **envp)
 	while (1)
 	{
 		g_signal_received = 0;
-	//	setup_signal(&shell, &handle_sigint_interactive_mode);
+		setup_signal(&shell, &handle_sigint_interactive_mode);
 		input = readline("gib comand pliz> ");
 		if (g_signal_received == SIGINT)
 		{
@@ -47,8 +47,8 @@ int	read_the_input(char **envp)
 			continue;
 		}
 		add_history(input);
-		shell.tab = pseudo_parsing(&shell, input);
-		//shell.tab = parsing(input, &shell);
+		//shell.tab = pseudo_parsing(&shell, input);
+		shell.tab = parsing(input, &shell);
 		if (shell.tab == NULL)
 			continue ;
 		exec_prompt(&shell);
