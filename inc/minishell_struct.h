@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/14 10:54:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/14 11:58:17 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,8 @@ typedef struct s_darray
  */
 typedef struct s_redirect
 {
-	int					fd; //idk if we keep it 
-	char				*filename; //malloc
-	char				*hd_delimiter; //malloc
+	char				*filename;
+	char				*hd_delimiter;
 	enum e_tokens		type;
 }	t_redirect;
 

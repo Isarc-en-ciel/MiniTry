@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/12 16:20:15 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/14 11:47:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,4 +158,7 @@ int			print_token_tab(t_darray *cmd);
 void		ft_print_redir_type(enum e_tokens token);
 int			print_stock_tab(t_stock *tab, int cmds);
 
+//src/parsing/from_stock_to_array.c
+
+t_command *from_stock_to_cmd(t_stock *tab, t_shell *sh);
 #endif
