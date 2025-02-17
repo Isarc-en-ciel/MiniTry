@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 17:52:21 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 20:04:28 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab, t_shell *shell)
 
 	i = count_pipes(tokens) + 1;
 	if (i == 0)
-		return (error_return(tab, 1));
+		return (error_return(tokens, 1, shell));
 	tab = malloc(sizeof(t_stock) * i);
 	if (!tab)
-		return (error_return(tokens, 0));
+		return (error_return(tokens, 0, shell));
 	if (into_cmds(i, tokens, tab) == -1)
 	{
 		free(tab);
-		return (error_return(tokens, 0));
+		return (error_return(tokens, 0, shell));
 	}
 	if (check_grammar(tab, i) == 1)
 	{
 		free(tab);
-		return (error_return(tokens, 1));
+		return (error_return(tokens, 1, shell));
 	}
 	return (tab);
 }
@@ -132,7 +132,7 @@ int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
 		tab[j] = (t_stock){0};
 		tab[j].nbr_elem = cmd_size;
 		tab[j].nbr_cmd = i;
-		tab[j].cmd = ft_calloc(sizeof(t_lexer), (tab[j].nbr_elem));
+		tab[j].cmd = ft_calloc((tab[j].nbr_elem), sizeof(t_lexer));
 		if (!tab[j].cmd)
 			return (-1);
 		n++;

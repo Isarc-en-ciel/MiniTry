@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/06 15:09:01 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 19:49:35 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_darray	*retrieve_cmd(char *input)
+t_darray	*retrieve_cmd(char *input, t_shell *shell)
 {
 	t_darray	*tab;
 
@@ -23,6 +23,7 @@ t_darray	*retrieve_cmd(char *input)
 		return (tab);
 	if (retrieve_loop(input, tab, 0, 0) == 1)
 	{
+		shell->exit_status = 2;
 		free_final_array(tab);
 		return (NULL);
 	}

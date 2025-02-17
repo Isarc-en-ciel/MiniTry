@@ -6,21 +6,24 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:06:42 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 17:46:41 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 19:40:57 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	error_fct(t_darray *tab)
+int	error_fct(t_darray *tab, int i)
 {
-	write (1, "SYNTAX ERROR\n", 13);
+	if (i == 1)
+		write (1, "SYNTAX ERROR\n", 13);
 	if (tab->content)
 		free_temp_array(tab);
+	if (i == 0)
+		exit (EXIT_FAILURE);
 	return (0);
 }
 
-t_stock	*error_return(t_darray *tokens, int i)
+t_stock	*error_return(t_darray *tokens, int i, t_shell *shell)
 {
 	if (tokens)
 	{
@@ -28,15 +31,16 @@ t_stock	*error_return(t_darray *tokens, int i)
 	}
 	if (i == 1)
 	{
-		//renvoyer code d'erreur en t_shell
+		shell->exit_status = 2;
 		write (1, "SYNTAX ERROR\n", 13);
 	}
-	//if (i == 0)
-	//EXIT SA MERE shell->exit_status = code erreur approprie
+	if (i == 0)
+		exit (EXIT_FAILURE);
 	return (NULL);
 }
 
 t_command	*error_parsing(t_stock *tab)
 {
+	(void) tab;
 	return (NULL);
 }

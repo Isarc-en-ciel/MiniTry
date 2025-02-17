@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 13:26:37 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 19:32:20 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_stock	*tab_cleaner(t_stock *tab)
 	new_tab = malloc(sizeof(t_stock) * tab[0].nbr_cmd);
 	if (!new_tab)
 		return (NULL);
-	print_stock_tab(tab, tab[0].nbr_cmd);
 	while (i < tab[0].nbr_cmd)
 	{
 		new_tab[i] = (t_stock){0};
@@ -32,9 +31,6 @@ t_stock	*tab_cleaner(t_stock *tab)
 		new_tab[i].nbr_cmd = tab[0].nbr_cmd;
 		i++;
 	}
-	printf("wola1 %d\n", i);
-	print_stock_tab(new_tab, tab[0].nbr_cmd);
-	printf("wola2\n");
 	free_second_degree_tab(tab, tab[0].nbr_cmd);
 	return (new_tab);
 }

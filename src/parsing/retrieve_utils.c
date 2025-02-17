@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 14:46:36 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/11/13 15:59:00 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 19:24:56 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int	retrieve_dquotes(char *input, int *i, int *j, t_darray *tab)
 	tab->content[*j] = create_doubleq(input, i, tab->content[*j]);
 	if (!tab->content[*j].word)
 	{
-		error_fct(tab);
+		if (tab->content[*j].is_there_a_space == -1)
+			error_fct(tab, 1);
+		else
+			error_fct(tab, 0);
 		return (1);
 	}
 	tab->actual_size++;
@@ -64,7 +67,10 @@ int	retrieve_squotes(char *input, int *i, int *j, t_darray *tab)
 	tab->content[*j] = create_simpleq(input, i, tab->content[*j]);
 	if (!tab->content[*j].word)
 	{
-		error_fct(tab);
+		if (tab->content[*j].is_there_a_space == -1)
+			error_fct(tab, 1);
+		else
+			error_fct(tab, 0);
 		return (1);
 	}
 	tab->actual_size++;

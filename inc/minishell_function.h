@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 17:55:33 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 19:29:50 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,14 @@ int					check_open_quotes(char *str, char c, int j);
 void				*ft_memcpy_plus(void *dst, const void *src, int start, int n);
 
 //dynamic array
-t_darray			*retrieve_cmd(char *input);
+t_darray			*retrieve_cmd(char *input, t_shell *shell);
 int					retrieve_loop(char *input, t_darray *tab, int i, int j);
 int					init_array(t_darray *darray, size_t block_size);
 int					reserve_array(t_darray *darray);
 void				free_temp_array(t_darray *darray);
 void				free_final_array(t_darray *darray);
 t_darray			realloc_array(t_darray *darray);
-int					error_fct(t_darray *tab);
+int					error_fct(t_darray *tab, int i);
 int					ft_isspace(char c);
 int					is_delimiter(char c);
 int					print_token_tab(t_darray *cmd);
@@ -135,7 +135,7 @@ int					retrieve_word(char *input, int *i, int *j, t_darray *tab);
 t_command			*parsing(char *input, t_shell *shell);
 t_stock				*parsing_starter(t_darray *tokens, t_stock	*tab, t_shell *shell);
 int					count_pipes(t_darray *tokens);
-t_stock				*error_return(t_darray *tokens, int i);
+t_stock				*error_return(t_darray *tokens, int i, t_shell *shell);
 int					into_cmds(int i, t_darray *tokens, t_stock *tab);
 int					fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
 int					nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
