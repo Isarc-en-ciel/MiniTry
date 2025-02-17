@@ -64,6 +64,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/utils/set_error.c \
 	  src/signal/setup_signal.c \
 	  src/signal/handle_sigint.c \
+	  src/parsing/from_stock_to_exec_cmd.c \
 
 HEADER = ../../inc/*.h
 

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 17:47:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:55:33 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,11 @@ int					count_new_elem(t_lexer *cmd, int nbr_elem, int *new_nbr_elem);
 int					copy_token(t_lexer cmd, t_lexer *new_cmd);
 
 //testing parsing
-int					print_token_tab(t_darray *cmd);
-void				ft_print_redir_type(enum e_tokens token);
-int					print_stock_tab(t_stock *tab, int cmds);
+int			print_token_tab(t_darray *cmd);
+void		ft_print_redir_type(enum e_tokens token);
+int			print_stock_tab(t_stock *tab, int cmds);
+
+//src/parsing/from_stock_to_cmd
+t_command	*from_stock_to_cmd(t_stock *stock, t_shell *sh);
 
 #endif
