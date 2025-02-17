@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/14 11:42:09 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:24:35 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-volatile sig_atomic_t g_signal_received = 0;
+volatile sig_atomic_t	g_signal_received = 0;
 
 void	handle_eof(char *input, t_shell *shell)
 {
@@ -41,10 +41,10 @@ int	read_the_input(char **envp)
 			g_signal_received = 0;
 		}
 		handle_eof(input, &shell);
-		if (input && !ft_strlen(input)) //if the input is just spaces
+		if (input && !ft_strlen(input))
 		{
 			free(input);
-			continue;
+			continue ;
 		}
 		add_history(input);
 		//shell.tab = pseudo_parsing(&shell, input);

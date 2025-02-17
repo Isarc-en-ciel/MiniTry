@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2024/12/10 16:22:19 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 13:15:59 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	expand_cmd(t_lexer *cmd, t_shell *shell, int size)
 		{
 			if (ft_strcmp(cmd[i].word, '$') == 0)
 			{
-				//if (expand_var(shell, &cmd[i].word) == -1)
-				//	return (-1);
+				if (expand_var(shell, &cmd[i].word) == -1)
+					return (-1);
 				if (cmd[i].word == NULL || ft_strlen(cmd[i].word) == 0)
 					cmd[i].is_there_a_space = -1;
 			}

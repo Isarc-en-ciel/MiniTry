@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/11 15:26:22 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:33:14 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	return (pipe_fd[READ_FROM]);
 }
 
-struct sigaction 	setup_signal_in_children(void)
+struct sigaction	setup_signal_in_children(void)
 {
-	struct	sigaction act;
+	struct sigaction	act;
 
 	ft_bzero(&act, sizeof(act));
 	act.sa_handler = SIG_DFL;
@@ -75,7 +75,7 @@ struct sigaction 	setup_signal_in_children(void)
 
 struct sigaction	setup_signal_in_parent(void)
 {
-	struct	sigaction act;
+	struct sigaction	act;
 
 	ft_bzero(&act, sizeof(act));
 	act.sa_handler = SIG_IGN;

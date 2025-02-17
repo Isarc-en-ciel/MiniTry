@@ -6,12 +6,12 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:51:15 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/14 12:12:08 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 13:19:59 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-// a partir de <<< ou >>> syntax error
+
 t_lexer	create_pipe(char *input, int *position, t_lexer token)
 {
 	token.word = NULL;

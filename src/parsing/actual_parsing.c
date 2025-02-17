@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/14 12:00:14 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 13:20:59 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int is_redirect(enum e_tokens token)
+static int	is_redirect(enum e_tokens token)
 {
 	if (token == REDIR_IN || token == REDIR_OUT
 		|| token == REDIR_APP || token == REDIR_HEREDOC)
@@ -20,7 +20,7 @@ static int is_redirect(enum e_tokens token)
 	return (1);
 }
 
-static int is_word_token(enum e_tokens token)
+static int	is_word_token(enum e_tokens token)
 {
 	if (token == WORD || token == D_QUOTE || token == QUOTE)
 		return (0);
@@ -39,8 +39,8 @@ int	check_grammar(t_stock *tab, int cmds)
 		while (j < tab[i].nbr_elem)
 		{
 			if ((is_redirect(tab[i].cmd[j].type) == 0)
-				&& (j + 1 >= tab[i].nbr_elem 
-				|| is_word_token(tab[i].cmd[j + 1].type) == 1))
+				&& (j + 1 >= tab[i].nbr_elem
+					|| is_word_token(tab[i].cmd[j + 1].type) == 1))
 				return (1);
 			j++;
 		}

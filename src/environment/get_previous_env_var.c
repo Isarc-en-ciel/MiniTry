@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_previous_env_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:13:27 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/06 14:45:38 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:33:52 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ t_env_list	*get_prev_env(t_env_list **head, char *key)
 	}
 	return (NULL);
 }
-

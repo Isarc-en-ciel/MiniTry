@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/10 15:57:37 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:32:21 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 static bool	del_found(char *hd_del, char *line)
 {
-	if (!ft_strncmp(hd_del, line, ft_strlen(hd_del)) 
+	if (!ft_strncmp(hd_del, line, ft_strlen(hd_del))
 		&& line[ft_strlen(hd_del)] == '\n')
 		return (true);
 	return (false);
@@ -54,7 +54,6 @@ void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	free_shell(shell);
 	exit(EXIT_SUCCESS);
 }
-
 
 /*
 void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
