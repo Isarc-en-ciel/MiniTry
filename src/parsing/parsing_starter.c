@@ -6,30 +6,32 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 14:33:55 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:47:27 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab)
+t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab, t_shell *shell)
 {
 	int		i;
 
 	i = count_pipes(tokens) + 1;
 	if (i == 0)
-	{
-		printf("pipe error\n");
-		free_final_array(tokens);
-		return (NULL);
-	}
+		return (error_return(tab, 1));
 	tab = malloc(sizeof(t_stock) * i);
 	if (!tab)
 		return (error_return(tokens, 0));
 	if (into_cmds(i, tokens, tab) == -1)
+	{
+		free(tab);
 		return (error_return(tokens, 0));
+	}
 	if (check_grammar(tab, i) == 1)
+	{
+		free(tab);
 		return (error_return(tokens, 1));
+	}
 	return (tab);
 }
 

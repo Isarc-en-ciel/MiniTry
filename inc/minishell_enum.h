@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/07 12:05:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:48:15 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ enum e_error
 	FILE_NO_PERM = FAIL,
 };
 
-enum
+enum e_redir
 {
 	NO_REDIR = -1,
 	READ_FROM = 0,

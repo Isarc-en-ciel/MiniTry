@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:24:27 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/17 13:31:00 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:31:14 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,5 @@ int	expand_var(t_shell *sh, char **wordp)
 		}
 	}
 	i = get_expansion_status(i, wordp, &ret);
-	ft_printf("return of expansion : %d; input expanded : %s\n", i, *wordp);
 	return (i);
 }
