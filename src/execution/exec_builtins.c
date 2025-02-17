@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:11:21 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/17 13:56:33 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 15:48:25 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_builtin	*find_builtin(t_shell *sh, t_command *cmd)
 	while (i != 7)
 	{
 		builtin = &sh->builtin[i];
-		if (key_found((char*)builtin->name, cmd_name))
+		if (key_found((char *)builtin->name, cmd_name))
 			return (builtin);
 		i++;
 	}

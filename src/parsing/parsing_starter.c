@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 13:21:37 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:33:55 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,11 @@ t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab)
 	}
 	tab = malloc(sizeof(t_stock) * i);
 	if (!tab)
-	{
-		free_final_array(tokens);
-		return (NULL);
-	}
+		return (error_return(tokens, 0));
 	if (into_cmds(i, tokens, tab) == -1)
-	{
-		free_final_array(tokens);
-		return (NULL);
-	}
+		return (error_return(tokens, 0));
 	if (check_grammar(tab, i) == 1)
-	{
-		printf("syntax error\n");
-		return (NULL);
-	}
+		return (error_return(tokens, 1));
 	return (tab);
 }
 
