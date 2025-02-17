@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/11 14:42:01 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:36:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,11 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 	(void) cmd;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-	{
 		exit_status = WEXITSTATUS(status);
-//		ft_printf("normal exit with status : %d\n", exit_status);
-	}
 	else if (WIFSIGNALED(status))
-	{
 		exit_status = 128 + WTERMSIG(status);
-		ft_printf("terminated by signal omg : %d\n", WTERMSIG(status));
-	}
 	else
-		exit_status = 1;
+		exit_status = cmd->error.code;
 	return (exit_status);
 }
 

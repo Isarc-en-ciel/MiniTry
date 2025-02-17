@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/14 16:42:38 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:47:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ t_command *from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
 		}
 		i++;
 	}
+	free_second_degree_tab(stock_array, stock_array->nbr_cmd);
 	sh->tab_size = i;
 	return (tab_exec_cmd);
 }
