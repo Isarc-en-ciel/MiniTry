@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 20:04:28 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/17 20:09:47 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab)
 	while (j < i)
 	{
 		cmd_size = 0;
-		while (tokens->content[n].type != PIPE && n < tokens->actual_size)
+		while (n < tokens->actual_size && tokens->content[n].type != PIPE)
 		{
 			n++;
 			cmd_size++;

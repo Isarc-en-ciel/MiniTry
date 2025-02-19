@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 19:29:50 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:09:33 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int					nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
 int					check_grammar(t_stock *tab, int cmds);
 void				free_first_degree_tab(t_stock *tab, int i);
 void				free_second_degree_tab(t_stock *tab, int i);
-t_command			*error_parsing(t_stock *tab);
+t_command			*error_parsing(t_stock *tab, int i, t_shell *shell);
 
 //expander
 int					expander(t_stock *tab, t_shell *shell);
@@ -154,6 +154,8 @@ t_stock				*tab_cleaner(t_stock *tab);
 int					clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *new_nbr_elem);
 int					count_new_elem(t_lexer *cmd, int nbr_elem, int *new_nbr_elem);
 int					copy_token(t_lexer cmd, t_lexer *new_cmd);
+void				new_empty_cmd(t_lexer *new_cmd);
+int					make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int new_nbr_elem);
 
 //testing parsing
 int			print_token_tab(t_darray *cmd);

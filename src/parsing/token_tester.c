@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:09:08 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/14 11:45:58 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:46:36 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	ft_print_redir_type(enum e_tokens token)
 		ft_printf("D_QUOTE");
 	else if (token == QUOTE)
 		ft_printf("QUOTE");
+	else if (token == NONE)
+		ft_printf("NONE");
 }
 
 int	print_stock_tab(t_stock *tab, int cmds)
@@ -63,9 +65,9 @@ int	print_stock_tab(t_stock *tab, int cmds)
 				tab[i].cmd[j].word, tab[i].cmd[j].is_there_a_space);
 			ft_print_redir_type(tab[i].cmd[j].type);
 			ft_printf("\n");
-			ft_printf("We have %d commands\n", tab[i].nbr_cmd);
 			j++;
 		}
+		ft_printf("We have %d commands\n", tab[i].nbr_cmd);
 		ft_printf("\n");
 		i++;
 	}

@@ -6,18 +6,17 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 17:28:54 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:09:52 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-//pas oublier de repasser par le parsing apres avoir expand et gerer les commandes vides
+//gerer les commandes vides
 int	expander(t_stock *tab, t_shell *shell)
 {
 	int	i;
 
 	i = 0;
-	print_stock_tab(tab, tab[0].nbr_cmd);
 	while (i < tab[0].nbr_cmd)
 	{
 		if (expand_cmd(tab[i].cmd, shell, tab[i].nbr_elem) == -1)
@@ -27,6 +26,9 @@ int	expander(t_stock *tab, t_shell *shell)
 		i++;
 	}
 	tab = tab_cleaner(tab);
+	if (tab == NULL)
+		return (-1);
+	print_stock_tab(tab, tab[0].nbr_cmd);
 	return (0);
 }
 
