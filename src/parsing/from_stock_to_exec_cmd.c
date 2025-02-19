@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 19:10:00 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:53:12 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**get_cmd_args(t_lexer *cmd, int cmd_size)
 	return (cmd_args);
 }
 
-t_command get_exec_struct(t_stock stock, int *status)
+t_command	get_exec_struct(t_stock stock, int *status)
 {
 	t_command	exec_cmd;
 
@@ -65,7 +65,7 @@ t_command get_exec_struct(t_stock stock, int *status)
 	return (exec_cmd);
 }
 
-t_command *from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
+t_command	*from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
 {
 	t_command	*tab_exec_cmd;
 	int			i;

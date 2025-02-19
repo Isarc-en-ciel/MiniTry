@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 18:55:34 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:54:58 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,14 @@ int					into_cmds(int i, t_darray *tokens, t_stock *tab);
 int					fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab);
 int					nbr_elem_cmd(int i, t_darray *tokens, t_stock *tab);
 int					check_grammar(t_stock *tab, int cmds);
+int					is_redirect(enum e_tokens token);
+int					is_word_token(enum e_tokens token);
 void				free_first_degree_tab(t_stock *tab, int i);
 void				free_second_degree_tab(t_stock *tab, int i);
 t_command			*error_parsing(t_stock *tab, int i, t_shell *shell);
 
 //expander
-int					expander(t_stock *tab, t_shell *shell);
+t_stock				*expander(t_stock *tab, t_shell *shell);
 int					expand_cmd(t_lexer *cmd, t_shell *shell, int size);
 int					join_cmd(t_lexer *cmd, int size, int i, int a);
 int					ft_strcmp(const char *s, char n);
@@ -158,16 +160,15 @@ void				new_empty_cmd(t_lexer *new_cmd);
 int					make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int j);
 
 //testing parsing
-int			print_token_tab(t_darray *cmd);
-void		ft_print_redir_type(enum e_tokens token);
-int			print_stock_tab(t_stock *tab, int cmds);
+int					print_token_tab(t_darray *cmd);
+void				ft_print_redir_type(enum e_tokens token);
+int					print_stock_tab(t_stock *tab, int cmds);
 
 //src/parsing/from_stock_to_cmd
-t_command	*from_stock_to_cmd(t_stock *stock, t_shell *sh);
+t_command			*from_stock_to_cmd(t_stock *stock, t_shell *sh);
 
 //from_stock_to_redirection
-bool			is_redir_operator(enum e_tokens type);
-t_redir_array	get_redirection_array(t_lexer *cmd, int cmd_size, int *pstatus);
-
+bool				is_redir_operator(enum e_tokens type);
+t_redir_array		get_redirection_array(t_lexer *cmd, int cmd_size, int *pstatus);
 
 #endif

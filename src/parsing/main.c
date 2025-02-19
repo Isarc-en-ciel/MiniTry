@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 18:41:21 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:40:01 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int	read_the_input(char **envp)
 		add_history(input);
 	//	shell.tab = pseudo_parsing(&shell, input);
 		shell.tab = parsing(input, &shell);
-		if (shell.tab == NULL)
-		{
-			//enter here if there is only spaces
-			ft_printf("there is no exec_cmd_tab. input : %s\n", input);
-			return (0);
-		}
-		exec_prompt(&shell);
+		// if (shell.tab == NULL)
+		// {
+		// 	//enter here if there is only spaces
+		// 	ft_printf("there is no exec_cmd_tab. input : %s\n", input);
+		// 	return (0);
+		// }
+		//exec_prompt(&shell);
 		free(input);
 	}
 	return (0);
@@ -84,10 +84,11 @@ t_command	*parsing(char *input, t_shell *shell)
 	if (tab == NULL)
 		return (NULL);
 	free_final_array(tokens);
-	if (expander(tab, shell) == -1)
+	tab = expander(tab, shell);
+	if (tab == NULL)
 		return (error_parsing(tab, 0, shell));
-	//if (check_grammar(tab, tab[0].nbr_cmd) == 1)
-	//	return (error_parsing(tab, 1, shell));
+	if (check_grammar(tab, tab[0].nbr_cmd) == 1)
+		return (error_parsing(tab, 1, shell));
 	//shell->tab = from_stock_to_cmd(tab, shell);
 	//return (shell->tab);
 	return (NULL);

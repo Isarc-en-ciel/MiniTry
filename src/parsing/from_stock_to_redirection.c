@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   from_stock_to_redirection.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:28 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 16:10:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:52:46 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_redir_operator(enum e_tokens type)
 {
-	if (type == REDIR_IN 
+	if (type == REDIR_IN
 		|| type == REDIR_OUT
 		|| type == REDIR_HEREDOC
 		|| type == REDIR_APP)

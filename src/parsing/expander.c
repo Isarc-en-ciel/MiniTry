@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 19:14:57 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:38:24 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	expander(t_stock *tab, t_shell *shell)
+t_stock	*expander(t_stock *tab, t_shell *shell)
 {
 	int	i;
 
@@ -20,16 +20,16 @@ int	expander(t_stock *tab, t_shell *shell)
 	while (i < tab[0].nbr_cmd)
 	{
 		if (expand_cmd(tab[i].cmd, shell, tab[i].nbr_elem) == -1)
-			return (-1);
+			return (NULL);
 		if (join_cmd(tab[i].cmd, tab[i].nbr_elem, 0, 1) == -1)
-			return (-1);
+			return (NULL);
 		i++;
 	}
 	tab = tab_cleaner(tab);
 	if (tab == NULL)
-		return (-1);
+		return (NULL);
 	print_stock_tab(tab, tab[0].nbr_cmd);
-	return (0);
+	return (tab);
 }
 
 int	expand_cmd(t_lexer *cmd, t_shell *shell, int size)
