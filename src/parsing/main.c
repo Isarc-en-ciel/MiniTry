@@ -76,6 +76,7 @@ t_command	*parsing(char *input, t_shell *shell)
 	t_command	*exec_cmd_tab;
 
 	tab = NULL;
+	(void)exec_cmd_tab;
 	tokens = retrieve_cmd(input, shell);
 	if (tokens == NULL || tokens->content == NULL)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 18:54:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:55:23 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	new_empty_cmd(t_lexer *new_cmd)
 	(new_cmd)->word = NULL;
 }
 
-int	make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *j)
+int	make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int j)
 {
 	int	i;
 
@@ -122,9 +122,9 @@ int	make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *j)
 	{
 		if (cmd[i].is_there_a_space != -1)
 		{
-			if (copy_token(cmd[i], &(new_cmd[0][*j])) == -1)
+			if (copy_token(cmd[i], &(new_cmd[0][j])) == -1)
 				return (-1);
-			*j++;
+			j++;
 		}
 		i++;
 	}
