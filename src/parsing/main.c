@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 20:09:38 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 20:12:23 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ t_command	*parsing(char *input, t_shell *shell)
 	t_command	*exec_cmd_tab;
 
 	tab = NULL;
-	(void)exec_cmd_tab;
 	tokens = retrieve_cmd(input, shell);
 	if (tokens == NULL || tokens->content == NULL)
 		return (NULL);
@@ -88,6 +87,6 @@ t_command	*parsing(char *input, t_shell *shell)
 		return (error_parsing(tab, 0, shell));
 	if (check_grammar(tab, tab[0].nbr_cmd) == 1)
 		return (error_parsing(tab, 1, shell));
-	shell->tab = from_stock_to_cmd(tab, shell);
-	return (shell->tab);
+	exec_cmd_tab = from_stock_to_cmd(tab, shell);
+	return (exec_cmd_tab);
 }
