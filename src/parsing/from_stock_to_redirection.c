@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:28 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 19:52:46 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 20:02:03 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	resolve_hd_or_filename(t_redirect *p_redir, char *filename)
 	}
 }
 
-t_redirect	*create_redirection_array(int array_size, t_lexer *cmd, int cmd_size)
+static t_redirect	*get_array(int array_size, t_lexer *cmd, int cmd_size)
 {
 	int			i;
 	int			j;
@@ -90,21 +90,21 @@ t_redirect	*create_redirection_array(int array_size, t_lexer *cmd, int cmd_size)
 	return (r_array);
 }
 
-t_redir_array	get_redirection_array(t_lexer *cmd, int cmd_size, int *pstatus)
+t_redir_array	get_redirections(t_lexer *cmd, int cmd_size, int *pstatus)
 {
-	t_redir_array	redir_array;
+	t_redir_array	redirections;
 
-	redir_array.size = count_redirection_operator(cmd, cmd_size);
-	if (redir_array.size < 0)
+	redirections.size = count_redirection_operator(cmd, cmd_size);
+	if (redirections.size < 0)
 	{
 		*pstatus = SYNTAX_ERROR;
-		return (redir_array);
+		return (redirections);
 	}
-	if (redir_array.size == 0)
+	if (redirections.size == 0)
 	{
-		redir_array.array = NULL;
-		return (redir_array);
+		redirections.array = NULL;
+		return (redirections);
 	}
-	redir_array.array = create_redirection_array(redir_array.size, cmd, cmd_size);
-	return (redir_array);
+	redirections.array = get_array(redirections.size, cmd, cmd_size);
+	return (redirections);
 }

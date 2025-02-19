@@ -6,13 +6,13 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 15:04:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:36:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static	t_shell	*clean_prompt(t_shell *shell)
+t_shell	*clean_prompt(t_shell *shell)
 {
 	free_tab_cmd(shell->tab_size, shell->tab);
 	shell->tab_size = 0;

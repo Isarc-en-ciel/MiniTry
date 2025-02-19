@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 19:40:01 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 20:04:24 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ int	read_the_input(char **envp)
 		add_history(input);
 	//	shell.tab = pseudo_parsing(&shell, input);
 		shell.tab = parsing(input, &shell);
-		// if (shell.tab == NULL)
-		// {
-		// 	//enter here if there is only spaces
-		// 	ft_printf("there is no exec_cmd_tab. input : %s\n", input);
-		// 	return (0);
-		// }
-		//exec_prompt(&shell);
+		if (shell.tab == NULL)
+		{
+			ft_printf("there is no exec_cmd_tab. input : %s\n", input);
+			continue ;
+		}
+		exec_prompt(&shell);
 		free(input);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 19:54:58 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 20:00:19 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char				*find_executable_path(t_shell *sh, int n, t_command *cmd);
 void				exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i);
 void				exec_builtin(t_builtin *builtin, t_command *cmd, t_shell *sh);
 void				terminate_pipeline(t_shell *sh, int i, int prev_fd);
+t_shell				*clean_prompt(t_shell *sh);
 
 /* repo utils */
 void				free_tab_char(char **tab);
@@ -168,7 +169,8 @@ int					print_stock_tab(t_stock *tab, int cmds);
 t_command			*from_stock_to_cmd(t_stock *stock, t_shell *sh);
 
 //from_stock_to_redirection
-bool				is_redir_operator(enum e_tokens type);
-t_redir_array		get_redirection_array(t_lexer *cmd, int cmd_size, int *pstatus);
+bool			    is_redir_operator(enum e_tokens type);
+t_redir_array	    get_redirections(t_lexer *cmd, int cmd_size, int *pstatus);
+
 
 #endif
