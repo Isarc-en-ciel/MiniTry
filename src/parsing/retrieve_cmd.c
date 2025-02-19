@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 19:49:35 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:16:21 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_darray	*retrieve_cmd(char *input, t_shell *shell)
 	if (!tab)
 		return (NULL);
 	if (init_array(tab, 10) == 0)
-		return (tab);
+		error_fct(tab, 0);
 	if (retrieve_loop(input, tab, 0, 0) == 1)
 	{
 		shell->exit_status = 2;
@@ -55,6 +55,8 @@ int	retrieve_loop(char *input, t_darray *tab, int i, int j)
 			a = retrieve_word(input, &i, &j, tab);
 		if (a == 1)
 			return (1);
+		if (a == -1)
+			error_fct(tab, 0);
 	}
 	return (0);
 }

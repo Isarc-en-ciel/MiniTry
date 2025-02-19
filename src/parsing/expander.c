@@ -6,12 +6,12 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 17:09:52 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:14:57 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-//gerer les commandes vides
+
 int	expander(t_stock *tab, t_shell *shell)
 {
 	int	i;
