@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:28 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 16:10:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:48:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_redir_operator(enum e_tokens type)
 {
-	if (type == REDIR_IN 
+	if (type == REDIR_IN
 		|| type == REDIR_OUT
 		|| type == REDIR_HEREDOC
 		|| type == REDIR_APP)
@@ -65,7 +65,7 @@ static void	resolve_hd_or_filename(t_redirect *p_redir, char *filename)
 	}
 }
 
-t_redirect	*create_redirection_array(int array_size, t_lexer *cmd, int cmd_size)
+static t_redirect	*get_array(int array_size, t_lexer *cmd, int cmd_size)
 {
 	int			i;
 	int			j;
@@ -90,21 +90,21 @@ t_redirect	*create_redirection_array(int array_size, t_lexer *cmd, int cmd_size)
 	return (r_array);
 }
 
-t_redir_array	get_redirection_array(t_lexer *cmd, int cmd_size, int *pstatus)
+t_redir_array	get_redirections(t_lexer *cmd, int cmd_size, int *pstatus)
 {
-	t_redir_array	redir_array;
+	t_redir_array	redirections;
 
-	redir_array.size = count_redirection_operator(cmd, cmd_size);
-	if (redir_array.size < 0)
+	redirections.size = count_redirection_operator(cmd, cmd_size);
+	if (redirections.size < 0)
 	{
 		*pstatus = SYNTAX_ERROR;
 		return (redir_array);
 	}
-	if (redir_array.size == 0)
+	if (redirections.size == 0)
 	{
-		redir_array.array = NULL;
+		redirections.array = NULL;
 		return (redir_array);
 	}
-	redir_array.array = create_redirection_array(redir_array.size, cmd, cmd_size);
+	redirections.array = get_array(redirections.size, cmd, cmd_size);
 	return (redir_array);
 }
