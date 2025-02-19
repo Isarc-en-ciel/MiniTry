@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:28 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 18:48:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:03:36 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ t_redir_array	get_redirections(t_lexer *cmd, int cmd_size, int *pstatus)
 	if (redirections.size < 0)
 	{
 		*pstatus = SYNTAX_ERROR;
-		return (redir_array);
+		return (redirections);
 	}
 	if (redirections.size == 0)
 	{
 		redirections.array = NULL;
-		return (redir_array);
+		return (redirections);
 	}
 	redirections.array = get_array(redirections.size, cmd, cmd_size);
-	return (redir_array);
+	return (redirections);
 }

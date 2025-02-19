@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 18:43:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:41:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int	read_the_input(char **envp)
 		shell.tab = parsing(input, &shell);
 		if (shell.tab == NULL)
 		{
-			//enter here if there is only spaces
 			ft_printf("there is no exec_cmd_tab. input : %s\n", input);
-			return (0);
+			continue ;
 		}
 		exec_prompt(&shell);
 		free(input);
