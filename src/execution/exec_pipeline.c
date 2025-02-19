@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/17 17:53:02 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:12:14 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	
 	cmd = &sh->tab[i];
 	perform_redirection(sh, &sh->tab[i]);
-	if (!cmd || cmd->error.code != SUCCESS || !cmd->cmd)
+	if (!cmd || cmd->error.code != SUCCESS || !cmd->cmd || !cmd->cmd[0])
 		exit_child(sh, pipe_fd, prev_fd, i);
 	builtin = find_builtin(sh, cmd);
 	if (configure_pipeline(sh, i, pipe_fd, prev_fd) == FAIL)
