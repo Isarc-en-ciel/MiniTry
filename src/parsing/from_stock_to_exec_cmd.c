@@ -6,32 +6,11 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/17 17:47:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:11:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	ft_token_len(int size, t_lexer *tab, enum e_tokens type)
-{
-	int	i;
-	int	token_nb;
-
-	i = 0;
-	token_nb = 0;
-	if (!tab)
-	{
-		ft_printf("can not count ft_token_size :(\n");
-		return (0);
-	}
-	while (i != size)
-	{
-		if (&tab[i] && tab[i].type == type)
-			token_nb++;
-		i++;
-	}
-	return (token_nb);
-}
 
 bool	is_redir_operator(enum e_tokens type)
 {
@@ -145,7 +124,7 @@ char	**get_cmd_args(t_lexer *cmd, int cmd_size)
 	cmd_args = NULL;
 	while (i != cmd_size)
 	{
-		if (i > 0 && !is_redir_operator(cmd[i - 1].type))
+		if (i > 0 && !is_redir_operator(cmd[i - 1].type) && !is_redir_operator(cmd[i].type))
 			len++;
 		else if (i == 0 && !is_redir_operator(cmd[i].type))
 			len++;
@@ -196,14 +175,12 @@ t_command *from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
 	i = 0;
 	tab_exec_cmd = malloc(sizeof(*tab_exec_cmd) * stock_array->nbr_cmd);
 	if (!tab_exec_cmd)
-	{
-		perror("malloc");
 		exit(EXIT_FAILURE);
-	}
+	sh->tab_size = stock_array->nbr_cmd;
 	while (i != stock_array->nbr_cmd)
 	{
 		tab_exec_cmd[i] = get_exec_struct(stock_array[i], &sh->exit_status);
-		if (sh->exit_status != SUCCESS)
+		if (sh->exit_status == SYNTAX_ERROR)
 		{
 			//free everything();
 			return (NULL);
@@ -211,6 +188,5 @@ t_command *from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
 		i++;
 	}
 	free_second_degree_tab(stock_array, stock_array->nbr_cmd);
-	sh->tab_size = i;
 	return (tab_exec_cmd);
 }

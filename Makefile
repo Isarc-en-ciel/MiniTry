@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: csteylae <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
+#    Updated: 2025/02/19 15:11:46 by csteylae         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME= minishell
 CC=cc
-CFLAGS= -Wall -Wextra -Werror -g -gdwarf-4 -O0 -fsanitize=address
+CFLAGS= -Wall -Wextra -Werror -g -O0 #-fsanitize=address -gdwarf-4 
 DFLAGS= -g -O0 -fsanitize=address
 VALGRIND_FLAGS= -g -O0
 
@@ -65,6 +77,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/signal/setup_signal.c \
 	  src/signal/handle_sigint.c \
 	  src/parsing/from_stock_to_exec_cmd.c \
+	  src/parsing/from_stock_to_redirection.c \
 
 HEADER = ../../inc/*.h
 

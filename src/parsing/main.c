@@ -34,15 +34,13 @@ int	read_the_input(char **envp)
 	while (1)
 	{
 		g_signal_received = 0;
-//		setup_signal(&shell, &handle_sigint_interactive_mode);
 		input = readline("gib comand pliz> ");
 		if (g_signal_received == SIGINT)
-		{
 			g_signal_received = 0;
-		}
 		handle_eof(input, &shell);
 		if (input && !ft_strlen(input))
 		{
+			ft_printf("input exists but its empty go to next iteration\n");
 			free(input);
 			continue ;
 		}
@@ -50,10 +48,13 @@ int	read_the_input(char **envp)
 	//	shell.tab = pseudo_parsing(&shell, input);
 		shell.tab = parsing(input, &shell);
 		if (shell.tab == NULL)
-			continue ;
+		{
+			//enter here if there is only spaces
+			ft_printf("there is no exec_cmd_tab. input : %s\n", input);
+			return (0);
+		}
 		exec_prompt(&shell);
 		free(input);
-		g_signal_received = 0;
 	}
 	return (0);
 }
@@ -72,6 +73,7 @@ t_command	*parsing(char *input, t_shell *shell)
 {
 	t_darray	*tokens;
 	t_stock		*tab;
+	t_command	*exec_cmd_tab;
 
 	tab = NULL;
 	tokens = retrieve_cmd(input, shell);

@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: csteylae <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
+#    Updated: 2025/02/19 15:11:46 by csteylae         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME= minishell
 CC=cc
-CFLAGS= -Wall -Wextra -Werror -g -gdwarf-4 -O0 #-fsanitize=address
+CFLAGS= -Wall -Wextra -Werror -g -O0 #-fsanitize=address -gdwarf-4 
 DFLAGS= -g -O0 -fsanitize=address
 VALGRIND_FLAGS= -g -O0
 
@@ -33,6 +45,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/parsing/token_tester.c \
 	  src/parsing/parsing_starter.c \
 	  src/parsing/actual_parsing.c \
+	  src/parsing/error_fcts.c \
 	  src/parsing/expander.c \
 	  src/parsing/tab_cleaner.c \
 	  src/environment/init_env.c \
@@ -43,21 +56,28 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/environment/get_env_value.c \
 	  src/environment/update_underscore_var.c \
 	  src/environment/compare_key.c \
+	  src/environment/increment_shlvl.c \
+	  src/environment/get_previous_env_var.c \
+	  src/environment/ft_get_env.c \
 	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \
 	  src/execution/exec_pipeline.c \
 	  src/execution/redirection.c \
 	  src/execution/heredoc.c \
-	  src/execution/is_only_one_builtin.c \
 	  src/execution/get_exit_status.c \
 	  src/execution/init_pipeline.c \
 	  src/execution/control_io_pipeline.c \
 	  src/execution/close_fd.c \
 	  src/execution/find_executable_path.c \
+	  src/execution/exec_builtins.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 	  src/utils/set_error.c \
+	  src/signal/setup_signal.c \
+	  src/signal/handle_sigint.c \
+	  src/parsing/from_stock_to_exec_cmd.c \
+	  src/parsing/from_stock_to_redirection.c \
 
 HEADER = ../../inc/*.h
 

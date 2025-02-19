@@ -38,6 +38,7 @@ enum e_tokens
 
 enum e_error
 {
+	REDIR_SYNTAX_ERROR = -1,
 	SYNTAX_ERROR = 2,
 	SUCCESS = 0,
 	FAIL = 1,
