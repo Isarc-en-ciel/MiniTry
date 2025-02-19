@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 19:32:20 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:17:31 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ t_stock	*tab_cleaner(t_stock *tab)
 		new_tab[i].nbr_elem = 0;
 		if (clean_cmd(tab[i].cmd, &new_tab[i].cmd,
 				tab[i].nbr_elem, &new_tab[i].nbr_elem) == -1)
+		{
+			free_second_degree_tab(new_tab, new_tab[0].nbr_cmd);
 			return (NULL);
+		}
 		new_tab[i].nbr_cmd = tab[0].nbr_cmd;
 		i++;
 	}
@@ -44,19 +47,30 @@ int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *new_nbr_elem)
 	j = 0;
 	*new_nbr_elem = count_new_elem(cmd, nbr_elem, new_nbr_elem);
 	if (*new_nbr_elem == 0)
-		return (-1);
-	*new_cmd = malloc(sizeof(t_lexer) * (*new_nbr_elem));
-	if (!*new_cmd)
-		return (-1);
-	while (i < nbr_elem)
 	{
-		if (cmd[i].is_there_a_space != -1)
+		*new_cmd = malloc(sizeof(t_lexer) * 1);
+		if (!new_cmd)
+			return (-1);
+		new_empty_cmd(&(new_cmd[0][j]));
+		*new_nbr_elem = 1;
+	}
+	else
+	{
+		*new_cmd = malloc(sizeof(t_lexer) * (*new_nbr_elem));
+		if (!*new_cmd)
+			return (-1);
+		// if (make_new_cmd(cmd, &(*new_cmd), nbr_elem, *new_nbr_elem) == -1)
+		// 	return (-1);
+		while (i < nbr_elem)
 		{
-			if (copy_token(cmd[i], &(new_cmd[0][j])) == -1)
-				return (-1);
-			j++;
+			if (cmd[i].is_there_a_space != -1)
+			{
+				if (copy_token(cmd[i], &(new_cmd[0][j])) == -1)
+					return (-1);
+				j++;
+			}
+			i++;
 		}
-		i++;
 	}
 	return (0);
 }
@@ -88,6 +102,31 @@ int	copy_token(t_lexer cmd, t_lexer *new_cmd)
 		(new_cmd)->word = ft_strdup(cmd.word);
 		if (!(new_cmd)->word)
 			return (-1);
+	}
+	return (0);
+}
+
+void	new_empty_cmd(t_lexer *new_cmd)
+{
+	(new_cmd)->is_there_a_space = 0;
+	(new_cmd)->type = NONE;
+	(new_cmd)->word = NULL;
+}
+
+int	make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *j)
+{
+	int	i;
+
+	i = 0;
+	while (i < nbr_elem)
+	{
+		if (cmd[i].is_there_a_space != -1)
+		{
+			if (copy_token(cmd[i], &(new_cmd[0][*j])) == -1)
+				return (-1);
+			*j++;
+		}
+		i++;
 	}
 	return (0);
 }

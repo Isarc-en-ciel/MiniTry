@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 12:10:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:30:32 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ t_command	*parsing(char *input, t_shell *shell)
 	tab = parsing_starter(tokens, tab, shell);
 	if (tab == NULL)
 		return (NULL);
-	exec_cmd_tab = from_stock_to_cmd(tab, shell);
 	free_final_array(tokens);
-	return (exec_cmd_tab);
-	//if (expander(tab, shell) == -1)
-	//	return (NULL);
-//	return (NULL);
+	if (expander(tab, shell) == -1)
+		return (error_parsing(tab, 0, shell));
+	//if (check_grammar(tab, tab[0].nbr_cmd) == 1)
+	//	return (error_parsing(tab, 1, shell));
+	//shell->tab = from_stock_to_cmd(tab, shell);
+	//return (shell->tab);
+	return (NULL);
 }
