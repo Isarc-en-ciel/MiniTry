@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 17:51:17 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:53:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ enum e_tokens
 
 enum e_error
 {
+	REDIR_SYNTAX_ERROR = -1,
 	SYNTAX_ERROR = 2,
 	SUCCESS = 0,
 	FAIL = 1,

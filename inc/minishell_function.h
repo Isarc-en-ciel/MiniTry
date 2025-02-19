@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 19:29:50 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 15:12:28 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,10 @@ int			print_stock_tab(t_stock *tab, int cmds);
 
 //src/parsing/from_stock_to_cmd
 t_command	*from_stock_to_cmd(t_stock *stock, t_shell *sh);
+
+//from_stock_to_redirection
+bool			is_redir_operator(enum e_tokens type);
+t_redir_array	get_redirection_array(t_lexer *cmd, int cmd_size, int *pstatus);
+
 
 #endif

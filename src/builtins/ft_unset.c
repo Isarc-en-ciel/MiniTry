@@ -6,13 +6,11 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 13:39:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:09:54 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//The return status is zero unless a name is readonly or may not be unset. 
 
 void	remove_env(t_env_list **head, char *key)
 {
