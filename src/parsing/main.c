@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 16:18:03 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:41:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_command	*parsing(char *input, t_shell *shell)
 	t_command	*exec_cmd_tab;
 
 	tab = NULL;
+	(void)exec_cmd_tab;
 	tokens = retrieve_cmd(input, shell);
 	if (tokens == NULL || tokens->content == NULL)
 		return (NULL);
