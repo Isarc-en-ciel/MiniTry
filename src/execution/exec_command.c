@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/11 14:05:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:00:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ void	exec_external_command(t_shell *shell, int n)
 		return (exec_command(path, shell, n));
 	else
 	{
+		ft_putstr_fd(cmd->cmd[0], STDERR_FILENO);
 		if (cmd->error.code == CMD_NOT_FOUND)
-			ft_printf("%s : command not found\n", cmd->cmd[0]);
+			ft_putstr_fd(" : command not found\n", STDERR_FILENO);
 		else if (cmd->error.code == FILE_NO_PERM)
-			ft_printf("%s : permission denied\n", cmd->cmd[0]);
+			ft_putstr_fd(" : permission denied\n", STDERR_FILENO);
 	}
 }

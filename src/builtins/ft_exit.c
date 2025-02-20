@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:14:42 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 13:29:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:36:53 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ static bool	check_validity(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[0] == '-' || str[0] == '+')
+			i++;
 		if (str[i] && !ft_isdigit(str[i]))
 		{
-			ft_printf("minishell: exit: %s: numeric argument required\n", str);
+			ft_putstr_fd("minishell: exit", STDERR_FILENO);
+			ft_putstr_fd(str, STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 			return (false);
 		}
 		i++;
@@ -36,13 +40,13 @@ int	ft_exit(t_shell *sh, t_command *cmd)
 	status = 0;
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDOUT_FILENO);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		return (FAIL);
 	}
 	if (cmd->cmd[1] != NULL)
 	{
 		if (!check_validity(cmd->cmd[1]))
-			status = 255;
+			exit(SYNTAX_ERROR);
 		else
 		{
 			status = ft_atoi(cmd->cmd[1]);
