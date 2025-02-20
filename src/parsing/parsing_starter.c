@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 18:08:09 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/20 15:58:55 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab, t_shell *shell)
 	}
 	if (check_grammar(tab, i) == 1)
 	{
-		free(tab);
+		free_second_degree_tab(tab, tab[0].nbr_cmd);
 		return (error_return(tokens, 1, shell));
 	}
 	return (tab);
