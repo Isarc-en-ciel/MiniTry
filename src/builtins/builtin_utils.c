@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/20 13:02:39 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:31:13 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,21 @@ bool	is_key_format(t_command *cmd, char *str)
 	}
 	return (true);
 	*/
-	if (str[0] != '_' && !ft_isalpha(str[0]))
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		ft_printf("%s : '%s': not a valid identifier\n", cmd->cmd[0], str);
+		if (str[i] != '_' && !ft_isalpha(str[i]))
+			break ;
+		i++;
+	}
+	if (str[i] != '\0' || i == 0)
+	{
+		ft_putstr_fd(cmd->cmd[0], STDERR_FILENO);
+		ft_putstr_fd(" : '", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 		return (false);
 	}
 	return (true);

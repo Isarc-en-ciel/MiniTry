@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 20:11:25 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:23:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,13 @@ static bool is_only_redirection(t_shell *sh)
 int	exec_prompt(t_shell *shell)
 {
 	if (is_only_redirection(shell))
+	{
+		shell = clean_prompt(shell);
 		return (shell->exit_status);
+	}
 	if (is_only_one_builtin(shell, 0))
 	{
+		shell = clean_prompt(shell);
 		return (shell->exit_status);
 	}
 	exec_pipeline(shell);

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/20 13:00:30 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:35:36 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*get_key(char *str, t_command *cmd)
 	key = NULL;
 	while (str[i] && str[i] != '=')
 		i++;
-	key = calloc(i, sizeof(char) + 1);
+	key = ft_calloc(i + 1, sizeof(char));
 	if (!key)
 	{
 		cmd->error = set_error("malloc", MALLOC);
@@ -39,7 +39,7 @@ static char	*get_value(char *str)
 	if (!value)
 		return (NULL);
 	value = value + 1;
-	if (value[0] == '\0')
+	if (*value == '\0')
 		return ("");
 	return (value);
 }
@@ -56,7 +56,7 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 		key = get_key(cmd->cmd[i], cmd);
 		if (!key)
 			return ;
-		if (!is_key_format(cmd, key))
+		if (!is_key_format(cmd, key)) 
 		{
 			*exit_status = FAIL;
 			i++;

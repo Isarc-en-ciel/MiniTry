@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/20 11:59:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:30:10 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static char	**get_cmd_args(t_lexer *cmd, int cmd_size)
 
 	i = 0;
 	len = 0;
+	if (get_cmd_args_size(cmd, cmd_size) == 0)
+		return (NULL);
 	cmd_args = malloc(sizeof(char *) * (get_cmd_args_size(cmd, cmd_size) + 1));
 	if (!cmd_args)
 		exit_error(NULL, "malloc");
@@ -103,6 +105,7 @@ t_command	*from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
 		{
 			free_second_degree_tab(stock_array, stock_array->nbr_cmd);
 			sh = clean_prompt(sh);
+			sh->exit_status = actual_status;
 			return (NULL);
 		}
 		i++;
