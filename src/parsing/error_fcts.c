@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:06:42 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 14:35:58 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/20 17:30:15 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,24 @@ t_command	*error_parsing(t_stock *tab, int i, t_shell *shell)
 	if (i == 0)
 		exit (EXIT_FAILURE);
 	return (NULL);
+}
+
+int	make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < nbr_elem)
+	{
+		if (cmd[i].is_there_a_space != -1)
+		{
+			if (copy_token(cmd[i], &(new_cmd[0][j])) == -1)
+				return (-1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
