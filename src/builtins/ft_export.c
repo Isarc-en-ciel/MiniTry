@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/20 17:35:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:01:46 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	*get_key(char *str, t_command *cmd)
 	i = 0;
 	key = NULL;
 	while (str[i] && str[i] != '=')
+		i++;
+	if (str[0] == '=')
 		i++;
 	key = ft_calloc(i + 1, sizeof(char));
 	if (!key)
@@ -60,6 +62,7 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 		{
 			*exit_status = FAIL;
 			i++;
+			free(key);
 			continue ;
 		}
 		value = get_value(cmd->cmd[i]);
