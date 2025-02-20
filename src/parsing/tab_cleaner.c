@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:17:35 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 18:57:22 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/20 17:32:40 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ t_stock	*tab_cleaner(t_stock *tab)
 
 int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *new_nbr_elem)
 {
-	int	i;
 	int	j;
 
-	i = 0;
 	j = 0;
 	*new_nbr_elem = count_new_elem(cmd, nbr_elem, new_nbr_elem);
 	if (*new_nbr_elem == 0)
@@ -59,18 +57,8 @@ int	clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *new_nbr_elem)
 		*new_cmd = malloc(sizeof(t_lexer) * (*new_nbr_elem));
 		if (!*new_cmd)
 			return (-1);
-		// if (make_new_cmd(cmd, &(*new_cmd), nbr_elem, *new_nbr_elem) == -1)
-		// 	return (-1);
-		while (i < nbr_elem)
-		{
-			if (cmd[i].is_there_a_space != -1)
-			{
-				if (copy_token(cmd[i], &(new_cmd[0][j])) == -1)
-					return (-1);
-				j++;
-			}
-			i++;
-		}
+		if (make_new_cmd(cmd, &(*new_cmd), nbr_elem) == -1)
+			return (-1);
 	}
 	return (0);
 }
@@ -111,22 +99,4 @@ void	new_empty_cmd(t_lexer *new_cmd)
 	(new_cmd)->is_there_a_space = 0;
 	(new_cmd)->type = NONE;
 	(new_cmd)->word = NULL;
-}
-
-int	make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int j)
-{
-	int	i;
-
-	i = 0;
-	while (i < nbr_elem)
-	{
-		if (cmd[i].is_there_a_space != -1)
-		{
-			if (copy_token(cmd[i], &(new_cmd[0][j])) == -1)
-				return (-1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
 }

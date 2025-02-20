@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 20:00:19 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/20 17:29:52 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int					clean_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int *new_nbr_el
 int					count_new_elem(t_lexer *cmd, int nbr_elem, int *new_nbr_elem);
 int					copy_token(t_lexer cmd, t_lexer *new_cmd);
 void				new_empty_cmd(t_lexer *new_cmd);
-int					make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem, int j);
+int					make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem);
 
 //testing parsing
 int					print_token_tab(t_darray *cmd);
