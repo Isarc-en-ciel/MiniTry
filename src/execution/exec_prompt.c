@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 19:36:11 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:11:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ int	exec_prompt(t_shell *shell)
 		return (shell->exit_status);
 	if (is_only_one_builtin(shell, 0))
 	{
-		ft_printf("builtin return : %i\n", shell->exit_status);
 		return (shell->exit_status);
 	}
 	exec_pipeline(shell);
 	shell = clean_prompt(shell);
-	ft_printf("exit status : %d\n", shell->exit_status);
 	return (shell->exit_status);
 }

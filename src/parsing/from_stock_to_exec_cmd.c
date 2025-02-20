@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 20:01:51 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/20 11:59:52 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,12 @@ static char	**get_cmd_args(t_lexer *cmd, int cmd_size)
 	{
 		if (is_cmd_args(cmd, i))
 		{
-			cmd_args[len] = ft_strdup(cmd[i].word);
-			if (!cmd_args[len])
-				exit_error(NULL, NULL);
+			if (cmd[i].word)
+				cmd_args[len] = ft_strdup(cmd[i].word);
+			else if (cmd[i].word == NULL)
+				cmd_args[len] = ft_calloc(1, sizeof(char));
+			if (cmd_args[len] == NULL)
+				exit(EXIT_FAILURE);
 			len++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 11:54:13 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:02:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,21 @@ void	build_envp(t_env_list **head, t_command *cmd, char ***envp)
 
 bool	is_key_format(t_command *cmd, char *str)
 {
+	/*
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '_' && ! ft_isalpha(str[i]))
+		{
+			ft_printf("%s : '%s': not a valid identifier\n", cmd->cmd[0], str);
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+	*/
 	if (str[0] != '_' && !ft_isalpha(str[0]))
 	{
 		ft_printf("%s : '%s': not a valid identifier\n", cmd->cmd[0], str);
