@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: csteylae <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
-#    Updated: 2025/02/20 14:28:52 by csteylae         ###   ########.fr        #
+#    Updated: 2025/02/20 15:51:51 by iwaslet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= minishell
 CC=cc
-CFLAGS= -Wall -Wextra -Werror -g -O0 #-fsanitize=address -gdwarf-4 
+CFLAGS= -Wall -Wextra -Werror -g -O0 -fsanitize=address -gdwarf-4 
 DFLAGS= -g -O0 -fsanitize=address
 VALGRIND_FLAGS= -g -O0
 
