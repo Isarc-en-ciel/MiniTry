@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 12:18:24 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:38:37 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ t_command	*parsing(char *input, t_shell *shell)
 	if (tokens == NULL || tokens->content == NULL)
 		return (NULL);
 	tab = parsing_starter(tokens, tab, shell);
+	free_final_array(tokens);
 	if (tab == NULL)
 		return (NULL);
-	free_final_array(tokens);
 	tab = expander(tab, shell);
 	if (tab == NULL)
 		return (error_parsing(tab, 0, shell));

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:48:50 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 19:07:17 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/20 14:45:36 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ t_darray	realloc_array(t_darray *darray)
 void	free_final_array(t_darray *darray)
 {
 	free_temp_array(darray);
+	free (darray->content);
 	free (darray);
 }
