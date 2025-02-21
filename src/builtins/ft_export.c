@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/20 18:01:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:46:47 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 		key = get_key(cmd->cmd[i], cmd);
 		if (!key)
 			return ;
-		if (!is_key_format(cmd, key)) 
+		if (!is_key_format(cmd, key))
 		{
 			*exit_status = FAIL;
 			i++;

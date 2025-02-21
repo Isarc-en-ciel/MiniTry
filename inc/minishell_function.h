@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/21 12:42:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:48:07 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void				perform_redirection(t_shell *shell, t_command *cmd); //file redirection.
 void				create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
 void				delete_heredoc_file(t_command *cmd);/* file exec_prompt.c */
 void				redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
-void					exec_prompt(t_shell *shell); /* file exec_prompt.c */
+void				exec_prompt(t_shell *shell); /* file exec_prompt.c */
 void				exec_external_cmd(t_shell *shell, int nb); /*file exec_command.c */
 void				exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
 t_command			*pseudo_parsing(t_shell *shell, char *input);
@@ -170,8 +170,7 @@ int					print_stock_tab(t_stock *tab, int cmds);
 t_command			*from_stock_to_cmd(t_stock *stock, t_shell *sh);
 
 //from_stock_to_redirection
-bool			    is_redir_operator(enum e_tokens type);
-t_redir_array	    get_redirections(t_lexer *cmd, int cmd_size, int *pstatus);
-
+bool				is_redir_operator(enum e_tokens type);
+t_redir_array		get_redirections(t_lexer *cmd, int cmd_size, int *pstatus);
 
 #endif

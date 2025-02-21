@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 12:42:13 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:47:22 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i)
 
 static bool	cannot_exec_cmd(t_command *cmd)
 {
-	if (!cmd 
-		|| cmd->error.code != SUCCESS 
-		|| !cmd->cmd 
-		|| !cmd->cmd[0] 
+	if (!cmd
+		|| cmd->error.code != SUCCESS
+		|| !cmd->cmd
+		|| !cmd->cmd[0]
 		|| cmd->cmd[0][0] == '\0')
 	{
 		return (true);
