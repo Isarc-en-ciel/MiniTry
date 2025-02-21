@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/21 12:56:41 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/21 15:18:08 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,11 @@ typedef struct s_shell
 {
 	struct sigaction	signal_act;
 	char				**env;
-	t_command			*tab; //parsing, the array of cmd
-	int					tab_size; //nb of cmd
-	int					exit_status; //init to 0
-	pid_t				*child_pid; //init to tab_size,malloc(sizeof(pid_t)*tab_size);
-	t_builtin			builtin[NB_OF_BUILTIN];//builtin struct 
+	t_command			*tab;
+	int					tab_size;
+	int					exit_status;
+	pid_t				*child_pid;
+	t_builtin			builtin[NB_OF_BUILTIN];
 }	t_shell;
 
 #endif
