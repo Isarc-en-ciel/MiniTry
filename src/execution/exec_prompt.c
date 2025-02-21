@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/20 17:23:51 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:09:50 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_shell	*clean_prompt(t_shell *shell)
 	return (shell);
 }
 
+/*
 static bool is_only_redirection(t_shell *sh)
 {
 	if (sh->tab_size > 1)
@@ -36,20 +37,23 @@ static bool is_only_redirection(t_shell *sh)
 	}
 	return (false);
 }
+*/
 
-int	exec_prompt(t_shell *shell)
+void	exec_prompt(t_shell *sh)
 {
-	if (is_only_redirection(shell))
+	struct sigaction	old_act;
+	t_builtin			*builtin;
+
+	sigaction(SIGINT, NULL, &old_act);
+	sh->signal_act = setup_signal_in_parent();
+	builtin = find_builtin(sh, &sh->tab[0]);
+	if (builtin && sh->tab_size == 1)
+		exec_builtin(builtin, &sh->tab[0], sh);
+	else
 	{
-		shell = clean_prompt(shell);
-		return (shell->exit_status);
+		init_child_pid(sh);
+		exec_pipeline(sh);
 	}
-	if (is_only_one_builtin(shell, 0))
-	{
-		shell = clean_prompt(shell);
-		return (shell->exit_status);
-	}
-	exec_pipeline(shell);
-	shell = clean_prompt(shell);
-	return (shell->exit_status);
+	sigaction(SIGINT, &old_act, NULL);
+	sh = clean_prompt(sh);
 }

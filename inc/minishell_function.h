@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 17:29:52 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/21 12:42:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ struct sigaction	init_sigaction(void(*fct)(int));
 void				setup_signal(t_shell *sh, void(*fct)(int));
 void				handle_sigint_interactive_mode(int signum);
 void				handle_sigint_child_process(int signum);
+struct sigaction	setup_signal_in_children(void);
+struct sigaction	setup_signal_in_parent(void);
 
 /*repo environment */
 char				**init_env(char **envp); //env_list.c
@@ -71,13 +73,12 @@ void				export_without_arg(t_env_list **head, t_command *cmd);
 void				init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd);
 void				init_child_pid(t_shell *sh);
 t_builtin			*find_builtin(t_shell *sh, t_command *cmd);
-bool				is_only_one_builtin(t_shell *sh, int i);
 void				perform_redirection(t_shell *shell, t_command *cmd); //file redirection.c
 void				create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redirection);
 void				delete_heredoc_file(t_command *cmd);/* file exec_prompt.c */
 void				redirect_io(t_shell *shell, int fd_in, int fd_out); //file redirection.c
-int					exec_prompt(t_shell *shell); /* file exec_prompt.c */
-void				exec_external_command(t_shell *shell, int nb); /*file exec_command.c */
+void					exec_prompt(t_shell *shell); /* file exec_prompt.c */
+void				exec_external_cmd(t_shell *shell, int nb); /*file exec_command.c */
 void				exec_pipeline(t_shell *shell); //file src/execution/exec_pipeline.c
 t_command			*pseudo_parsing(t_shell *shell, char *input);
 int					get_exit_status(t_command *cmd, pid_t pid);

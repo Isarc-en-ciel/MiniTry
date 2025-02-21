@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:45:52 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/11 15:22:07 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:02:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	init_pipeline(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 		exit_error(sh, NULL);
 	}
-	sh->child_pid[i] = fork();
-	if (sh->child_pid[i] < 0)
-	{
-		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
-		sh->tab[i].error = set_error("fork", SYSCALL_ERROR);
-		exit_error(sh, NULL);
-	}
+//	sh->child_pid[i] = fork();
+//	if (sh->child_pid[i] < 0)
+//	{
+//		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+//		sh->tab[i].error = set_error("fork", SYSCALL_ERROR);
+//		exit_error(sh, NULL);
+//	}
 }
