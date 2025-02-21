@@ -6,71 +6,11 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/20 15:30:10 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:24:02 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static bool	is_cmd_args(t_lexer *cmd, int i)
-{
-	if (i == 0 && !is_redir_operator(cmd[i].type))
-		return (true);
-	else if (i > 0 && !is_redir_operator(cmd[i - 1].type)
-		&& !is_redir_operator(cmd[i].type))
-	{
-		return (true);
-	}
-	else
-		return (false);
-}
-
-static int	get_cmd_args_size(t_lexer *cmd, int cmd_size)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (i != cmd_size)
-	{
-		if (is_cmd_args(cmd, i))
-			len++;
-		i++;
-	}
-	return (len);
-}
-
-static char	**get_cmd_args(t_lexer *cmd, int cmd_size)
-{
-	int		i;
-	int		len;
-	char	**cmd_args;
-
-	i = 0;
-	len = 0;
-	if (get_cmd_args_size(cmd, cmd_size) == 0)
-		return (NULL);
-	cmd_args = malloc(sizeof(char *) * (get_cmd_args_size(cmd, cmd_size) + 1));
-	if (!cmd_args)
-		exit_error(NULL, "malloc");
-	while (i != cmd_size)
-	{
-		if (is_cmd_args(cmd, i))
-		{
-			if (cmd[i].word)
-				cmd_args[len] = ft_strdup(cmd[i].word);
-			else if (cmd[i].word == NULL)
-				cmd_args[len] = ft_calloc(1, sizeof(char));
-			if (cmd_args[len] == NULL)
-				exit(EXIT_FAILURE);
-			len++;
-		}
-		i++;
-	}
-	cmd_args[len] = NULL;
-	return (cmd_args);
-}
 
 static t_command	get_exec_struct(t_stock stock, int *status)
 {

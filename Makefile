@@ -6,7 +6,7 @@
 #    By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
-#    Updated: 2025/02/21 14:50:52 by iwaslet          ###   ########.fr        #
+#    Updated: 2025/02/21 15:25:43 by csteylae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/signal/handle_sigint.c \
 	  src/parsing/from_stock_to_exec_cmd.c \
 	  src/parsing/from_stock_to_redirection.c \
+	  src/parsing/get_cmd_args.c \
 
 HEADER = ../../inc/*.h
 
