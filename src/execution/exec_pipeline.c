@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 12:47:22 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/21 12:53:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,6 @@ void	exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i)
 	exit(exit_status);
 }
 
-static bool	cannot_exec_cmd(t_command *cmd)
-{
-	if (!cmd
-		|| cmd->error.code != SUCCESS
-		|| !cmd->cmd
-		|| !cmd->cmd[0]
-		|| cmd->cmd[0][0] == '\0')
-	{
-		return (true);
-	}
-	return (false);
-}
-
 static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 {
 	int			status;
@@ -46,7 +33,7 @@ static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	cmd = &sh->tab[i];
 	builtin = find_builtin(sh, cmd);
 	perform_redirection(sh, &sh->tab[i]);
-	if (cannot_exec_cmd(cmd))
+	if (is_error_with_cmd(cmd))
 		exit_child(sh, pipe_fd, prev_fd, i);
 	status = configure_pipeline(sh, i, pipe_fd, prev_fd);
 	if (status == SUCCESS)

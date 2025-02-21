@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 15:03:43 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:56:24 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 		exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		exit_status = 128 + WTERMSIG(status);
-//	else
-//		exit_status = cmd->error.code;
 	return (exit_status);
 }
 

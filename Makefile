@@ -6,7 +6,7 @@
 #    By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
-#    Updated: 2025/02/21 11:04:01 by csteylae         ###   ########.fr        #
+#    Updated: 2025/02/21 12:55:40 by csteylae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,6 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/environment/increment_shlvl.c \
 	  src/environment/get_previous_env_var.c \
 	  src/environment/ft_get_env.c \
-	  src/execution/pseudo_parsing.c \
 	  src/execution/exec_command.c \
 	  src/execution/exec_prompt.c \
 	  src/execution/exec_pipeline.c \

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 12:09:50 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:54:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,18 @@ t_shell	*clean_prompt(t_shell *shell)
 	return (shell);
 }
 
-/*
-static bool is_only_redirection(t_shell *sh)
+bool	is_error_with_cmd(t_command *cmd)
 {
-	if (sh->tab_size > 1)
-		return (false);
-	if (!sh->tab[0].cmd && sh->tab[0].redirection.size > 0)
+	if (!cmd
+		|| cmd->error.code != SUCCESS
+		|| !cmd->cmd
+		|| !cmd->cmd[0]
+		|| cmd->cmd[0][0] == '\0')
 	{
-		perform_redirection(sh, &sh->tab[0]);
 		return (true);
 	}
 	return (false);
 }
-*/
 
 void	exec_prompt(t_shell *sh)
 {

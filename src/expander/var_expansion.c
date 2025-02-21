@@ -6,20 +6,11 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:24:27 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/17 17:31:14 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/21 12:56:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-/* The goal is to expand an input string received  where the ft_strchr(str, '$') returned something
-  * it is all the string within QUOTES or D_QUOTES. The goal is to return a new string in which
-  * the substring that should be expanded are efficiently transformed. The input can take 
-  * the following forms "this part of string should not be expanded but the $USER is $$$$$lol $?"
-  * We decide to manage the $$ (another expansion in bash that returns the PID) by ignoring it.
-  * 
-  * The only expansion that we should manage is the exit status and the environment variable
- */
 
 static int	get_word(char **retp, char *word, int i)
 {
