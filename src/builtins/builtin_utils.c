@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 12:59:12 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:10:19 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	build_envp(t_env_list **head, t_command *cmd, char ***envp)
 	*envp = new_envp;
 }
 
-static void	print_not_valid_identifier(t_command *cmd)
+static void	print_not_valid_identifier(char *str, t_command *cmd)
 {
 	ft_putstr_fd(cmd->cmd[0], STDERR_FILENO);
 	ft_putstr_fd(" : '", STDERR_FILENO);
@@ -72,14 +72,14 @@ bool	is_key_format(t_command *cmd, char *str)
 	{
 		if (i == 0 && str[0] != '_' && !ft_isalpha(str[0]))
 		{
-			print_not_valid_identifier(cmd);
+			print_not_valid_identifier(str, cmd);
 			return (false);
 		}
 		else if (i > 0)
 		{
 			if (!ft_isdigit(str[i]) && !ft_isalpha(str[i]) && str[i] != '_')
 			{
-				print_not_valid_identifier(cmd);
+				print_not_valid_identifier(str, cmd);
 				return (false);
 			}
 		}
