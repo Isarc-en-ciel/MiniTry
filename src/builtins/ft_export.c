@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 12:46:47 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:31:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,19 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 		key = get_key(cmd->cmd[i], cmd);
 		if (!key)
 			return ;
-		if (!is_key_format(cmd, key))
+		if (is_key_format(cmd, key))
 		{
+			*exit_status = SUCCESS;
+			value = get_value(cmd->cmd[i]);
+			if (!update_env(head, key, value))
+			{
+				cmd->error = set_error(NULL, MALLOC);
+				return ;
+			}
+		}
+		else
 			*exit_status = FAIL;
-			i++;
-			free(key);
-			continue ;
-		}
-		value = get_value(cmd->cmd[i]);
-		if (!update_env(head, key, value))
-		{
-			cmd->error = set_error(NULL, MALLOC);
-			return ;
-		}
 		free(key);
-		*exit_status = SUCCESS;
 		i++;
 	}
 }
