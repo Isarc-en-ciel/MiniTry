@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/11 11:19:39 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:56:41 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,11 @@ typedef struct s_command
 /*
  *	A temp struct used inside builtins functions to manage the environment 
  *	easely. Before the return of the builtin function, once all modifications
- *	are done,  this struct will be copied into an array of str (char **env) and then destroyed; 
+ *	are done,  this struct will be copied into an array of str (char **env) 
+ *	and then destroyed; 
  *
- *	The bool is_init is to check if the environment is initialized (syntax : "export LOL=")
+ *	The bool is_init is to check if the environment is initialized 
+ *	(syntax : "export LOL=")
  *	or if the var is just instancied ("export VAR")
  *	and then destroyed; 
  */
@@ -143,7 +145,7 @@ typedef struct s_shell
 	t_command			*tab; //parsing, the array of cmd
 	int					tab_size; //nb of cmd
 	int					exit_status; //init to 0
-	pid_t				*child_pid; // init to tab_size, malloc(sizeof (pid_t) *tab_size);
+	pid_t				*child_pid; //init to tab_size,malloc(sizeof(pid_t)*tab_size);
 	t_builtin			builtin[NB_OF_BUILTIN];//builtin struct 
 }	t_shell;
 
