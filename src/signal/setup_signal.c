@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:28:14 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 12:10:50 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:46:26 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ struct sigaction	init_sigaction(void (*signal_handler)(int))
 	return (act);
 }
 
-void	setup_signal(t_shell *sh, void(*signal_handler)(int))
+void	setup_signal(t_shell *sh, void (*signal_handler) (int))
 {
 	sh->signal_act.sa_handler = signal_handler;
 	if (sigaction(SIGINT, &sh->signal_act, NULL) != SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/21 15:18:08 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/21 15:47:37 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_redir_array
 	int			size;
 }	t_redir_array;
 
-typedef struct error
+typedef struct s_error
 {
 	char			*str_perror;
 	enum e_error	code;
