@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/21 15:25:00 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:32:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 struct sigaction	init_sigaction(void(*fct)(int));
 void				setup_signal(t_shell *sh, void(*fct)(int));
 void				handle_sigint_interactive_mode(int signum);
-void				handle_sigint_child_process(int signum);
 struct sigaction	setup_signal_in_children(void);
 struct sigaction	setup_signal_in_parent(void);
 
