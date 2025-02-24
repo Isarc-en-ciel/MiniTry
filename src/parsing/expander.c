@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 17:33:28 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:45:44 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_stock	*expander(t_stock *tab, t_shell *shell)
 	tab = tab_cleaner(tab);
 	if (tab == NULL)
 		return (NULL);
-	//print_stock_tab(tab, tab[0].nbr_cmd);
+	print_stock_tab(tab, tab[0].nbr_cmd);
 	return (tab);
 }
 
@@ -71,6 +71,7 @@ int	join_cmd(t_lexer *cmd, int size, int i, int a)
 					cmd[i].word = ft_strjoin(cmd[i].word, cmd[i + a].word, 2);
 					if (cmd[i].word == NULL)
 						return (-1);
+					change_type(&cmd[i], cmd[i + a]);
 					cmd[i + a].is_there_a_space = -1;
 					a++;
 				}
