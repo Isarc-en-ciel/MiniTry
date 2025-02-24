@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 19:31:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:22:37 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,6 @@ static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	while (1)
 	{
 		write(STDIN_FILENO, "> ", 2);
-		if (g_signal_received == SIGINT)
-		{
-			write(1, "\n", 1);
-			break;
-			g_signal_received = 0;
-		}
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 		{
