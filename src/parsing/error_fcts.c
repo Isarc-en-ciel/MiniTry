@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:06:42 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 17:30:15 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 14:11:12 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ int	error_fct(t_darray *tab, int i)
 {
 	if (i == 1)
 		write (1, "SYNTAX ERROR\n", 13);
-	if (tab->content)
-		free_final_array(tab);
 	if (i == 0)
+	{
+		free_final_array(tab);
 		exit (EXIT_FAILURE);
+	}
 	return (0);
 }
 
