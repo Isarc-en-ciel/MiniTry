@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 16:07:14 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 16:18:20 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ int	read_the_input(char **envp)
 		add_history(input);
 		shell.tab = parsing(input, &shell);
 		if (shell.tab == NULL)
-		{
-//			ft_printf("there is no exec_cmd_tab. input : %s\n", input);
 			continue ;
-		}
 		exec_prompt(&shell);
 		free(input);
 	}
