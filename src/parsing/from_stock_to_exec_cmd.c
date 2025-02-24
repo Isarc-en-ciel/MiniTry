@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 15:24:02 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:00:34 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ static t_command	get_exec_struct(t_stock stock, int *status)
 	exec_cmd.error.code = SUCCESS;
 	exec_cmd.error.str_perror = NULL;
 	return (exec_cmd);
+}
+
+static void	syntax_error(t_stock *stock_array, t_shell *sh, t_command *tab_exec_cmd)
+{
+	free_second_degree_tab(stock_array, stock_array->nbr_cmd);
+	free(tab_exec_cmd);
+	sh = clean_prompt(sh);
+	sh->exit_status = SYNTAX_ERROR;
 }
 
 t_command	*from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
@@ -43,9 +51,7 @@ t_command	*from_stock_to_cmd(t_stock *stock_array, t_shell *sh)
 		tab_exec_cmd[i] = get_exec_struct(stock_array[i], &actual_status);
 		if (actual_status == SYNTAX_ERROR)
 		{
-			free_second_degree_tab(stock_array, stock_array->nbr_cmd);
-			sh = clean_prompt(sh);
-			sh->exit_status = actual_status;
+			syntax_error(stock_array, sh, tab_exec_cmd);
 			return (NULL);
 		}
 		i++;

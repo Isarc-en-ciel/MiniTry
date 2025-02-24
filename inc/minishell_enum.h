@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 17:05:33 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 19:08:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ enum e_error
 	MALLOC = -1,
 	SYSCALL_ERROR = -1,
 	CD_ERROR = 3,
+	PERMISSION_DENIED = 126, 
 	CMD_NOT_FOUND = 127,
 	FILE_NO_PERM = FAIL,
 };
