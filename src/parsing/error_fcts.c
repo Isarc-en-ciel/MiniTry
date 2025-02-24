@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:06:42 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 15:46:54 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:53:13 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,12 @@ int	make_new_cmd(t_lexer *cmd, t_lexer **new_cmd, int nbr_elem)
 	return (0);
 }
 
-void	change_type(t_lexer	*joined_token, t_lexer added_token)
+int	change_type(t_lexer	*joined_token, t_lexer added_token)
 {
+	if (joined_token->type == D_QUOTE)
+		return (0);
 	joined_token->type = WORD;
-	if (added_token.type == D_QUOTE)
+	if (added_token.type == D_QUOTE || added_token.type == QUOTE)
 		joined_token->type = D_QUOTE;
+	return (0);
 }

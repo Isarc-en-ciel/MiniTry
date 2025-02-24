@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 15:44:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 15:53:19 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ t_command			*error_parsing(t_stock *tab, int i, t_shell *shell);
 t_stock				*expander(t_stock *tab, t_shell *shell);
 int					expand_cmd(t_lexer *cmd, t_shell *shell, int size);
 int					join_cmd(t_lexer *cmd, int size, int i, int a);
-void				change_type(t_lexer	*joined_token, t_lexer added_token);
+int					change_type(t_lexer	*joined_token, t_lexer added_token);
 int					ft_strcmp(const char *s, char n);
 char				*ft_strcpy(const char *s1, char *s2);
 t_stock				*tab_cleaner(t_stock *tab);
