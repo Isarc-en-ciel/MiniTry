@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 16:33:06 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 17:41:28 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_stock
  */
 typedef struct s_redirect
 {
-	int					fd; //idk if we keep it 
 	char				*filename; //malloc
 	char				*hd_delimiter; //malloc
 	bool				hd_expansion;
