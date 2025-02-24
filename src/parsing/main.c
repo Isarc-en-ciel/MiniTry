@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 15:59:54 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 16:07:14 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,10 @@ int	read_the_input(char **envp)
 		handle_eof(input, &shell);
 		if (input && !ft_strlen(input))
 		{
-//			ft_printf("input exists but its empty go to next iteration\n");
 			free(input);
 			continue ;
 		}
 		add_history(input);
-	//	shell.tab = pseudo_parsing(&shell, input);
 		shell.tab = parsing(input, &shell);
 		if (shell.tab == NULL)
 		{
