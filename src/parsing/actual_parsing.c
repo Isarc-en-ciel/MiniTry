@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 15:52:06 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 19:43:05 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,3 @@ void	free_second_degree_tab(t_stock *tab, int i)
 	}
 	free_first_degree_tab(tab, i);
 }
-
-/* ou est ce que j'initie/remplis le t_shell ?
-ou est ce que je le revoie/recupere ?
-fonction supplementaire dans le main pour mettre toutes 
-les fcts de parsing pour retourner l'erreur et le t_shell plus facilement ?*/

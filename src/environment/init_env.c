@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:43:07 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 19:52:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:49:39 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static char	*add_env_var(char *str)
 		return (NULL);
 	if (!ft_strncmp("_=", str, ft_strlen("_=")))
 	{
-		new_env_var = calloc(ft_strlen(SHELL_INVOK) + 1, sizeof(char));
+		new_env_var = ft_calloc(ft_strlen(SHELL_INVOK) + 1, sizeof(char));
 		if (!new_env_var)
 			return (NULL);
 		ft_memcpy(new_env_var, SHELL_INVOK, ft_strlen(SHELL_INVOK));
 		return (new_env_var);
 	}
-	new_env_var = calloc(ft_strlen(str) + 1, sizeof(char));
+	new_env_var = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (!new_env_var)
 		return (NULL);
 	ft_memcpy(new_env_var, str, ft_strlen(str));
