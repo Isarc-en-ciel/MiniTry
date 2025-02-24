@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:56 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/21 15:17:05 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 17:05:33 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ enum e_redir
 # define FAIL 1
 # define HEREDOC_FILE "/tmp/minishell_heredoc"
 # define SHELL_INVOK "_=./minishell"
-# define NOENT_PERROR "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
+# define NOENT_PERROR "cd: error retrieving current directory\
+						: getcwd: cannot access parent directories\
+						: No such file or directory"
 #endif
