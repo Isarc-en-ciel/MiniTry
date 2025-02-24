@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 19:43:05 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 20:28:53 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ void	free_second_degree_tab(t_stock *tab, int i)
 	j = 0;
 	while (j < i && tab[j].cmd)
 	{
-		while (n < tab[j].nbr_elem && tab[j].cmd[n].word)
+		while (n < tab[j].nbr_elem)
 		{
-			free (tab[j].cmd[n].word);
+			if (tab[j].cmd[n].word)
+				free (tab[j].cmd[n].word);
 			n++;
 		}
 		j++;
