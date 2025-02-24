@@ -6,7 +6,7 @@
 #    By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
-#    Updated: 2025/02/21 15:55:55 by iwaslet          ###   ########.fr        #
+#    Updated: 2025/02/24 17:05:33 by csteylae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME= minishell
 CC=cc
 CFLAGS= -Wall -Wextra -Werror -g -O0 #-fsanitize=address -gdwarf-4 
 DFLAGS= -g -O0 -fsanitize=address
-VALGRIND_FLAGS= -g -O0
 
 LIBFT = lib/Libft/libft.a
 PRINTF_LIB = lib/ft_printf/libftprintf.a
@@ -105,7 +104,7 @@ re: fclean all
 
 debug: CFLAGS += $(DFLAGS)
 debug: re
-valgrind: CFLAGS += $(VALGRIND_FLAGS)
-valgrind: re
+valgrind: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:28 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 16:07:25 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:29:24 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ static void	resolve_hd_or_filename(t_redirect *p_redir, t_lexer cmd)
 	{
 		p_redir->filename = NULL;
 		p_redir->hd_delimiter = str;
-		if (cmd.type != WORD)
-			p_redir->hd_expansion = false;
-		else
+		if (cmd.type == WORD)
 			p_redir->hd_expansion = true;
+		else
+			p_redir->hd_expansion = false;
 	}
 	else
 	{
