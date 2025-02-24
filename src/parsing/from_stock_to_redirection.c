@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:28 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 20:02:03 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/24 16:07:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,30 @@ static int	count_redirection_operator(t_lexer *cmd, int cmd_size)
 	return (nb_of_redir);
 }
 
-static void	resolve_hd_or_filename(t_redirect *p_redir, char *filename)
+static void	resolve_hd_or_filename(t_redirect *p_redir, t_lexer cmd)
 {
+	char	*str;
+
+	if (cmd.word)
+		str = ft_strdup(cmd.word);
+	else
+		str = ft_calloc(1, sizeof(char));
+	if (!str)
+		exit(EXIT_FAILURE);
 	if (p_redir->type == REDIR_HEREDOC)
 	{
 		p_redir->filename = NULL;
-		p_redir->hd_delimiter = ft_strdup(filename);
-		if (!p_redir->hd_delimiter)
-			exit(EXIT_FAILURE);
+		p_redir->hd_delimiter = str;
+		if (cmd.type != WORD)
+			p_redir->hd_expansion = false;
+		else
+			p_redir->hd_expansion = true;
 	}
 	else
 	{
-		p_redir->filename = ft_strdup(filename);
-		if (!p_redir->filename)
-			exit(EXIT_FAILURE);
+		p_redir->filename = str;
 		p_redir->hd_delimiter = NULL;
+		p_redir->hd_expansion = false;
 	}
 }
 
@@ -82,7 +91,7 @@ static t_redirect	*get_array(int array_size, t_lexer *cmd, int cmd_size)
 		{
 			r_array[j].type = cmd[i].type;
 			i++;
-			resolve_hd_or_filename(&r_array[j], cmd[i].word);
+			resolve_hd_or_filename(&r_array[j], cmd[i]);
 			j++;
 		}
 		i++;
