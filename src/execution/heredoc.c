@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 17:00:29 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:38:41 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,32 @@ static bool	del_found(char *hd_del, char *line)
 
 static void	handle_hd_expansion(char **line, int fd, t_shell *sh, t_redirect *r)
 {
-	char	*line_expanded;
+	char	*line_to_exp;
 
-	line_expanded = NULL;
-	if (*line && ft_strchr(*line, '$') && r->hd_expansion == true)
+	line_to_exp = NULL;
+	if (line && *line && ft_strchr(*line, '$') && r->hd_expansion == true)
 	{
-		line_expanded = ft_substr(*line, 0, ft_strlen(*line) - 1);
-		if (!line_expanded)
+		line_to_exp = ft_calloc(ft_strlen(*line), sizeof(char));
+		if (!line_to_exp)
 		{
+			free(line);
 			close(fd);
-			exit_error(sh, "ft_substr");
+			exit_error(sh, "ft_calloc");
 		}
-		expand_var(sh, &line_expanded);
-		*line = ft_strjoin(line_expanded, "\n", S1_MALLOC);
+		ft_memcpy(line_to_exp, *line, ft_strlen(*line) - 1);
+		free(*line);
+		expand_var(sh, &line_to_exp);
+		*line = ft_strjoin(line_to_exp, "\n", S1_MALLOC);
 		if (!*line)
 		{
 			close(fd);
-			exit_error(sh, "ft_strjoin");
+			exit_error(sh, "ft_calloc");
 		}
 	}
 	return ;
 }
 
-void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
+static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 {
 	char	*line;
 
@@ -80,7 +83,7 @@ void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	exit(EXIT_SUCCESS);
 }
 
-void	get_hd_filename(t_command *cmd, t_redirect *redir)
+static void	get_hd_filename(t_command *cmd, t_redirect *redir)
 {
 	free(redir->filename);
 	redir->filename = ft_strdup(HEREDOC_FILE);
