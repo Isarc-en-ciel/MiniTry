@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 20:20:05 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/25 13:14:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ void	handle_eof(char *input, t_shell *shell)
 	}
 }
 
+void	setup_sigquit(t_shell *sh)
+{
+	struct sigaction	act;
+
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = SIG_IGN;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	if (sigaction(SIGQUIT, &act, NULL) != SUCCESS)
+		exit_error(sh, "sigaction");
+}
+
 int	read_the_input(char **envp)
 {
 	char		*input;
@@ -31,6 +43,7 @@ int	read_the_input(char **envp)
 
 	g_signal_received = 0;
 	shell = init_shell(envp);
+	setup_sigquit(&shell);
 	while (1)
 	{
 		g_signal_received = 0;

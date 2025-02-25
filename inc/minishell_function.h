@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 15:53:19 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/25 13:32:14 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 
 /* repo signal */
 struct sigaction	init_sigaction(void (*fct) (int));
-void				setup_signal(t_shell *sh, void (*fct) (int));
+//void				setup_signal(t_shell *sh, void (*fct) (int));
 void				handle_sigint_interactive_mode(int signum);
 struct sigaction	setup_signal_in_children(void);
 struct sigaction	setup_signal_in_parent(void);
+void				set_signal_in_children(t_shell *sh);
 
 /*repo environment */
 char				**init_env(char **envp);

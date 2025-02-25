@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 20:01:18 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:31:37 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,39 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	return (pipe_fd[READ_FROM]);
 }
 
+/*
+void	setup_sigquit_in_children(t_shell *sh)
+{
+	struct sigaction	filesep;
+
+	ft_bzero(&filesep, sizeof(filesep));
+	filesep.sa_handler = SIG_DFL;
+	sigemptyset(&filesep.sa_mask);
+	filesep.sa_flags = 0;
+	if (sigaction(SIGQUIT, &filesep, NULL) != SUCCESS)
+		exit_error(sh, "sigaction");
+}
+
+
+void	set_signal_in_children(t_shell *sh)
+{
+	struct sigaction	sigint_in_child;
+	struct sigaction	sigquit_in_child;
+
+	sigint_in_child = setup_signal_in_children();
+	sigquit_in_child = setup_signal_in_children();
+	if (sigaction(SIGINT, &sigint_in_child, NULL) != SUCCESS)
+		exit_error(sh, "sigaction");
+	if (sigaction(SIGQUIT, &sigquit_in_child, NULL) != SUCCESS)
+		exit_error(sh, "sigaction");
+}
+*/
+
 void	exec_pipeline(t_shell *sh)
 {
-	int					pipe_fd[2];
-	int					prev_fd;
-	int					i;
+	int	pipe_fd[2];
+	int	prev_fd;
+	int	i;
 
 	prev_fd = NO_REDIR;
 	i = 0;
@@ -78,7 +106,9 @@ void	exec_pipeline(t_shell *sh)
 			exit_error(sh, "fork");
 		if (sh->child_pid[i] == CHILD_PROCESS)
 		{
-			sh->signal_act = setup_signal_in_children();
+	//		sh->signal_act = setup_signal_in_children();
+	//		setup_sigquit_in_children(sh);
+			set_signal_in_children(sh);
 			launch_cmd(sh, i, pipe_fd, prev_fd);
 		}
 		prev_fd = get_prev_fd(sh, i, pipe_fd, prev_fd);

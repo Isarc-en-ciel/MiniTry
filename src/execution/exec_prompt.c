@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 12:54:04 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:12:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ bool	is_error_with_cmd(t_command *cmd)
 
 void	exec_prompt(t_shell *sh)
 {
-	struct sigaction	old_act;
+	struct sigaction	interactive_sigint;;
+	struct sigaction	interactive_sigquit;
 	t_builtin			*builtin;
 
-	sigaction(SIGINT, NULL, &old_act);
+	sigaction(SIGINT, NULL, &interactive_sigint);
+	sigaction(SIGQUIT, NULL, &interactive_sigquit);
 	sh->signal_act = setup_signal_in_parent();
 	builtin = find_builtin(sh, &sh->tab[0]);
 	if (builtin && sh->tab_size == 1)
@@ -53,6 +55,7 @@ void	exec_prompt(t_shell *sh)
 		init_child_pid(sh);
 		exec_pipeline(sh);
 	}
-	sigaction(SIGINT, &old_act, NULL);
+	sigaction(SIGINT, &interactive_sigint, NULL);
+	sigaction(SIGQUIT, &interactive_sigquit, NULL);
 	sh = clean_prompt(sh);
 }
