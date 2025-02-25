@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/25 13:14:44 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:59:13 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,55 +24,74 @@ void	handle_eof(char *input, t_shell *shell)
 	}
 }
 
-void	setup_sigquit(t_shell *sh)
+static bool is_empty(char *input)
 {
-	struct sigaction	act;
-
-	ft_bzero(&act, sizeof(act));
-	act.sa_handler = SIG_IGN;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
-	if (sigaction(SIGQUIT, &act, NULL) != SUCCESS)
-		exit_error(sh, "sigaction");
+	if (input && !ft_strlen(input))
+	{
+		free(input);
+		input = NULL;
+		return (true);
+	}
+	return (false);
 }
 
-int	read_the_input(char **envp)
+static void	handle_signal(char *input, t_shell *shell)
+{
+	if (g_signal_received == SIGINT)
+		g_signal_received = 0;
+	handle_eof(input, shell);
+}
+
+/*
+void	launch_minishell(char **envp)
 {
 	char		*input;
 	t_shell		shell;
 
-	g_signal_received = 0;
 	shell = init_shell(envp);
-	setup_sigquit(&shell);
+	set_signal_in_interactive_mode();
 	while (1)
 	{
 		g_signal_received = 0;
 		input = readline("gib comand pliz> ");
-		if (g_signal_received == SIGINT)
-			g_signal_received = 0;
-		handle_eof(input, &shell);
-		if (input && !ft_strlen(input))
-		{
-			free(input);
-			continue ;
-		}
+		handle_signal(input, &shell);
+		if (is_empty(input))
+			continue;
 		add_history(input);
 		shell.tab = parsing(input, &shell);
+		free(input);
 		if (shell.tab == NULL)
 			continue ;
-		exec_prompt(&shell);
-		free(input);
+		else
+			exec_prompt(&shell);
 	}
-	return (0);
 }
+*/
 
 int	main(int ac, char **av, char **envp)
 {
+	char		*input;
+	t_shell		shell;
+
 	(void)av;
 	if (ac != 1)
 		return (1);
-	if (read_the_input(envp) == 1)
-		write (1, "ho no it's fucked\n", 18);
+	shell = init_shell(envp);
+	set_signal_in_interactive_mode(&shell);
+	while (1)
+	{
+		g_signal_received = 0;
+		input = readline("gib comand pliz> ");
+		handle_signal(input, &shell);
+		if (is_empty(input))
+			continue;
+		add_history(input);
+		shell.tab = parsing(input, &shell);
+		free(input);
+		if (shell.tab == NULL)
+			continue ;
+		exec_prompt(&shell);
+	}
 	return (0);
 }
 

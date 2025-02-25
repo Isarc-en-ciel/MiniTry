@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 19:05:32 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:51:42 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 
 # include "minishell_enum.h"
 # include "minishell_lib.h"
-
-//volatile sig_atomic_t	g_signal_received;
 
 struct	s_shell;
 
@@ -137,7 +135,6 @@ typedef struct s_builtin
  */
 typedef struct s_shell
 {
-	struct sigaction	signal_act;
 	char				**env;
 	t_command			*tab;
 	int					tab_size;

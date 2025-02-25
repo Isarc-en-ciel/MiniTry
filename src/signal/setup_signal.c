@@ -6,35 +6,33 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:28:14 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/25 13:30:52 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:36:47 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-struct sigaction	init_sigaction(void (*signal_handler)(int))
+void	set_signal_in_interactive_mode(t_shell *shell)
 {
-	struct sigaction	act;
+	struct sigaction	interupt;
+	struct sigaction	quit;
 
-	ft_bzero(&act, sizeof(act));
-	act.sa_handler = signal_handler;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
-	if (sigaction(SIGINT, &act, NULL) != SUCCESS)
-		exit(EXIT_FAILURE);
-	return (act);
+	ft_bzero(&interupt, sizeof(interupt));
+	interupt.sa_handler = handle_sigint_interactive_mode;
+	sigemptyset(&interupt.sa_mask);
+	interupt.sa_flags = 0;
+	if (sigaction(SIGINT, &interupt, NULL) != SUCCESS)
+		exit_error(shell, "sigaction");
+	ft_bzero(&quit, sizeof(quit));
+	quit.sa_handler = SIG_IGN;
+	sigemptyset(&quit.sa_mask);
+	quit.sa_flags = 0;
+	if (sigaction(SIGQUIT, &quit, NULL) != SUCCESS)
+		exit_error(shell, "sigaction");
 }
 
-/*
-void	setup_signal(t_shell *sh, void (*signal_handler) (int))
-{
-	sh->signal_act.sa_handler = signal_handler;
-	if (sigaction(SIGINT, &sh->signal_act, NULL) != SUCCESS)
-		exit_error(sh, "sigaction");
-}
-*/
 
-struct sigaction	setup_signal_in_children(void)
+static struct sigaction	setup_signal_in_children(void)
 {
 	struct sigaction	act;
 
@@ -45,7 +43,7 @@ struct sigaction	setup_signal_in_children(void)
 	return (act);
 }
 
-void	set_signal_in_children(t_shell *sh)
+void	set_signal_in_child(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 {
 	struct sigaction	sigint_in_child;
 	struct sigaction	sigquit_in_child;
@@ -53,12 +51,18 @@ void	set_signal_in_children(t_shell *sh)
 	sigint_in_child = setup_signal_in_children();
 	sigquit_in_child = setup_signal_in_children();
 	if (sigaction(SIGINT, &sigint_in_child, NULL) != SUCCESS)
+	{
+		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 		exit_error(sh, "sigaction");
+	}
 	if (sigaction(SIGQUIT, &sigquit_in_child, NULL) != SUCCESS)
+	{
+		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 		exit_error(sh, "sigaction");
+	}
 }
 
-struct sigaction	setup_signal_in_parent(void)
+struct sigaction	set_signal_in_parent(t_shell *sh)
 {
 	struct sigaction	act;
 
@@ -67,6 +71,6 @@ struct sigaction	setup_signal_in_parent(void)
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;
 	if (sigaction(SIGINT, &act, NULL) != SUCCESS)
-		exit(EXIT_FAILURE);
+		exit_error(sh, "sigaction");
 	return (act);
 }
