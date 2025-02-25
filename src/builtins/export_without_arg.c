@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:51:41 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/31 11:25:50 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:51:02 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,9 @@ void	export_without_arg(t_env_list **head, t_command *cmd)
 		ft_putstr_fd(tmp->key, fd);
 		if (tmp->value)
 		{
-			ft_putstr_fd("=", fd);
+			ft_putstr_fd("=\"", fd);
 			ft_putstr_fd(tmp->value, fd);
+			ft_putstr_fd("\"", fd);
 		}
 		ft_putstr_fd("\n", fd);
 		tmp = tmp->next;

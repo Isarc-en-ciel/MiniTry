@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 14:31:33 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:49:53 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,17 @@ static char	*get_key(char *str, t_command *cmd)
 
 	i = 0;
 	key = NULL;
-	while (str[i] && str[i] != '=')
-		i++;
-	if (str[0] == '=')
+	if (ft_strnstr(str, "+=", ft_strlen(str)))
+	{
+		while (str[i] && str[i] != '+')
+			i++;
+	}
+	else
+	{
+		while (str[i] && str[i] != '=')
+			i++;
+	}
+	if (i == 0)
 		i++;
 	key = ft_calloc(i + 1, sizeof(char));
 	if (!key)
@@ -33,24 +41,36 @@ static char	*get_key(char *str, t_command *cmd)
 	return (key);
 }
 
-static char	*get_value(char *str)
+static void	get_value(t_command *cmd, char *arg, t_env_list **head, char *key)
 {
-	char	*value;
+	char		*value;
+	t_env_list	*var;
 
-	value = ft_strchr(str, '=');
-	if (!value)
-		return (NULL);
-	value = value + 1;
-	if (*value == '\0')
-		return ("");
-	return (value);
+	value = NULL;
+	var = get_env(key, head);
+	value = ft_strnstr(arg, "+=", ft_strlen(arg));
+	if (value)
+		value = value + 2;
+	else
+	{
+		value = ft_strchr(arg, '=');
+		value = value + 1;
+	}
+	if (var && ft_strnstr(arg, "+=", ft_strlen(arg)))
+	{
+		value = ft_strjoin(var->value, value, NO_MALLOC);
+	}
+	if (!update_env(head, key, value))
+	{
+		cmd->error = set_error("malloc", MALLOC);
+		return;
+	}
 }
 
 static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 {
 	int		i;
 	char	*key;
-	char	*value;
 
 	i = 1;
 	while (cmd->cmd[i])
@@ -61,12 +81,9 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 		if (is_key_format(cmd, key))
 		{
 			*exit_status = SUCCESS;
-			value = get_value(cmd->cmd[i]);
-			if (!update_env(head, key, value))
-			{
-				cmd->error = set_error(NULL, MALLOC);
-				return ;
-			}
+			 get_value(cmd, cmd->cmd[i], head, key);
+			 if (cmd->error.code != SUCCESS)
+				 return ;
 		}
 		else
 			*exit_status = FAIL;
