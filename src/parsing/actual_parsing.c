@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:02:05 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/24 20:28:53 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/25 12:37:39 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ void	free_first_degree_tab(t_stock *tab, int i)
 	int	j;
 
 	j = 0;
-	while (j < i && tab[j].cmd)
+	while (j < i)
 	{
-		free (tab[j].cmd);
+		if (tab[j].cmd)
+			free (tab[j].cmd);
 		j++;
 	}
 	free (tab);
