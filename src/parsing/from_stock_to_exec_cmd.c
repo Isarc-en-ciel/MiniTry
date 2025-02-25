@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:45:31 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 20:00:34 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:29:37 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_command	get_exec_struct(t_stock stock, int *status)
 	return (exec_cmd);
 }
 
-static void	syntax_error(t_stock *stock_array, t_shell *sh, t_command *tab_exec_cmd)
+void	syntax_error(t_stock *stock_array, t_shell *sh, t_command *tab_exec_cmd)
 {
 	free_second_degree_tab(stock_array, stock_array->nbr_cmd);
 	free(tab_exec_cmd);

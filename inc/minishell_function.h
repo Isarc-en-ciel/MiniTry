@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/25 13:32:14 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:30:55 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,8 @@ int					print_stock_tab(t_stock *tab, int cmds);
 
 //src/parsing/from_stock_to_cmd
 t_command			*from_stock_to_cmd(t_stock *stock, t_shell *sh);
+void				syntax_error(t_stock *stock_array, t_shell *sh,
+						t_command *tab_exec_cmd);
 
 //from_stock_to_redirection
 bool				is_redir_operator(enum e_tokens type);
