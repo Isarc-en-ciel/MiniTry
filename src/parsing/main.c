@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/25 15:59:13 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:40:00 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_eof(char *input, t_shell *shell)
 	}
 }
 
-static bool is_empty(char *input)
+static bool	is_empty(char *input)
 {
 	if (input && !ft_strlen(input))
 	{
@@ -84,7 +84,7 @@ int	main(int ac, char **av, char **envp)
 		input = readline("gib comand pliz> ");
 		handle_signal(input, &shell);
 		if (is_empty(input))
-			continue;
+			continue ;
 		add_history(input);
 		shell.tab = parsing(input, &shell);
 		free(input);

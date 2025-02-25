@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/25 15:34:33 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:39:02 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	is_error_with_cmd(t_command *cmd)
 
 void	exec_prompt(t_shell *sh)
 {
-	struct sigaction	interactive_sigint;;
+	struct sigaction	interactive_sigint;
 	struct sigaction	interactive_sigquit;
 	t_builtin			*builtin;
 

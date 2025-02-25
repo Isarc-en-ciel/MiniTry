@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_exit_status.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/25 16:05:55 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:38:43 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 		exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
-//		write(1, "\n", 1);
 		exit_status = 128 + WTERMSIG(status);
 		if (exit_status == 130 || exit_status == 131)
 			write(1, "\n", 1);

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:28:14 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/25 15:36:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:38:03 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	set_signal_in_interactive_mode(t_shell *shell)
 	if (sigaction(SIGQUIT, &quit, NULL) != SUCCESS)
 		exit_error(shell, "sigaction");
 }
-
 
 static struct sigaction	setup_signal_in_children(void)
 {
