@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 13:38:42 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/26 13:48:46 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	count_pipes(t_darray *tokens)
 				return (-1);
 			i++;
 		}
+		if (i < 0 || i > INT_MAX)
+			return (301);
 		j++;
 	}
 	if (tokens->content[j].type && tokens->content[j].type == PIPE)
