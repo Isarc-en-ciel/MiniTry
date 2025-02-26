@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:06:42 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/25 16:42:24 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/26 13:32:26 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ t_stock	*error_return(t_darray *tokens, int i, t_shell *shell)
 	{
 		shell->exit_status = 2;
 		write (1, "syntax error\n", 13);
+	}
+	if (i == 2)
+	{
+		shell->exit_status = 1;
+		write (1, "too many pipes\n", 15);
 	}
 	if (i == 0)
 		exit (EXIT_FAILURE);
