@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:48:50 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/20 15:54:31 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/26 18:32:30 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ int	init_array(t_darray *darray, size_t block_size)
 	darray->block = block_size;
 	darray->max_size = block_size;
 	darray->actual_size = 0;
-	darray->content = malloc(sizeof(t_lexer) * block_size);
+	darray->content = ft_calloc(block_size, sizeof(t_lexer));
 	if (!darray->content)
 		return (0);
-	ft_bzero(darray->content, sizeof(t_lexer) * darray->max_size);
 	return (1);
 }
 
@@ -53,16 +52,26 @@ void	free_temp_array(t_darray *darray)
 t_darray	realloc_array(t_darray *darray)
 {
 	t_lexer	*new_content;
+	size_t 	i;
 
+	i = 0;
 	darray->max_size = darray->max_size + darray->block;
-	new_content = malloc(sizeof(t_lexer) * darray->max_size);
+	new_content = ft_calloc(darray->max_size, sizeof(t_lexer));
 	if (!new_content)
 	{
 		darray->max_size = 0;
 		return (*darray);
 	}
-	ft_bzero(new_content, sizeof(t_lexer) * darray->max_size);
-	ft_memcpy(new_content, darray->content, sizeof(t_lexer) * darray->max_size);
+	while (i < darray->actual_size)
+	{
+		if (copy_token(darray->content[i], &new_content[i]) == -1)
+		{
+			darray->max_size = 0;
+			return (*darray);
+		}
+		i++;
+	}
+	//ft_memcpy_size(new_content, darray->content, sizeof(t_lexer) * darray->max_size);
 	free(darray->content);
 	darray->content = new_content;
 	return (*darray);
