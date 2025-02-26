@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 13:10:19 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:14:27 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	init_env_list(t_env_list **head, t_command *cmd, char **env)
 {
 	*head = NULL;
 	*head = array_to_list(env);
-	if (!*head)
+	if (!*head && env && *env)
 	{
 		if (cmd)
 			cmd->error = set_error("malloc", MALLOC);

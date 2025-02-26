@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/25 19:49:53 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:53:20 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,58 @@ static char	*get_key(char *str, t_command *cmd)
 	return (key);
 }
 
+static char	*concatenate(t_env_list *var, char *value, t_command *cmd, bool *p)
+{
+	char	*concatenated_val;
+
+	concatenated_val = NULL;
+	value += 2;
+	if (!var)
+		return (value);
+	if (!var->value && value)
+		return (value);
+	else if (var->value && !value)
+		return (var->value);
+	else
+	{
+		concatenated_val = ft_strjoin(var->value, value, NO_MALLOC);
+		if (!concatenated_val)
+		{
+			cmd->error = set_error("malloc", MALLOC);
+			return (NULL);
+		}
+		*p = true;
+		return (concatenated_val);
+	}
+}
+
 static void	get_value(t_command *cmd, char *arg, t_env_list **head, char *key)
 {
 	char		*value;
 	t_env_list	*var;
+	bool		should_freed;
 
-	value = NULL;
 	var = get_env(key, head);
 	value = ft_strnstr(arg, "+=", ft_strlen(arg));
+	should_freed = false;
 	if (value)
-		value = value + 2;
+	{
+		value = concatenate(var, value, cmd, &should_freed);
+		if (cmd->error.code != SUCCESS)
+			return ;
+	}
 	else
 	{
 		value = ft_strchr(arg, '=');
-		value = value + 1;
+		if (value)
+			value += 1;
 	}
-	if (var && ft_strnstr(arg, "+=", ft_strlen(arg)))
-	{
-		value = ft_strjoin(var->value, value, NO_MALLOC);
-	}
+	if (var && !ft_strchr(arg, '='))
+		return ;
 	if (!update_env(head, key, value))
-	{
 		cmd->error = set_error("malloc", MALLOC);
-		return;
-	}
+	if (should_freed)
+		free(value);
 }
 
 static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
@@ -81,9 +109,9 @@ static void	export_var(t_env_list **head, t_command *cmd, int *exit_status)
 		if (is_key_format(cmd, key))
 		{
 			*exit_status = SUCCESS;
-			 get_value(cmd, cmd->cmd[i], head, key);
-			 if (cmd->error.code != SUCCESS)
-				 return ;
+			get_value(cmd, cmd->cmd[i], head, key);
+			if (cmd->error.code != SUCCESS)
+				return ;
 		}
 		else
 			*exit_status = FAIL;
