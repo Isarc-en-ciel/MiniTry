@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 13:34:54 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/26 13:38:18 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_stock	*parsing_starter(t_darray *tokens, t_stock	*tab, t_shell *shell)
 	i = count_pipes(tokens) + 1;
 	if (i == 0)
 		return (error_return(tokens, 1, shell));
-	if (i == 300)
+	if (i < 300)
 		return (error_return(tokens, 2, shell));
 	tab = malloc(sizeof(t_stock) * i);
 	if (!tab)
