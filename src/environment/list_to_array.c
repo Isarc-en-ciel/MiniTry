@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:29:05 by csteylae          #+#    #+#             */
-/*   Updated: 2024/12/13 19:53:29 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:36:33 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,39 @@ static void	*free_struct(t_env_list **head, char **str_tab)
 	if (str_tab)
 		free_tab_char(str_tab);
 	return (NULL);
+}
+
+static char	*join_key_value(t_env_list *tmp)
+{
+	char	*str;
+
+	str = ft_strjoin(tmp->key, "=", NO_MALLOC);
+	if (!str)
+		return (NULL);
+	str = ft_strjoin(str, tmp->value, S1_MALLOC);
+	if (!str)
+		return (NULL);
+	return (str);
+}
+
+char	*list_to_str(t_env_list *tmp)
+{
+	char	*str;
+
+	str = NULL;
+	if (tmp->value)
+	{
+		str = join_key_value(tmp);
+		if (!str)
+			return (NULL);
+	}
+	else
+	{
+		str = ft_strdup(tmp->key);
+		if (!str)
+			return (NULL);
+	}
+	return (str);
 }
 
 char	**list_to_array(t_env_list **head)
@@ -34,13 +67,7 @@ char	**list_to_array(t_env_list **head)
 		return (free_struct(head, env));
 	while (tmp)
 	{
-		env[i] = ft_strjoin(tmp->key, "=", NO_MALLOC);
-		if (!env[i])
-			return (free_struct(head, env));
-		if (tmp->value)
-			env[i] = ft_strjoin(env[i], tmp->value, S1_MALLOC);
-		else
-			env[i] = ft_strdup(tmp->key);
+		env[i] = list_to_str(tmp);
 		if (!env[i])
 			return (free_struct(head, env));
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/19 17:09:54 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:07:18 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_unset(t_shell *sh, t_command *cmd)
 
 	head = array_to_list(sh->env);
 	sh->exit_status = SUCCESS;
-	if (!head)
+	if (sh->env && !head)
 		return (builtin_error(cmd, "malloc", MALLOC, NULL));
 	i = 1;
 	while (cmd->cmd[i])
