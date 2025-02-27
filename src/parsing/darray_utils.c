@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:48:50 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 18:32:30 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 09:58:36 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_temp_array(t_darray *darray)
 t_darray	realloc_array(t_darray *darray)
 {
 	t_lexer	*new_content;
-	size_t 	i;
+	size_t	i;
 
 	i = 0;
 	darray->max_size = darray->max_size + darray->block;
@@ -69,9 +69,9 @@ t_darray	realloc_array(t_darray *darray)
 			darray->max_size = 0;
 			return (*darray);
 		}
+		free (darray->content[i].word);
 		i++;
 	}
-	//ft_memcpy_size(new_content, darray->content, sizeof(t_lexer) * darray->max_size);
 	free(darray->content);
 	darray->content = new_content;
 	return (*darray);
