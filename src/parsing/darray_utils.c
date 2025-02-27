@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:48:50 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 18:32:30 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/26 19:14:50 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_darray	realloc_array(t_darray *darray)
 			darray->max_size = 0;
 			return (*darray);
 		}
+		free(darray->content[i].word);
 		i++;
 	}
 	//ft_memcpy_size(new_content, darray->content, sizeof(t_lexer) * darray->max_size);
