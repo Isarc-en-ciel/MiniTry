@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/27 10:25:04 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 10:57:41 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_stock	*expander(t_stock *tab, t_shell *shell)
 	tab = tab_cleaner(tab);
 	if (tab == NULL)
 		return (NULL);
+	print_stock_tab(tab, tab[0].nbr_cmd);
 	return (tab);
 }
 
