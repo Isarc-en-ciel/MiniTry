@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/27 11:32:01 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 12:07:21 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ int	expand_cmd(t_lexer *cmd, t_shell *shell, int size)
 				if (cmd[i].word == NULL || ft_strlen(cmd[i].word) == 0)
 					cmd[i].is_there_a_space = -1;
 			}
-		}
-		if (is_word_token(cmd[i].type) == 0)
-		{
-			if (cmd[i].word == NULL || ft_strlen(cmd[i].word) == 0)
-				cmd[i].is_there_a_space = -1;
 		}
 		i++;
 	}
