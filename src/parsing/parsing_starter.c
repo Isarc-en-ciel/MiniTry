@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:58:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 13:48:46 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 11:27:49 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	fill_cmb_tab(int *j, int *l, t_darray *tokens, t_stock *tab)
 				return (-1);
 			tab[*j].cmd[n].word = ft_memcpy(tab[*j].cmd[n].word,
 					tokens->content[*l].word,
-					ft_strlen(tokens->content[*l].word) + 1);
+					ft_strlen(tokens->content[*l].word));
 		}
 		n++;
 		*l += 1;
