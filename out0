@@ -1,0 +1,23 @@
+total 232
+drwxr-xr-x  9 csteylae 2023_s19   4096 Feb 27 10:33 .
+drwxr-xr-x  8 csteylae 2023_s19    128 Feb 25 18:12 ..
+drwxr-xr-x  2 csteylae 2023_s19    123 Feb 17 20:48 draws
+-rw-r--r--  1 csteylae 2023_s19      0 Feb 27 10:28 echo
+drwxr-xr-x  8 csteylae 2023_s19    220 Feb 27 10:27 .git
+-rw-r--r--  1 csteylae 2023_s19      4 Feb 17 20:48 .gitignore
+drwxr-xr-x  2 csteylae 2023_s19    126 Feb 26 19:12 inc
+drwxr-xr-x  5 csteylae 2023_s19     57 Feb 17 20:48 lib
+-rw-r--r--  1 csteylae 2023_s19   3657 Feb 26 18:11 Makefile
+-rwxr-xr-x  1 csteylae 2023_s19 191712 Feb 27 10:27 minishell
+drwxr-xr-x  6 csteylae 2023_s19    295 Feb 27 10:24 minishell_tester
+-rw-r--r--  1 csteylae 2023_s19   1354 Feb 27 10:33 out
+-rw-r--r--  1 csteylae 2023_s19      0 Feb 27 10:33 out0
+-rw-r--r--  1 csteylae 2023_s19   1637 Feb 17 20:48 README.md
+drwxr-xr-x 10 csteylae 2023_s19    128 Feb 26 19:16 src
+-rw-r--r--  1 csteylae 2023_s19     70 Feb 24 20:10 supp.supp
+-rw-r--r--  1 csteylae 2023_s19      0 Feb 27 10:33 tmp_err_bash
+-rw-r--r--  1 csteylae 2023_s19      0 Feb 27 10:33 tmp_err_minishell
+-rw-r--r--  1 csteylae 2023_s19      5 Feb 27 10:33 tmp_out_bash
+-rw-r--r--  1 csteylae 2023_s19    186 Feb 27 10:33 tmp_out_minishell
+-rw-r--r--  1 csteylae 2023_s19  10580 Feb 27 10:33 tmp_valgrind-out.txt
+drwxr-xr-x  2 csteylae 2023_s19     27 Feb 17 20:48 .vscode

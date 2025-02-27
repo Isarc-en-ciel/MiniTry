@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:59:12 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/10 12:42:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:07:02 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*get_value_to_expand(char *word, int *i)
 	var = NULL;
 	count = 0;
 	*i = *i + 1;
-	while (word[*i] && word[*i] != ' ' && word[*i] != '$')
+	while (word[*i] && word[*i] != ' ' && word[*i] != '$' && word[*i] != '\'')
 	{
 		count++;
 		*i = *i + 1;
