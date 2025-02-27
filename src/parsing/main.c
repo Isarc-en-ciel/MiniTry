@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:56:06 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 18:38:10 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 10:23:54 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		g_signal_received = 0;
-		input = readline("gib comand pliz> ");
+		input = readline("minishell prompt here> ");
 		handle_signal(input, &shell);
 		if (is_empty(input))
 			continue ;
