@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 15:09:08 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/19 19:49:34 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 10:25:07 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,5 @@ int	print_stock_tab(t_stock *tab, int cmds)
 	}
 	return (0);
 }
+
+/*print_stock_tab(tab, tab[0].nbr_cmd);*/
