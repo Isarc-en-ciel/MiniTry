@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 13:48:50 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/27 09:58:36 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 12:36:55 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	free_temp_array(t_darray *darray)
 	i = 0;
 	while (i < darray->actual_size)
 	{
-		free(darray->content[i].word);
+		if (darray->content[i].word)
+			free(darray->content[i].word);
 		i++;
 	}
 }

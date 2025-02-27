@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 21:38:14 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/27 11:55:21 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 12:48:46 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ char	*ft_strjoin(char *s1, char *s2, char flag)
 		return (NULL);
 	n = ft_strlen(s1) + ft_strlen(s2);
 	if (n == 0)
+	{
+		ft_free_str(s1, s2, flag);
 		return (ft_calloc(1, 1));
+	}
 	strjoin = (char *) malloc(sizeof(char) * (n + 1));
 	if (!strjoin)
 		return (ft_free_str(s1, s2, flag));

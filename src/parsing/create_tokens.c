@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:53:33 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/17 19:22:28 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 12:34:33 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_lexer	create_doubleq(char *input, int *position, t_lexer token)
 		token.is_there_a_space = -1;
 		return (token);
 	}
-	token.word = malloc(sizeof(char) * l);
+	token.word = ft_calloc(l, sizeof(char));
 	if (token.word == NULL)
 		return (token);
 	token.word = ft_memcpy_plus(token.word, input, *position + 1, l);
@@ -47,12 +47,13 @@ t_lexer	create_simpleq(char *input, int *position, t_lexer token)
 	token.type = QUOTE;
 	token.word = NULL;
 	l = check_open_quotes(input, '\'', *position);
+	ft_printf("longueur l : %d\n", l);
 	if (l == 0)
 	{
 		token.is_there_a_space = -1;
 		return (token);
 	}
-	token.word = malloc(sizeof(char) * l);
+	token.word = ft_calloc(l, sizeof(char));
 	if (token.word == NULL)
 		return (token);
 	token.word = ft_memcpy_plus(token.word, input, *position + 1, l);
