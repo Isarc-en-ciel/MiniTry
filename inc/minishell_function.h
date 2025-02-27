@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 18:36:19 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 13:08:11 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "minishell_enum.h"
 
 /* repo signal */
+void				handle_eof(char *input, t_shell *shell);
 void				handle_sigint_interactive_mode(int signum);
 void				set_signal_in_interactive_mode(t_shell *sh);
 struct sigaction	set_signal_in_parent(t_shell *sh);
