@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/27 12:45:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/02/27 15:10:58 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	join_cmd(t_lexer *cmd, int size, int i, int a)
 		a = 1;
 		if (cmd[i].is_there_a_space != -1)
 		{
-			while (i + a < size)
+			while (i + a < size && is_word_token(cmd[i + a].type) == 0)
 			{
 				if ((is_word_token(cmd[i].type) == 0)
 					&& (is_word_token(cmd[i + a].type) == 0)
