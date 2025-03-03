@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/03 17:37:32 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 19:49:57 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,18 @@
 
 #include "../../inc/minishell.h"
 
-static void	setup_heredoc_signals(t_shell *sh, int fd, t_command *cmd)
+
+void	handle_sigint_hd(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_signal_received = SIGINT;
+	//	write(1, "\n", 1);
+		exit(130);
+	}
+}
+
+static void	setup_heredoc_signals(t_shell *sh, int fd)
 {
 	struct sigaction	hd_sigquit;
 	struct sigaction	hd_sigint;
@@ -33,27 +44,26 @@ static void	setup_heredoc_signals(t_shell *sh, int fd, t_command *cmd)
 	hd_sigquit.sa_flags = 0;
 	if (sigaction(SIGQUIT, &hd_sigquit, NULL) != SUCCESS)
 	{
-		cmd->error = set_error("sigaction", SYSCALL_ERROR);
 		close_fd(&fd);
-		exit_error(sh, NULL);
+		exit_error(sh, "sigaction");
 	}
+	
 	ft_bzero(&hd_sigint, sizeof(hd_sigint));
-	hd_sigint.sa_handler = SIG_DFL;
+	hd_sigint.sa_handler = handle_sigint_hd;
 	sigemptyset(&hd_sigint.sa_mask);
 	if (sigaction(SIGINT, &hd_sigint, NULL) != SUCCESS)
 	{
-		cmd->error = set_error("sigaction", SYSCALL_ERROR);
 		close_fd(&fd);
-		exit_error(sh, NULL);
+		exit_error(sh, "sigaction");
 	}
 }
 
-static void	write_heredoc(t_shell *sh, int fd, t_redirect *rdir, t_command *cmd)
+static void	write_heredoc(t_shell *sh, int fd, t_redirect *rdir)
 {
 	char	*line;
 
 	line = NULL;
-	setup_heredoc_signals(sh, fd, cmd);
+	setup_heredoc_signals(sh, fd);
 	while (1)
 	{
 		line = readline("> "); 
@@ -100,11 +110,11 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 {
 	int					heredoc;
 	int					pid;
-	struct sigaction	old_sigint;
+//	struct sigaction	old_sigint;
 	struct sigaction	old_sigquit;
 
    	sigaction(SIGQUIT, NULL, &old_sigquit);
-   	sigaction(SIGINT, NULL, &old_sigint);
+ //  	sigaction(SIGINT, NULL, &old_sigint);
 	heredoc = open_hd(cmd);
 	if (heredoc == -1)
 		return ;
@@ -115,10 +125,11 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 		return ;
 	}
 	if (pid == CHILD_PROCESS)
-		write_heredoc(shell, heredoc, redir, cmd);
+		write_heredoc(shell, heredoc, redir);
 	shell->exit_status = get_exit_status(cmd, pid); 
 	sigaction(SIGQUIT, &old_sigquit, NULL);
-	sigaction(SIGINT, &old_sigint, NULL);
+//	sigaction(SIGINT, &old_sigint, NULL);
+	cmd->error.code =  shell->exit_status;
 	close(heredoc);
 	get_hd_filename(cmd, redir);
 }
