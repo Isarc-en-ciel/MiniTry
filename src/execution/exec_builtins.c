@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:11:21 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 16:02:34 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:38:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	exec_builtin(t_builtin *builtin, t_command *cmd, t_shell *sh)
 {
 	if (builtin && sh->tab_size == 1)
 	{
-		perform_redirection(sh, &sh->tab[0]);
 		if (sh->tab[0].error.code != SUCCESS)
 		{
 			sh->exit_status = sh->tab[0].error.code;

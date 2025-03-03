@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/03 12:36:14 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:16:44 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 	exit_status = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
+	{
 		exit_status = WEXITSTATUS(status);
+	}
 	else if (WIFSIGNALED(status))
 	{
 		exit_status = 128 + WTERMSIG(status);
-		if (exit_status == 130 || exit_status == 131)
-			write(1, "\n", 1);
 	}
 	return (exit_status);
 }
@@ -43,6 +43,8 @@ int	wait_children(t_shell *shell, pid_t *child_pid, int child_nb)
 		exit_status = get_exit_status(&shell->tab[i], child_pid[i]);
 		i++;
 	}
+	if (exit_status == 130 || exit_status == 131)
+		write(1, "\n", 1);
 	return (exit_status);
 }
 
