@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 20:22:37 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:05:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@
  */
 #include "../../inc/minishell.h"
 
+/*
 static bool	del_found(char *hd_del, char *line)
 {
 	if (!ft_strncmp(hd_del, line, ft_strlen(hd_del))
 		&& line[ft_strlen(hd_del)] == '\n')
 		return (true);
 	return (false);
-}
+}*/
 
 static void	handle_hd_expansion(char **line, int fd, t_shell *sh, t_redirect *r)
 {
@@ -63,6 +64,33 @@ static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	line = NULL;
 	while (1)
 	{
+		line = readline("> "); 
+		if (!line)
+		{
+			ft_printf("warning : heredoc terminate with eof\n");
+			break ;
+		}
+		if (key_found(redir->hd_delimiter, line))
+			break ;
+		handle_hd_expansion(&line, fd_hd, shell, redir);
+		write(fd_hd, line, ft_strlen(line));
+		free(line);
+	}
+	if (line)
+		free(line);
+	close(fd_hd);
+	free_shell(shell);
+	exit(EXIT_SUCCESS);
+}
+
+/*
+static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
+{
+	char	*line;
+
+	line = NULL;
+	while (1)
+	{
 		write(STDIN_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
@@ -81,7 +109,7 @@ static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	close(fd_hd);
 	free_shell(shell);
 	exit(EXIT_SUCCESS);
-}
+}*/
 
 static void	get_hd_filename(t_command *cmd, t_redirect *redir)
 {
@@ -91,10 +119,28 @@ static void	get_hd_filename(t_command *cmd, t_redirect *redir)
 		cmd->error = set_error("malloc", MALLOC);
 }
 
+
+static void	setup_sigquit_hd(t_shell *sh, int fd, t_command *cmd)
+{
+	struct sigaction hd_sigquit;
+
+	ft_bzero(&hd_sigquit, sizeof(hd_sigquit));
+	hd_sigquit.sa_handler = SIG_IGN;
+	sigemptyset(&hd_sigquit.sa_mask);
+	hd_sigquit.sa_flags = 0;
+	if (sigaction(SIGQUIT, &hd_sigquit, NULL) != SUCCESS)
+	{
+		cmd->error = set_error("sigaction", SYSCALL_ERROR);
+		close_fd(&fd);
+		exit_error(sh, NULL);
+	}
+}
+
 void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 {
 	int		heredoc;
 	int		pid;
+	struct sigaction	old_act;
 
 	if (access(HEREDOC_FILE, F_OK) == 0)
 		unlink(HEREDOC_FILE);
@@ -110,9 +156,15 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 		cmd->error = set_error("fork", SYSCALL_ERROR);
 		return ;
 	}
-	else if (pid == 0)
+   	sigaction(SIGQUIT, &old_act, NULL);
+	setup_sigquit_hd(shell, heredoc, cmd);
+	if (pid == 0)
+	{
+//		setup_sigquit_hd(shell, heredoc, cmd);
 		write_heredoc(shell, heredoc, redir);
+	}
 	waitpid(pid, NULL, 0);
 	close(heredoc);
 	get_hd_filename(cmd, redir);
+	sigaction(SIGQUIT, NULL, &old_act);
 }

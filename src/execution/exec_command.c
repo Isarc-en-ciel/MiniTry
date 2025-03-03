@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:34:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 19:11:36 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:59:38 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void	exec_absolute_path(t_shell *shell, int n)
 		}
 	}
 	else if (access(path, F_OK) == 0 && access(path, X_OK) != 0)
-		shell->tab[n].error = set_error(path, PERMISSION_DENIED);
+		shell->tab[n].error.code = PERMISSION_DENIED;
 	else
-		shell->tab[n].error = set_error(path, CMD_NOT_FOUND);
+		shell->tab[n].error.code = CMD_NOT_FOUND;
 }
 
 static void	cannot_exec_binary(t_command *cmd)
@@ -44,7 +44,7 @@ static void	cannot_exec_binary(t_command *cmd)
 	ft_putstr_fd(cmd->cmd[0], STDERR_FILENO);
 	if (cmd->error.code == CMD_NOT_FOUND)
 		ft_putstr_fd(" : command not found\n", STDERR_FILENO);
-	else if (cmd->error.code == FILE_NO_PERM)
+	else if (cmd->error.code == PERMISSION_DENIED)
 		ft_putstr_fd(" : permission denied\n", STDERR_FILENO);
 }
 
@@ -56,15 +56,15 @@ void	exec_external_cmd(t_shell *sh, int n)
 	path = NULL;
 	cmd = &sh->tab[n];
 	if (ft_strchr(cmd->cmd[0], '/'))
-		return (exec_absolute_path(sh, n));
-	path = find_executable_path(sh, n, cmd);
+		exec_absolute_path(sh, n);
+	else
+		path = find_executable_path(sh, n, cmd);
 	if (path)
 	{
 		execve(path, sh->tab[n].cmd, sh->env);
 		free(path);
 		sh->tab[n].error = set_error("execve", SYSCALL_ERROR);
 	}
-	else
-		cannot_exec_binary(cmd);
+	cannot_exec_binary(cmd);
 	return ;
 }

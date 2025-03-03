@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/25 16:38:43 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/03 12:36:14 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 	int		exit_status;
 
 	(void) cmd;
+	status = 0;
+	exit_status = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_status = WEXITSTATUS(status);
