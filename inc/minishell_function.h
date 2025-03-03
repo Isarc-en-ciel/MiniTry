@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/03 17:14:31 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:45:13 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int					expand_exit_status(char **retp, int exit_status);
 int					expand_env_var(char **retp, char *word, int i, char **env);
 bool				is_the_exit_status(char *word, int i);
 bool				is_an_env_var(char *word, int i);
-void				handle_hd_expansion(char **line, int fd, t_shell *sh, t_redirect *r);
+void				handle_hd_expansion(char **line, int fd,
+						t_shell *sh, t_redirect *r);
 
 /* repo init */
 t_shell				init_shell(char **envp);
