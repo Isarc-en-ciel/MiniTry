@@ -6,7 +6,7 @@
 #    By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
-#    Updated: 2025/02/26 16:47:37 by csteylae         ###   ########.fr        #
+#    Updated: 2025/03/03 17:00:30 by csteylae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/expander/expand_exit_status.c \
 	  src/expander/expand_env_var.c \
 	  src/expander/update_expanded_value.c \
+	  src/expander/handle_heredoc_expansion.c \
 	  src/builtins/builtin_utils.c \
 	  src/builtins/ft_cd.c \
 	  src/builtins/ft_env.c \

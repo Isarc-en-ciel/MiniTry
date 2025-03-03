@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/03 16:37:57 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:37:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,15 @@ void	exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i)
 {
 	int	exit_status;
 
-	sh->exit_status = sh->tab[i].error.code;
-	exit_status = sh->tab[i].error.code;
+	if (sh->exit_status == 130 || sh->exit_status == 131)
+	{
+		exit_status = sh->exit_status;
+	}
+	else
+	{
+		sh->exit_status = sh->tab[i].error.code;
+		exit_status = sh->tab[i].error.code;
+	}
 	close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 	free_shell(sh);
 	exit(exit_status);
