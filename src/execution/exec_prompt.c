@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/03 16:46:31 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:52:15 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	exec_prompt(t_shell *sh)
 	sigaction(SIGINT, NULL, &interactive_sigint);
 	sigaction(SIGQUIT, NULL, &interactive_sigquit);
 	set_signal_in_parent(sh);
-	perform_cmd_redirection(sh);	
+	perform_cmd_redirection(sh);
 	builtin = find_builtin(sh, &sh->tab[0]);
 	if (builtin && sh->tab_size == 1)
 		exec_builtin(builtin, &sh->tab[0], sh);
