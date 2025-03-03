@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/03 15:05:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:47:43 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,8 @@
  * so we will be able to use it as any other file in the function open_file()
  *
  */
-#include "../../inc/minishell.h"
 
-/*
-static bool	del_found(char *hd_del, char *line)
-{
-	if (!ft_strncmp(hd_del, line, ft_strlen(hd_del))
-		&& line[ft_strlen(hd_del)] == '\n')
-		return (true);
-	return (false);
-}*/
+#include "../../inc/minishell.h"
 
 static void	handle_hd_expansion(char **line, int fd, t_shell *sh, t_redirect *r)
 {
@@ -74,6 +66,7 @@ static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 			break ;
 		handle_hd_expansion(&line, fd_hd, shell, redir);
 		write(fd_hd, line, ft_strlen(line));
+		write(fd_hd, "\n", 1);
 		free(line);
 	}
 	if (line)
@@ -82,34 +75,6 @@ static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
 	free_shell(shell);
 	exit(EXIT_SUCCESS);
 }
-
-/*
-static void	write_heredoc(t_shell *shell, int fd_hd, t_redirect *redir)
-{
-	char	*line;
-
-	line = NULL;
-	while (1)
-	{
-		write(STDIN_FILENO, "> ", 2);
-		line = get_next_line(STDIN_FILENO);
-		if (!line)
-		{
-			ft_printf("warning : heredoc terminate with eof\n");
-			break ;
-		}
-		if (del_found(redir->hd_delimiter, line))
-			break ;
-		handle_hd_expansion(&line, fd_hd, shell, redir);
-		write(fd_hd, line, ft_strlen(line));
-		free(line);
-	}
-	if (line)
-		free(line);
-	close(fd_hd);
-	free_shell(shell);
-	exit(EXIT_SUCCESS);
-}*/
 
 static void	get_hd_filename(t_command *cmd, t_redirect *redir)
 {
@@ -118,7 +83,6 @@ static void	get_hd_filename(t_command *cmd, t_redirect *redir)
 	if (!redir->filename)
 		cmd->error = set_error("malloc", MALLOC);
 }
-
 
 static void	setup_sigquit_hd(t_shell *sh, int fd, t_command *cmd)
 {
@@ -142,8 +106,7 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 	int		pid;
 	struct sigaction	old_act;
 
-	if (access(HEREDOC_FILE, F_OK) == 0)
-		unlink(HEREDOC_FILE);
+   	sigaction(SIGQUIT, NULL, &old_act);
 	heredoc = open(HEREDOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (heredoc == -1)
 	{
@@ -156,15 +119,13 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 		cmd->error = set_error("fork", SYSCALL_ERROR);
 		return ;
 	}
-   	sigaction(SIGQUIT, &old_act, NULL);
-	setup_sigquit_hd(shell, heredoc, cmd);
-	if (pid == 0)
+	if (pid == CHILD_PROCESS)
 	{
-//		setup_sigquit_hd(shell, heredoc, cmd);
+		setup_sigquit_hd(shell, heredoc, cmd);
 		write_heredoc(shell, heredoc, redir);
 	}
 	waitpid(pid, NULL, 0);
+	sigaction(SIGQUIT, &old_act, NULL);
 	close(heredoc);
 	get_hd_filename(cmd, redir);
-	sigaction(SIGQUIT, NULL, &old_act);
 }
