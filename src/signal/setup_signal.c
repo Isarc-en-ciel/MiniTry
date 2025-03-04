@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:28:14 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/25 16:38:03 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:59:23 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,28 @@ struct sigaction	set_signal_in_parent(t_shell *sh)
 	if (sigaction(SIGINT, &act, NULL) != SUCCESS)
 		exit_error(sh, "sigaction");
 	return (act);
+}
+
+void	setup_heredoc_signals(t_shell *sh, int fd)
+{
+	struct sigaction	hd_sigquit;
+	struct sigaction	hd_sigint;
+
+	ft_bzero(&hd_sigquit, sizeof(hd_sigquit));
+	hd_sigquit.sa_handler = SIG_IGN;
+	sigemptyset(&hd_sigquit.sa_mask);
+	hd_sigquit.sa_flags = 0;
+	if (sigaction(SIGQUIT, &hd_sigquit, NULL) != SUCCESS)
+	{
+		close_fd(&fd);
+		exit_error(sh, "sigaction");
+	}
+	ft_bzero(&hd_sigint, sizeof(hd_sigint));
+	hd_sigint.sa_handler = handle_sigint_hd;
+	sigemptyset(&hd_sigint.sa_mask);
+	if (sigaction(SIGINT, &hd_sigint, NULL) != SUCCESS)
+	{
+		close_fd(&fd);
+		exit_error(sh, "sigaction");
+	}
 }

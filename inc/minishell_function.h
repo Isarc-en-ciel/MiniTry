@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/04 12:48:54 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:59:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void				handle_sigint_hd(int signum);
 void				set_signal_in_interactive_mode(t_shell *sh);
 struct sigaction	set_signal_in_parent(t_shell *sh);
 void				set_signal_in_child(t_shell *sh, int i, int pp[2], int p);
+void				setup_heredoc_signals(t_shell *sh, int fd);
 
 /*repo environment */
 char				**init_env(char **envp);

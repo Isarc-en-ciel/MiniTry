@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 14:44:06 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:01:57 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,15 @@
 
 #include "../../inc/minishell.h"
 
-static void	setup_heredoc_signals(t_shell *sh, int fd)
+void	exit_heredoc(t_shell *sh, int fd, char *line)
 {
-	struct sigaction	hd_sigquit;
-	struct sigaction	hd_sigint;
-
-	ft_bzero(&hd_sigquit, sizeof(hd_sigquit));
-	hd_sigquit.sa_handler = SIG_IGN;
-	sigemptyset(&hd_sigquit.sa_mask);
-	hd_sigquit.sa_flags = 0;
-	if (sigaction(SIGQUIT, &hd_sigquit, NULL) != SUCCESS)
-	{
-		close_fd(&fd);
-		exit_error(sh, "sigaction");
-	}
-	ft_bzero(&hd_sigint, sizeof(hd_sigint));
-	hd_sigint.sa_handler = handle_sigint_hd;
-	sigemptyset(&hd_sigint.sa_mask);
-	if (sigaction(SIGINT, &hd_sigint, NULL) != SUCCESS)
-	{
-		close_fd(&fd);
-		exit_error(sh, "sigaction");
-	}
+	close(fd);
+	if (line)
+		free(line);
+	free_shell(sh);
+	if (g_signal_received == SIGINT)
+		exit(130);
+	exit (EXIT_SUCCESS);
 }
 
 static void	write_heredoc(t_shell *sh, int fd, t_redirect *rdir)
@@ -69,13 +56,7 @@ static void	write_heredoc(t_shell *sh, int fd, t_redirect *rdir)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	close(fd);
-	if (line)
-		free(line);
-	free_shell(sh);
-	if (g_signal_received == SIGINT)
-		exit(130);
-	exit(EXIT_SUCCESS);
+	exit_heredoc(sh, fd, line);
 }
 
 static void	get_hd_filename(t_command *cmd, t_redirect *redir)
