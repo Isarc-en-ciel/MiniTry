@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/03 17:45:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/04 12:48:54 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 /* repo signal */
 void				handle_eof(char *input, t_shell *shell);
 void				handle_sigint_interactive_mode(int signum);
+void				handle_sigint_hd(int signum);
 void				set_signal_in_interactive_mode(t_shell *sh);
 struct sigaction	set_signal_in_parent(t_shell *sh);
 void				set_signal_in_child(t_shell *sh, int i, int pp[2], int p);

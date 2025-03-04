@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:55:49 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/27 13:10:57 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:14:30 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,3 +21,10 @@ void	handle_eof(char *input, t_shell *shell)
 		exit(EXIT_SUCCESS);
 	}
 }
+
+void	handle_sigint_hd(int signum)
+{
+	g_signal_received = signum;
+	close(STDIN_FILENO);
+}
+

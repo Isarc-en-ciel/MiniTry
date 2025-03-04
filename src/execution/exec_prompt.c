@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 11:26:07 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:21:12 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ bool	is_error_with_cmd(t_command *cmd)
 		|| cmd->error.code != SUCCESS
 		|| !cmd->cmd
 		|| !cmd->cmd[0]
-		|| cmd->cmd[0][0] == '\0')
+		|| cmd->cmd[0][0] == '\0'
+		|| g_signal_received == SIGINT)
 	{
 		return (true);
 	}
@@ -47,7 +48,6 @@ static void	perform_cmd_redirection(t_shell *sh)
 	{
 		if (g_signal_received == SIGINT)
 		{
-			g_signal_received = 0;
 			return ;
 		}
 		perform_redirection(sh, &sh->tab[i]);
@@ -77,5 +77,6 @@ void	exec_prompt(t_shell *sh)
 	}
 	sigaction(SIGINT, &interactive_sigint, NULL);
 	sigaction(SIGQUIT, &interactive_sigquit, NULL);
+	g_signal_received = 0;
 	sh = clean_prompt(sh);
 }

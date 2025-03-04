@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 12:46:22 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/04 12:58:49 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
  */
 
 #include "../../inc/minishell.h"
-
-void	handle_sigint_hd(int signum)
-{
-	g_signal_received = signum;
-	close(STDIN_FILENO);
-}
 
 static void	setup_heredoc_signals(t_shell *sh, int fd)
 {
@@ -60,8 +54,6 @@ static void	write_heredoc(t_shell *sh, int fd, t_redirect *rdir)
 	setup_heredoc_signals(sh, fd);
 	while (1)
 	{
-		if (g_signal_received == SIGINT)
-			break ;
 		line = readline("> ");
 		if (g_signal_received == SIGINT)
 			break ;
