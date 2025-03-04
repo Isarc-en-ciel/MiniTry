@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 13:27:27 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:33:13 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int	ft_cd(t_shell *sh, t_command *cmd)
 	if (!init_env_list(&head, cmd, sh->env))
 		return (FAIL);
 	if (cmd->cmd[1] && cmd->cmd[2])
-		return (builtin_error(cmd, cmd->cmd[0], FAIL, NULL));
+	{
+		ft_putstr_fd("cd: too many arguments\n", STDOUT_FILENO);
+		return (builtin_error(cmd, NULL, FAIL, &head));
+	}
 	change_directory(cmd, &head);
 	if (cmd->error.code != SUCCESS && cmd->error.code != ENOENT)
 		return (builtin_error(cmd, NULL, 0, &head));

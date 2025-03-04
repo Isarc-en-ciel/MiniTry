@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:59:48 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/07 13:28:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:42:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,12 @@ int	ft_env(t_shell *sh, t_command *cmd)
 	if (!init_env_list(&head, cmd, sh->env))
 		return (FAIL);
 	if (cmd->cmd[1])
-		return (builtin_error(cmd, cmd->cmd[0], FAIL, &head));
+	{
+		ft_putstr_fd("env : '", STDOUT_FILENO);
+		ft_putstr_fd(cmd->cmd[1], STDOUT_FILENO);
+		ft_putstr_fd("' no such file or directory\n", STDOUT_FILENO);
+		return (builtin_error(cmd, NULL, FAIL, &head));
+	}
 	if (update_underscore(&head, &sh->env, cmd) == FAIL)
 		sh->exit_status = builtin_error(cmd, NULL, 0, &head);
 	else
