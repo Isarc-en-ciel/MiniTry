@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_sigint.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:55:49 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 14:14:30 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:48:40 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ void	handle_sigint_hd(int signum)
 	g_signal_received = signum;
 	close(STDIN_FILENO);
 }
-
