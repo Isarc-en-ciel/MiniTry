@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 12:58:49 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:44:06 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 	shell->exit_status = get_exit_status(cmd, pid);
 	sigaction(SIGQUIT, &old_sigquit, NULL);
 	sigaction(SIGINT, &old_sigint, NULL);
-	cmd->error.code = shell->exit_status;
 	close(heredoc);
 	get_hd_filename(cmd, redir);
 	if (shell->exit_status == 130)

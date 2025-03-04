@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:02:38 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 14:24:48 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:43:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 	int		status;
 	int		exit_status;
 
-	(void) cmd;
 	status = 0;
 	exit_status = 0;
 	waitpid(pid, &status, 0);
@@ -29,6 +28,7 @@ int	get_exit_status(t_command *cmd, pid_t pid)
 	{
 		exit_status = 128 + WTERMSIG(status);
 	}
+	cmd->error.code = exit_status;
 	return (exit_status);
 }
 
