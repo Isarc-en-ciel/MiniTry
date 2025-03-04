@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/03 19:26:28 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:21:46 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,5 @@ void	exec_pipeline(t_shell *sh)
 		i++;
 	}
 	terminate_pipeline(sh, i, prev_fd);
+	g_signal_received = 0;
 }

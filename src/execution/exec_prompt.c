@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:07:13 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/03 19:26:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:26:07 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ static void	perform_cmd_redirection(t_shell *sh)
 	i = 0;
 	while (i != sh->tab_size)
 	{
+		if (g_signal_received == SIGINT)
+		{
+			g_signal_received = 0;
+			return ;
+		}
 		perform_redirection(sh, &sh->tab[i]);
 		i++;
 	}
@@ -63,7 +68,7 @@ void	exec_prompt(t_shell *sh)
 	builtin = find_builtin(sh, &sh->tab[0]);
 	if (builtin && sh->tab_size == 1)
 	{
-		exec_builtin(builtin, &sh->tab[0], sh); //idk
+		exec_builtin(builtin, &sh->tab[0], sh);
 	}
 	else
 	{
