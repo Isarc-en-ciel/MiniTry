@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:14:42 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/24 19:02:14 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:20:56 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ static int	get_exit_arg(char *str)
 	long long	status;
 
 	if (!check_validity(str))
+	{
 		return (SYNTAX_ERROR);
+	}
 	status = ft_atoi(str);
 	if (status >= LLONG_MAX)
 	{
@@ -62,8 +64,13 @@ int	ft_exit(t_shell *sh, t_command *cmd)
 	status = 0;
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		return (FAIL);
+		if (!check_validity(cmd->cmd[1]) || !check_validity(cmd->cmd[2]))
+			exit(SYNTAX_ERROR);
+		else
+		{
+			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
+			exit(FAIL);
+		}
 	}
 	if (cmd->cmd[1] != NULL)
 		status = get_exit_arg(cmd->cmd[1]);

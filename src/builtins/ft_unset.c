@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/26 17:07:18 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:59:40 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	ft_unset(t_shell *sh, t_command *cmd)
 	i = 1;
 	while (cmd->cmd[i])
 	{
-		if (!is_key_format(cmd, cmd->cmd[i]))
-			sh->exit_status = FAIL;
 		remove_env(&head, cmd->cmd[i]);
 		i++;
 	}
