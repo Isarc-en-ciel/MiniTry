@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:33:24 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/03 18:23:43 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:44:42 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "minishell_enum.h"
 # include "minishell_struct.h"
 # include "minishell_function.h"
+
 extern volatile sig_atomic_t	g_signal_received;
 
 #endif

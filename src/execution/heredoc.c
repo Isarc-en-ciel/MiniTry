@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 16:52:09 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 12:34:19 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:46:22 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 void	handle_sigint_hd(int signum)
 {
-    g_signal_received = signum;
+	g_signal_received = signum;
 	close(STDIN_FILENO);
 }
 
@@ -61,10 +61,10 @@ static void	write_heredoc(t_shell *sh, int fd, t_redirect *rdir)
 	while (1)
 	{
 		if (g_signal_received == SIGINT)
-			break;
-		line = readline("> "); 
+			break ;
+		line = readline("> ");
 		if (g_signal_received == SIGINT)
-			break;
+			break ;
 		if (!line)
 		{
 			ft_printf("warning : heredoc terminate with eof\n");
@@ -96,7 +96,7 @@ static void	get_hd_filename(t_command *cmd, t_redirect *redir)
 
 static int	open_hd(t_command *cmd)
 {
-	int	heredoc; 
+	int	heredoc;
 
 	heredoc = open(HEREDOC_FILE, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (heredoc < 0)
@@ -113,8 +113,8 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 	struct sigaction	old_sigint;
 	struct sigaction	old_sigquit;
 
-   	sigaction(SIGQUIT, NULL, &old_sigquit);
-  	sigaction(SIGINT, NULL, &old_sigint);
+	sigaction(SIGQUIT, NULL, &old_sigquit);
+	sigaction(SIGINT, NULL, &old_sigint);
 	heredoc = open_hd(cmd);
 	if (heredoc == -1)
 		return ;
@@ -126,10 +126,10 @@ void	create_heredoc(t_shell *shell, t_command *cmd, t_redirect *redir)
 	}
 	if (pid == CHILD_PROCESS)
 		write_heredoc(shell, heredoc, redir);
-	shell->exit_status = get_exit_status(cmd, pid); 
+	shell->exit_status = get_exit_status(cmd, pid);
 	sigaction(SIGQUIT, &old_sigquit, NULL);
 	sigaction(SIGINT, &old_sigint, NULL);
-	cmd->error.code =  shell->exit_status;
+	cmd->error.code = shell->exit_status;
 	close(heredoc);
 	get_hd_filename(cmd, redir);
 	if (shell->exit_status == 130)
