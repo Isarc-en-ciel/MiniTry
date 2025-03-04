@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:14:42 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 16:20:56 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:25:47 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_exit(t_shell *sh, t_command *cmd)
 	status = 0;
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
-		if (!check_validity(cmd->cmd[1]) || !check_validity(cmd->cmd[2]))
+		if (!check_validity(cmd->cmd[1]))
 			exit(SYNTAX_ERROR);
 		else
 		{
