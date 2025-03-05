@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/05 19:07:05 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:31:44 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ bool	is_key_format(t_command *cmd, char *str)
 		}
 		else if (i > 0)
 		{
-		
 			if (!ft_isdigit(str[i]) && !ft_isalpha(str[i]) && str[i] != '_')
 			{
 				print_not_valid_identifier(str, cmd);
