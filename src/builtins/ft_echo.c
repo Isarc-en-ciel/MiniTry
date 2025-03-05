@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:50:11 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/05 12:40:34 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:41:51 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_echo(t_shell *sh, t_command *cmd)
 
 	fd = STDOUT_FILENO;
 	flag_opt = false;
-	if (cmd->fd_out >= 0)
+	if (cmd->fd_out != NO_REDIR)
 		fd = cmd->fd_out;
 	i = parse_option(cmd->cmd);
 	if (i > 1)

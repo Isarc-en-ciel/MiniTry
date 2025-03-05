@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/05 16:52:10 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/05 19:50:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	if (status == SUCCESS)
 	{
 		if (builtin)
+		{
+			if (key_found("exit", cmd->cmd[0]))
+				close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
 			exec_builtin(builtin, cmd, sh);
+		}
 		else
 			exec_external_cmd(sh, i);
 	}
@@ -61,14 +65,16 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	t_command	*cmd;
 
 	cmd = &sh->tab[i];
+	close_fd(&prev_fd);
+	close_fd(&pipe_fd[WRITE_TO]);
 	close_fd(&cmd->fd_in);
 	close_fd(&cmd->fd_out);
-	if (close_fd(&pipe_fd[WRITE_TO]) == FAIL || close_fd(&prev_fd) == FAIL)
-	{
-		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
-		cmd->error = set_error(NULL, SYSCALL_ERROR);
-		return (NO_REDIR);
-	}
+//	if (close_fd(&pipe_fd[WRITE_TO]) == FAIL || close_fd(&prev_fd) == FAIL)
+//	{
+//		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+//		cmd->error = set_error(NULL, SYSCALL_ERROR);
+//		return (NO_REDIR);
+//	}
 	if (cmd->fd_out != NO_REDIR)
 		close_fd(&pipe_fd[READ_FROM]);
 	return (pipe_fd[READ_FROM]);
