@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/05 18:34:54 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:07:05 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	build_envp(t_env_list **head, t_command *cmd, char ***envp)
 	char	**new_envp;
 
 	new_envp = list_to_array(head);
-	if (!new_envp)
+	if (!new_envp && head && *head)
 	{
 		ft_printf("cannot list to array :(\n");
 		builtin_error(cmd, "malloc", MALLOC, head);

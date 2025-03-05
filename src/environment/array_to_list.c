@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:26:54 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/01 13:29:14 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:10:32 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_env_list	*array_to_list(char **env)
 	head = NULL;
 	new = NULL;
 	i = 0;
+	if (!env || !*env)
+		return (NULL);
 	while (env[i])
 	{
 		new = get_new_node(env[i]);

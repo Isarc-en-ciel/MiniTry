@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:21:03 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 15:59:40 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:11:19 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	remove_env(t_env_list **head, char *key)
 	if (key_found((*head)->key, key))
 	{
 		delete_env(*head);
-		(*head) = second_elem;
+		if (second_elem)
+			(*head) = second_elem;
+		else
+			*head = NULL;
 		return ;
 	}
 	prev = get_prev_env(head, key);
@@ -45,6 +48,8 @@ int	ft_unset(t_shell *sh, t_command *cmd)
 	if (sh->env && !head)
 		return (builtin_error(cmd, "malloc", MALLOC, NULL));
 	i = 1;
+	if (!head)
+		return (sh->exit_status);
 	while (cmd->cmd[i])
 	{
 		remove_env(&head, cmd->cmd[i]);
