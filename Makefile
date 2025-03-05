@@ -6,7 +6,7 @@
 #    By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
-#    Updated: 2025/03/03 17:00:30 by csteylae         ###   ########.fr        #
+#    Updated: 2025/03/05 13:05:55 by csteylae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,6 +106,6 @@ re: fclean all
 debug: CFLAGS += $(DFLAGS)
 debug: re
 valgrind: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./minishell
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=supp.supp ./minishell
 
 .PHONY: all clean fclean re

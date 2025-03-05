@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 14:25:29 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:59:48 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 		else
 			exec_external_cmd(sh, i);
 	}
+	else if (status == FAIL)
+		cmd->error = set_error(NULL, FAIL);
 	exit_child(sh, pipe_fd, prev_fd, i);
 }
 
@@ -59,6 +61,8 @@ static int	get_prev_fd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	t_command	*cmd;
 
 	cmd = &sh->tab[i];
+	close_fd(&cmd->fd_in); 
+	close_fd(&cmd->fd_out); 
 	if (close_fd(&pipe_fd[WRITE_TO]) == FAIL || close_fd(&prev_fd) == FAIL)
 	{
 		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);

@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:49:43 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/21 11:20:43 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:38:53 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ void	redirect_io(t_shell *shell, int new_fd_in, int new_fd_out)
 	{
 		if (dup2(new_fd_in, STDIN_FILENO) < 0)
 			exit_error(shell, "dup2");
+//		close(new_fd_in);
 	}
 	if (new_fd_out > NO_REDIR)
 	{
 		if (dup2(new_fd_out, STDOUT_FILENO) < 0)
 			exit_error(shell, "dup2");
+//		close(new_fd_out);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:04:23 by csteylae          #+#    #+#             */
-/*   Updated: 2025/01/30 12:47:17 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:55:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,28 @@ static int	handle_first_cmd(int *in, int *out, int pipe_fd[2])
 
 static int	handle_last_cmd(int *in, int *out, int prev_fd)
 {
-	if (*in != NO_REDIR)
+/*	if (*in != NO_REDIR)
 	{
 		if (close_fd(&prev_fd) == FAIL)
 			return (FAIL);
 	}
 	else
 		*in = prev_fd;
+	if (*out == NO_REDIR)
+		*out = STDOUT_FILENO;
+	return (SUCCESS);
+*/
+	if (*in != NO_REDIR && prev_fd == NO_REDIR)
+	{
+		if (close_fd(&prev_fd) == FAIL)
+			return (FAIL);
+	}
+	else if (*in == NO_REDIR && prev_fd != NO_REDIR)
+		*in = prev_fd;
+	else if (*in == NO_REDIR && prev_fd == NO_REDIR)
+	{
+		*in = STDIN_FILENO;
+	}
 	if (*out == NO_REDIR)
 		*out = STDOUT_FILENO;
 	return (SUCCESS);
