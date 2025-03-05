@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/26 17:14:27 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:34:54 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ bool	is_key_format(t_command *cmd, char *str)
 		}
 		else if (i > 0)
 		{
+		
 			if (!ft_isdigit(str[i]) && !ft_isalpha(str[i]) && str[i] != '_')
 			{
 				print_not_valid_identifier(str, cmd);

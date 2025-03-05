@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:14:42 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 16:25:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:23:39 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,14 @@ int	ft_exit(t_shell *sh, t_command *cmd)
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
 		if (!check_validity(cmd->cmd[1]))
+		{
+			free_shell(sh);
 			exit(SYNTAX_ERROR);
+		}
 		else
 		{
 			ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
+			free_shell(sh);
 			exit(FAIL);
 		}
 	}

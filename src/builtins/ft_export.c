@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 13:33:53 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/26 16:53:20 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:36:21 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int	ft_export(t_shell *sh, t_command *cmd)
 		return (FAIL);
 	if (!cmd->cmd[1])
 	{
+		if (!head)
+			return (SUCCESS);
 		export_without_arg(&head, cmd);
 		destroy_lst(&head);
 		return (SUCCESS);
