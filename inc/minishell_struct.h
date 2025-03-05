@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:28:30 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/25 14:51:42 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:30:53 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct s_stock
  */
 typedef struct s_redirect
 {
-	char				*filename; //malloc
-	char				*hd_delimiter; //malloc
+	char				*filename;
+	char				*hd_delimiter;
 	bool				hd_expansion;
 	enum e_tokens		type;
 }	t_redirect;
@@ -72,7 +72,7 @@ typedef struct s_redirect
 */
 typedef struct s_redir_array
 {
-	t_redirect	*array; //malloc, array = malloc(sizeof(*array) * size)
+	t_redirect	*array;
 	int			size;
 }	t_redir_array;
 
@@ -95,9 +95,9 @@ typedef struct s_command
 {
 	char			**cmd;
 	t_redir_array	redirection;
-	int				fd_in; //exec
-	int				fd_out; //exec
-	t_error			error; //set to OK
+	int				fd_in;
+	int				fd_out;
+	t_error			error;
 }	t_command;
 
 /*
