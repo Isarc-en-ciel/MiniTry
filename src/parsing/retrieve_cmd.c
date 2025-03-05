@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 17:06:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/02/26 18:36:13 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/05 17:28:12 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ t_darray	*retrieve_cmd(char *input, t_shell *shell)
 		return (NULL);
 	}
 	if (tab->actual_size == 0)
+	{
+		free_final_array(tab);
 		return (NULL);
+	}
 	return (tab);
 }
 
