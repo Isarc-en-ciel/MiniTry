@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:14:27 by csteylae          #+#    #+#             */
-/*   Updated: 2025/02/17 13:29:09 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:46:22 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ t_error	set_error(char *str, enum e_error code)
 
 	new_error.str_perror = str;
 	new_error.code = code;
-	if (code == CMD_NOT_FOUND)
-	{
-		ft_printf("%s: command not found\n", str);
-	}
-	else if (str)
+	if (str)
 		perror(str);
 	return (new_error);
 }

@@ -6,7 +6,7 @@
 #    By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/19 12:04:57 by csteylae          #+#    #+#              #
-#    Updated: 2025/03/05 19:54:21 by csteylae         ###   ########.fr        #
+#    Updated: 2025/03/06 15:18:51 by csteylae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SRCS= lib/get_next_line/get_next_line.c \
 	  src/execution/close_fd.c \
 	  src/execution/find_executable_path.c \
 	  src/execution/exec_builtins.c \
+	  src/execution/get_binary_path.c \
 	  src/utils/free_struct.c \
 	  src/utils/exit_error.c \
 	  src/utils/set_error.c \

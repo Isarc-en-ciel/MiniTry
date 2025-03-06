@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:26:55 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/01/30 13:13:20 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:06:04 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <stdbool.h>
 # include <fcntl.h>
 # include <signal.h>

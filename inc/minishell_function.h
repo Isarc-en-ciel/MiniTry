@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/04 14:59:48 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:20:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int					ft_export(t_shell *sh, t_command *cmd);
 void				export_without_arg(t_env_list **head, t_command *cmd);
 
 /* repo execution */
+char				*check_path_accessibility(char *path, t_command *cmd);
+void				print_stat_file_error(t_command *cmd);
 void				init_pipeline(t_shell *sh, int i,
 						int pipe_fd[2], int prev_fd);
 void				init_child_pid(t_shell *sh);
@@ -96,7 +98,7 @@ int					configure_pipeline(t_shell *sh,
 int					close_fd(int *p_fd);
 void				close_all_fds(int pipe_fd[2],
 						int *prev_fd, int *in, int *out);
-char				*find_executable_path(t_shell *sh, int n, t_command *cmd);
+char				*get_binary_path(t_shell *sh, int n, t_command *cmd);
 void				exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i);
 void				exec_builtin(t_builtin *builtin,
 						t_command *cmd, t_shell *sh);
