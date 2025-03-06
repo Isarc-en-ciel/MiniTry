@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/06 12:40:33 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/06 12:42:34 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	join_cmd(t_lexer *cmd, int size, int i, int a)
 			else
 				i++;
 		}
+		i++;
 	}
 	return (0);
 }
