@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:15:58 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/06 16:24:23 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:58:24 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,11 @@ char	*find_binary_path(t_command *cmd, char **path_array)
 		}
 		update_file_status(&file_status, cmd);
 		free(path);
+		path = NULL;
 		i++;
 	}
 	cmd->error.code = file_status;
+	ft_printf("yup\n");
 	return (NULL);
 }
 
@@ -106,6 +108,6 @@ char	*get_binary_path(t_shell *sh, int n, t_command *cmd)
 		return (NULL);
 	}
 	path = find_binary_path(cmd, path_array);
-	free(path_array);
+	free_tab_char(path_array);
 	return (path);
 }

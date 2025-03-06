@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:37:24 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/06 15:48:46 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:34:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	exit_child(t_shell *sh, int pipe_fd[2], int prev_fd, int i)
 	exit(exit_status);
 }
 
+static void	check_if_exit(int pipe_fd[2], int prev_fd, t_shell *sh, int i)
+{
+	if (key_found("exit", sh->tab[i].cmd[0]))
+		close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+}
+
 static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 {
 	int			status;
@@ -48,8 +54,7 @@ static void	launch_cmd(t_shell *sh, int i, int pipe_fd[2], int prev_fd)
 	{
 		if (builtin)
 		{
-			if (key_found("exit", cmd->cmd[0]))
-				close_all_fds(pipe_fd, &prev_fd, &sh->tab[i].fd_in, &sh->tab[i].fd_out);
+			check_if_exit(pipe_fd, prev_fd, sh, i);
 			exec_builtin(builtin, cmd, sh);
 		}
 		else
