@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:29:17 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/03 15:13:42 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/06 12:37:15 by iwaslet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,23 @@ int	join_cmd(t_lexer *cmd, int size, int i, int a)
 	while (i < size)
 	{
 		a = 1;
-		if (cmd[i].is_there_a_space != -1)
+		while (i + a < size && is_word_token(cmd[i + a].type) == 0)
 		{
-			while (i + a < size && is_word_token(cmd[i + a].type) == 0)
+			if ((cmd[i].is_there_a_space != -1)
+				&& (is_word_token(cmd[i].type) == 0)
+				&& (is_word_token(cmd[i + a].type) == 0)
+				&& cmd[i + a].is_there_a_space == 0)
 			{
-				if ((is_word_token(cmd[i].type) == 0)
-					&& (is_word_token(cmd[i + a].type) == 0)
-					&& cmd[i + a].is_there_a_space == 0)
-				{
-					cmd[i].word = ft_strjoin(cmd[i].word, cmd[i + a].word, '1');
-					if (cmd[i].word == NULL)
-						return (-1);
-					change_type(&cmd[i], cmd[i + a]);
-					cmd[i + a].is_there_a_space = -1;
-					a++;
-				}
-				else
-					i++;
+				cmd[i].word = ft_strjoin(cmd[i].word, cmd[i + a].word, '1');
+				if (cmd[i].word == NULL)
+					return (-1);
+				change_type(&cmd[i], cmd[i + a]);
+				cmd[i + a].is_there_a_space = -1;
+				a++;
 			}
-		}
+			else
+				i++;
+			}
 		i++;
 	}
 	return (0);
