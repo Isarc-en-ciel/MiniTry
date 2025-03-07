@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:23:29 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/04 15:33:13 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:06:45 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_path(t_env_list *head, char *str, t_command *cmd)
 		if (!path)
 		{
 			cmd->error = set_error(NULL, FAIL);
-			ft_putstr_fd("cd: HOME not set\n", STDOUT_FILENO);
+			ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
 			return (NULL);
 		}
 	}
@@ -33,7 +33,7 @@ char	*get_path(t_env_list *head, char *str, t_command *cmd)
 		if (!path || !path[0])
 		{
 			cmd->error = set_error(NULL, FAIL);
-			ft_printf("cd: OLDPWD not set\n");
+			ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
 		}
 	}
 	return (ft_strdup(path));
@@ -83,7 +83,7 @@ void	change_directory(t_command *cmd, t_env_list **head)
 	}
 	status = chdir(path);
 	free(path);
-	if (status != SUCCESS && cmd->error.code != ENOENT)
+	if (status != SUCCESS)
 	{
 		cmd->error = set_error("cd", status);
 		return ;
@@ -100,7 +100,7 @@ int	ft_cd(t_shell *sh, t_command *cmd)
 		return (FAIL);
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
-		ft_putstr_fd("cd: too many arguments\n", STDOUT_FILENO);
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
 		return (builtin_error(cmd, NULL, FAIL, &head));
 	}
 	change_directory(cmd, &head);

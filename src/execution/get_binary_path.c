@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:15:58 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/06 16:58:24 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:25:01 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,16 @@ char	*find_binary_path(t_command *cmd, char **path_array)
 		path = construct_path(path_array[i], cmd->cmd[0], cmd);
 		if (!path)
 			return (NULL);
-		path = check_path_accessibility(path, cmd);
-		if (path)
-		{
+		if (is_an_executable_file(path, cmd))
 			return (path);
-		}
-		update_file_status(&file_status, cmd);
 		free(path);
 		path = NULL;
+		if (cmd->error.code == SYSCALL_ERROR)
+			return (NULL);
+		update_file_status(&file_status, cmd);
 		i++;
 	}
 	cmd->error.code = file_status;
-	ft_printf("yup\n");
 	return (NULL);
 }
 

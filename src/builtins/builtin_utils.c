@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:11:33 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/05 19:31:44 by iwaslet          ###   ########.fr       */
+/*   Updated: 2025/03/07 12:08:25 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	builtin_error(t_command *cmd, char *s, enum e_error code, t_env_list **head)
 	{
 		if (cmd->error.code == SUCCESS)
 			cmd->error = set_error(s, code);
-		else
-			perror(s);
 	}
 	if (head && *head)
 		destroy_lst(head);

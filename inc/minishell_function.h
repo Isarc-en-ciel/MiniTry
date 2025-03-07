@@ -6,7 +6,7 @@
 /*   By: iwaslet <iwaslet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:38:18 by iwaslet           #+#    #+#             */
-/*   Updated: 2025/03/06 15:20:45 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:21:13 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int					ft_export(t_shell *sh, t_command *cmd);
 void				export_without_arg(t_env_list **head, t_command *cmd);
 
 /* repo execution */
-char				*check_path_accessibility(char *path, t_command *cmd);
+bool				is_an_executable_file(char *path, t_command *cmd);
 void				print_stat_file_error(t_command *cmd);
 void				init_pipeline(t_shell *sh, int i,
 						int pipe_fd[2], int prev_fd);

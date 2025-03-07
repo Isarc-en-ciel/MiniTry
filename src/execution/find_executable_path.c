@@ -6,7 +6,7 @@
 /*   By: csteylae <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 14:20:45 by csteylae          #+#    #+#             */
-/*   Updated: 2025/03/06 16:21:47 by csteylae         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:19:53 by csteylae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@ static void	handle_non_regular_file(t_command *cmd, struct stat stats)
 		cmd->error.code = PERMISSION_DENIED;
 }
 
-char	*check_path_accessibility(char *full_path, t_command *cmd)
+bool	is_an_executable_file(char *full_path, t_command *cmd)
 {
 	struct stat	stats;
 
 	if (!full_path)
-		return (NULL);
+		return (false);
 	if (stat((const char *)full_path, &stats) != 0)
 	{
 		handle_stat_error(cmd);
-		return (NULL);
+		return (false);
 	}
 	if (!S_ISREG(stats.st_mode))
 	{
 		handle_non_regular_file(cmd, stats);
-		return (NULL);
+		return (false);
 	}
 	if (stats.st_mode & S_IXUSR)
-		return (full_path);
+		return (true);
 	else
 	{
 		cmd->error = set_error(NULL, PERMISSION_DENIED);
-		return (NULL);
+		return (false);
 	}
 }
